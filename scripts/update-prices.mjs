@@ -61,7 +61,7 @@ if (updated === 0) {
 await writeFile(
   PRICES_PATH,
   JSON.stringify(
-    { updated: new Date().toISOString(), source: 'stooq.com', quotes },
+    { updated: new Date().toISOString(), source: 'finance.yahoo.com', quotes },
     null,
     1
   ) + '\n'
