@@ -1,0 +1,233 @@
+[
+ {
+  "name": "Alex Armstrong",
+  "ticker": "MSTR",
+  "start": 32.34,
+  "end": 304.79,
+  "change": 8.424552
+ },
+ {
+  "name": "John Withers",
+  "ticker": "NVDA",
+  "start": 44.69,
+  "end": 183.16,
+  "change": 3.098456
+ },
+ {
+  "name": "Alejandra Orozco",
+  "ticker": "NVDA",
+  "start": 44.69,
+  "end": 183.16,
+  "change": 3.098456
+ },
+ {
+  "name": "Olivia Hardley",
+  "ticker": "ANF",
+  "start": 54.54,
+  "end": 73.36,
+  "change": 0.345068
+ },
+ {
+  "name": "Buckley",
+  "ticker": "GE",
+  "start": 86.89,
+  "end": 291.49,
+  "change": 2.354701
+ },
+ {
+  "name": "Michelle Fried",
+  "ticker": "TSM",
+  "start": 87.03,
+  "end": 280.66,
+  "change": 2.224865
+ },
+ {
+  "name": "Todd Grover",
+  "ticker": "ADYEY",
+  "start": 7.48,
+  "end": 16.85,
+  "change": 1.252674
+ },
+ {
+  "name": "Allie Mitchell",
+  "ticker": "RUN",
+  "start": 10.01,
+  "end": 18.8,
+  "change": 0.878122
+ },
+ {
+  "name": "Bibi Withers",
+  "ticker": "COST",
+  "start": 569.52,
+  "end": 930.01,
+  "change": 0.632972
+ },
+ {
+  "name": "Karen Korchinski",
+  "ticker": "COST",
+  "start": 569.52,
+  "end": 930.01,
+  "change": 0.632972
+ },
+ {
+  "name": "Alex Morris",
+  "ticker": "COST",
+  "start": 569.52,
+  "end": 930.01,
+  "change": 0.632972
+ },
+ {
+  "name": "Scott Korchinski",
+  "ticker": "CMG",
+  "start": 37.23,
+  "end": 39.82,
+  "change": 0.069568
+ },
+ {
+  "name": "Joe Hobbs",
+  "ticker": "AMZN",
+  "start": 125.96,
+  "end": 216.37,
+  "change": 0.717768
+ },
+ {
+  "name": "Scott Mitchell",
+  "ticker": "BROS",
+  "start": 23.99,
+  "end": 48.88,
+  "change": 1.037516
+ },
+ {
+  "name": "Jack Korchinski",
+  "ticker": "AAPL",
+  "start": 174.91,
+  "end": 245.27,
+  "change": 0.402264
+ },
+ {
+  "name": "Tim",
+  "ticker": "MSFT",
+  "start": 319.36,
+  "end": 510.96,
+  "change": 0.59995
+ },
+ {
+  "name": "Anthony Fryar",
+  "ticker": "KO",
+  "start": 52.38,
+  "end": 67.04,
+  "change": 0.279878
+ },
+ {
+  "name": "Suzanne Korchinski",
+  "ticker": "V",
+  "start": 233.48,
+  "end": 343.65,
+  "change": 0.471861
+ },
+ {
+  "name": "Theo Lee",
+  "ticker": "DIS",
+  "start": 80.81,
+  "end": 109.19,
+  "change": 0.351194
+ },
+ {
+  "name": "Betsy Arch",
+  "ticker": "DIS",
+  "start": 80.81,
+  "end": 109.19,
+  "change": 0.351194
+ },
+ {
+  "name": "Jim Korchinski",
+  "ticker": "SHEL",
+  "start": 62.66,
+  "end": 71.42,
+  "change": 0.139802
+ },
+ {
+  "name": "Nicole Haylock",
+  "ticker": "ABNB",
+  "start": 124.99,
+  "end": 118.19,
+  "change": -0.054404
+ },
+ {
+  "name": "Victoria Withers",
+  "ticker": "COP",
+  "start": 113.42,
+  "end": 87.64,
+  "change": -0.227297
+ },
+ {
+  "name": "Brett Morris",
+  "ticker": "BATS:WEED",
+  "start": 29.23,
+  "end": 20.8,
+  "change": -0.288402
+ },
+ {
+  "name": "Chris Morris",
+  "ticker": "ADBE",
+  "start": 516.44,
+  "end": 337.51,
+  "change": -0.346468
+ },
+ {
+  "name": "Kelly Grover",
+  "ticker": "ULTA",
+  "start": 388.82,
+  "end": 549.28,
+  "change": 0.412685
+ },
+ {
+  "name": "Adam Fried",
+  "ticker": "TSLA",
+  "start": 260.05,
+  "end": 413.49,
+  "change": 0.59004
+ },
+ {
+  "name": "Natalie Tran",
+  "ticker": "TSLA",
+  "start": 260.05,
+  "end": 413.49,
+  "change": 0.59004
+ },
+ {
+  "name": "Leala",
+  "ticker": "ENPH",
+  "start": 116.01,
+  "end": 34.27,
+  "change": -0.704594
+ },
+ {
+  "name": "Brit",
+  "ticker": "F",
+  "start": 11.9,
+  "end": 11.41,
+  "change": -0.041176
+ },
+ {
+  "name": "Cynthia Withers",
+  "ticker": "NKE",
+  "start": 95.79,
+  "end": 65.22,
+  "change": -0.319136
+ },
+ {
+  "name": "Jamie",
+  "ticker": "NATR",
+  "start": 16.43,
+  "end": 14.58,
+  "change": -0.112599
+ },
+ {
+  "name": "Isabelle Korchinski",
+  "ticker": "LULU",
+  "start": 360.36,
+  "end": 167.51,
+  "change": -0.535159
+ }
+]

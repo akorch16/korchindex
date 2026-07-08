@@ -1,0 +1,585 @@
+{
+ "label": "Year 1",
+ "fiscal": "FY24",
+ "dates": [
+  "2023-10-05",
+  "2024-01-05",
+  "2024-04-05",
+  "2024-07-04",
+  "2024-10-07"
+ ],
+ "people": [
+  {
+   "name": "Alex Armstrong",
+   "ticker": "MSTR",
+   "prices": [
+    32.34,
+    63.11,
+    143.9,
+    128.17,
+    186.09
+   ],
+   "return": 4.754174,
+   "gender": "M",
+   "role": "H",
+   "rationale": "Microstrategy - tracks very close with the price of bitcoin as they are one of the largest holders in the world. With the halving less than one year away (a 4 year cycle in which the amount of btc mined every block is cut in half), we are primed for either a big run or or a serious drop...time will tell. Hope it;s a good one."
+  },
+  {
+   "name": "John Withers",
+   "ticker": "NVDA",
+   "prices": [
+    44.69,
+    49.1,
+    88.01,
+    125.83,
+    127.72
+   ],
+   "return": 1.85791,
+   "gender": "M",
+   "role": "H",
+   "rationale": "My stock pick (from stocks that I own) Is Nividia Corporation (NVDA Nasdaq). California based visual computing company. Likely beneficiary of AI. A suggestion: you will find that you cannot buy an even $1,000 of everyone’s stock picks. NVDA, for example, is $400+/share so you can only buy 2 shares. You may want to measure the growth in terms of the percentage increase in each position rather than comparing the ending value to $1,000. Should be fun. GO KORCH! Love John"
+  },
+  {
+   "name": "Alejandra Orozco",
+   "ticker": "NVDA",
+   "prices": [
+    44.69,
+    49.1,
+    88.01,
+    125.83,
+    127.72
+   ],
+   "return": 1.85791,
+   "gender": "W",
+   "role": "U",
+   "rationale": "Because I'm fucking bitter I didn't buy it when it was $75 and maybe this is my chance to redeem myself, maybe I'll stop being so bitter after this. It's got a projected forecast of upward of $600 and the very bullish analysts have it $1100 in the next 12 months. And I didn't buy it was $75, and I didn't buy it when it was $300 and I just bought $5000 worth"
+  },
+  {
+   "name": "Olivia Hardley",
+   "ticker": "ANF",
+   "prices": [
+    54.54,
+    90.54,
+    120.79,
+    171.54,
+    139.04
+   ],
+   "return": 1.549322,
+   "gender": "W",
+   "role": "U",
+   "rationale": null
+  },
+  {
+   "name": "Buckley",
+   "ticker": "GE",
+   "prices": [
+    86.89,
+    100.93,
+    156.3,
+    160.5,
+    185.96
+   ],
+   "return": 1.140177,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Michelle Fried",
+   "ticker": "TSM",
+   "prices": [
+    87.03,
+    99.61,
+    141.36,
+    183.99,
+    184.51
+   ],
+   "return": 1.120074,
+   "gender": "W",
+   "role": "W",
+   "rationale": "“Risk is what keeps us young” - The Wolf of Wallstreet Stock pick : TSMC"
+  },
+  {
+   "name": "Todd Grover",
+   "ticker": "ADYEY",
+   "prices": [
+    7.48,
+    12.1,
+    16.12,
+    12.3,
+    14.73
+   ],
+   "return": 0.969251,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Allie Mitchell",
+   "ticker": "RUN",
+   "prices": [
+    10.01,
+    16.16,
+    11.83,
+    12.21,
+    16.64
+   ],
+   "return": 0.662338,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Bibi Withers",
+   "ticker": "COST",
+   "prices": [
+    569.52,
+    656.01,
+    713.72,
+    885.67,
+    873.59
+   ],
+   "return": 0.533906,
+   "gender": "W",
+   "role": "W",
+   "rationale": "OK. I would pick Costco. I am judging by the filled parking lots, long lines at the pumps and very crowded stores of shoppers who have very full carts. Good luck. Love the experiment. Bibi"
+  },
+  {
+   "name": "Karen Korchinski",
+   "ticker": "COST",
+   "prices": [
+    569.52,
+    656.01,
+    713.72,
+    885.67,
+    873.59
+   ],
+   "return": 0.533906,
+   "gender": "W",
+   "role": "U",
+   "rationale": "This is such a great idea. I’m proud of you always . I know you asked for just one pick and the explanation why. So here’s my shpiel (a little bit of yiddish to up your NY quotient): B/n you ‘n me, I lost a shit ton of $ in 2008. Shorting was my friend and then, NOT!!! Not at all :( It took me a long long time to recover from the margin call(s). Yup I have an MBA, but not in finance - ha! I’ve never invested since. Yet, I still pay attention to most of the important global markets bc they all affect the global economy and our fundamental livelihood. I would like to add to your fund $5K USD bc not only do I trust you, it wd help me a lot, to have some extra income. Let me know if you’re into it. You shd take a % as a fee. You come from a boat load of smarts on both sides of the family and you’re fearless but not reckless. I trust you. The US market has been sucking lately. I won’t pick any stocks, re: utilities, banks, metal - I agree with pundits about this. Also I stayed away from anything in the Chinese market. Current interest rates are high so I think that my nemesis bonds are currently safe, but only short term. I get shivers, just thinking about it!!! After all that, I have two picks: 1st. PICK: Costco. Currently trading at $568ish.  NASDAQ: COST. I believe that it is more recession-proof than most retail companies. Yes it’s Brick and Mortar, BUT people like to see and touch stuff and it’s a known/trusted staple for retail. Costco isn’t going away - it’s a staple and what I would consider a durable. People of all incomes shop at Costco. Mom & Pop corner stores are lire Americana and have been around forever - the ones that have already survived big box stores, aren’t going anywhere. In food deserts throughout the USA, mom and pops are it. M&P stores shop at Costco for basic supplies. Amazon & Walmart will continue to shrink staff to up profits. And that human shrinkage will just continue to increase bc of their aggressively negative stance on unions. I think that AI at Walmart and Amazon will continue upward as well. It’ll affect Costco too, but not to the same degree. My only hesitation with Costco is how increased unionization will affect them. 2nd PICK: 2 yr T-bill is currently paying out around 5.056%. Stable and steady sometimes can win the race. I know it’s not a stock, but it diversifies any portfolio. Again, recession proof. So depending on how you need/want to structure your portfolio - aggressive or conservative, I leave it with you. Since I used to have an aggressive portfolio, my instinct is to pick COSTCO. But aggressive didn’t work out so well for me, but then again, I wasn’t well diversified at ALL - kinda’ all eggs in one basket - oops Since Costco is kinda’ high $/ share, let me know you need a different pick. I hv a cpl others in the wings at lower per share prices. Stay dry. Huge Hugs and Much Love. K"
+  },
+  {
+   "name": "Alex Morris",
+   "ticker": "COST",
+   "prices": [
+    569.52,
+    656.01,
+    713.72,
+    885.67,
+    873.59
+   ],
+   "return": 0.533906,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Scott Korchinski",
+   "ticker": "CMG",
+   "prices": [
+    37.23,
+    44.26,
+    58.11,
+    58.11,
+    56.73
+   ],
+   "return": 0.523771,
+   "gender": "M",
+   "role": "U",
+   "rationale": null
+  },
+  {
+   "name": "Joe Hobbs",
+   "ticker": "AMZN",
+   "prices": [
+    125.96,
+    145.24,
+    185.07,
+    200,
+    180.8
+   ],
+   "return": 0.435376,
+   "gender": "M",
+   "role": "H",
+   "rationale": "Hi Alex, Hope you’re well. I think this is a great idea and I’m please to be a part of it. My stock pick is AWS, mainly because I believe the need for data centres is growing due to AI over the next 3-5 years & also because it’s a relatively safe bet when gambling with somebody else’s money! Good luck, I look forward to hearing the results of the experiment. Kind Regards, Joe Hobbs"
+  },
+  {
+   "name": "Scott Mitchell",
+   "ticker": "BROS",
+   "prices": [
+    23.99,
+    31.11,
+    32.87,
+    42.11,
+    31.63
+   ],
+   "return": 0.318466,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Greg Arch",
+   "ticker": "FSST",
+   "prices": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "return": 0.297243,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Jack Korchinski",
+   "ticker": "AAPL",
+   "prices": [
+    174.91,
+    181.18,
+    169.58,
+    226.34,
+    221.69
+   ],
+   "return": 0.267452,
+   "gender": "M",
+   "role": "U",
+   "rationale": null
+  },
+  {
+   "name": "Tim",
+   "ticker": "MSFT",
+   "prices": [
+    319.36,
+    367.75,
+    425.52,
+    467.56,
+    409.54
+   ],
+   "return": 0.282377,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Anthony Fryar",
+   "ticker": "KO",
+   "prices": [
+    52.38,
+    59.67,
+    59.51,
+    63.76,
+    69.01
+   ],
+   "return": 0.317488,
+   "gender": "M",
+   "role": "U",
+   "rationale": "Great concept. Well done. My pick is easy... America's sweetheart: Coca-Cola. It's not getting us to dinner on either end of the spectrum, but I'll tell you what: nothing thrives better during times of inflation and uncertainty than obesity and diabetes. A safe investment that will not tug at my guilty conscience of exposing you to lose money on my choice. And at the risk of burying the lede, the most defining aspect that makes it our choice here: the symbol is KO. Now we just need to find someone to select Richelieu Hardware..."
+  },
+  {
+   "name": "Suzanne Korchinski",
+   "ticker": "V",
+   "prices": [
+    233.48,
+    259.69,
+    277.14,
+    270.36,
+    273.79
+   ],
+   "return": 0.172649,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Theo Lee",
+   "ticker": "DIS",
+   "prices": [
+    80.81,
+    90.9,
+    118.38,
+    97.99,
+    92.39
+   ],
+   "return": 0.143299,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Betsy Arch",
+   "ticker": "DIS",
+   "prices": [
+    80.81,
+    90.9,
+    118.38,
+    97.99,
+    92.39
+   ],
+   "return": 0.143299,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Jim Korchinski",
+   "ticker": "SHEL",
+   "prices": [
+    62.66,
+    65.73,
+    71.29,
+    73.25,
+    70.23
+   ],
+   "return": 0.120811,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Nicole Haylock",
+   "ticker": "ABNB",
+   "prices": [
+    124.99,
+    135.98,
+    161.77,
+    152.5,
+    130.23
+   ],
+   "return": 0.041923,
+   "gender": "W",
+   "role": "W",
+   "rationale": "Love this Alex! Thanks for inviting me to be a part of it. Full disclosure, I have zero knowledge when it comes to stocks so going out on a limb here. My stock pick is Airbnb (ABNB). Why I chose it? 1. Post pandemic travel is ramping up, so are the needs of finding places to stay that are competitively priced. 2. Historical figures: returns in the 6 month to a year period seem to be favourable. 3. Just seems like a solid business model with possibilities to expand. 4. Bonus- I just love airbnb lol. Hope this helps! Nicole Haylock (CMo’s better half)"
+  },
+  {
+   "name": "Victoria Withers",
+   "ticker": "COP",
+   "prices": [
+    113.42,
+    116.53,
+    133.52,
+    112.55,
+    114.72
+   ],
+   "return": 0.011462,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Brett Morris",
+   "ticker": "BATS:WEED",
+   "prices": [
+    29.23,
+    33.64,
+    43.55,
+    31.37,
+    29.21
+   ],
+   "return": -0.000684,
+   "gender": "M",
+   "role": "U",
+   "rationale": null
+  },
+  {
+   "name": "Chris Morris",
+   "ticker": "ADBE",
+   "prices": [
+    516.44,
+    564.6,
+    485.12,
+    578.34,
+    487.3
+   ],
+   "return": -0.056425,
+   "gender": "M",
+   "role": "H",
+   "rationale": null
+  },
+  {
+   "name": "Kelly Grover",
+   "ticker": "ULTA",
+   "prices": [
+    388.82,
+    471.12,
+    444.75,
+    390,
+    370.01
+   ],
+   "return": -0.048377,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Adam Fried",
+   "ticker": "TSLA",
+   "prices": [
+    260.05,
+    237.49,
+    164.9,
+    251.52,
+    240.83
+   ],
+   "return": -0.073909,
+   "gender": "M",
+   "role": "H",
+   "rationale": "A wise man once said: “If you aren't willing to own a stock for ten years, don't even think about owning it for ten minutes” So, while I disagree with the premise of a one year investment period….TSLA. Book it. If you’re curious about my rationale, happy to explain it to you over our dinner at Lazy Bear next October. Love, Adam"
+  },
+  {
+   "name": "Natalie Tran",
+   "ticker": "TSLA",
+   "prices": [
+    260.05,
+    237.49,
+    164.9,
+    251.52,
+    240.83
+   ],
+   "return": -0.073909,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Leala",
+   "ticker": "ENPH",
+   "prices": [
+    116.01,
+    115.39,
+    112.27,
+    97.14,
+    106.36
+   ],
+   "return": -0.083182,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Brit",
+   "ticker": "F",
+   "prices": [
+    11.9,
+    11.85,
+    13.28,
+    12.84,
+    10.49
+   ],
+   "return": -0.118487,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Cynthia Withers",
+   "ticker": "NKE",
+   "prices": [
+    95.79,
+    102.08,
+    88.84,
+    75.43,
+    80.83
+   ],
+   "return": -0.156175,
+   "gender": "W",
+   "role": "U",
+   "rationale": null
+  },
+  {
+   "name": "Jamie",
+   "ticker": "NATR",
+   "prices": [
+    16.43,
+    17.18,
+    19.74,
+    14.88,
+    13.16
+   ],
+   "return": -0.199026,
+   "gender": "W",
+   "role": "W",
+   "rationale": null
+  },
+  {
+   "name": "Isabelle Korchinski",
+   "ticker": "LULU",
+   "prices": [
+    360.36,
+    491.1,
+    356.87,
+    298.14,
+    272.48
+   ],
+   "return": -0.243867,
+   "gender": "W",
+   "role": "U",
+   "rationale": null
+  },
+  {
+   "name": "Adriana Withers",
+   "ticker": "CYBN",
+   "prices": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "return": -0.5,
+   "gender": "W",
+   "role": "U",
+   "rationale": "Was looking for an option in psychedelic-based therapeutics and liked Cybin as it a) was Canadian based and b) seemed less volatile than others in the space. I only invest in things I believe in, and I think this will be a big wave for all sorts of healing in the near future. Might not be this year, but you said “think long”. 😊"
+  }
+ ],
+ "benchmarks": [
+  {
+   "ticker": "VOO",
+   "prices": [
+    389.91,
+    429.98,
+    476.49,
+    509.84,
+    null
+   ],
+   "return": 0.221018
+  },
+  {
+   "ticker": "DIA",
+   "prices": [
+    331.17,
+    374.64,
+    388.86,
+    393.7,
+    null
+   ],
+   "return": 0.174839
+  },
+  {
+   "ticker": "NASDX",
+   "prices": [
+    31.8,
+    32.76,
+    36.39,
+    40.98,
+    null
+   ],
+   "return": 0.140038
+  },
+  {
+   "ticker": "BRK.B",
+   "prices": [
+    345.06,
+    365.59,
+    418.62,
+    411.17,
+    null
+   ],
+   "return": 0.218016
+  }
+ ],
+ "korchReturn": 0.486699
+}
