@@ -36,9 +36,9 @@ Built with Vite + React. Charts are hand-rolled SVG. No backend.
 
 ## Automation
 
-- **`.github/workflows/deploy.yml`** — builds and deploys the site to GitHub Pages on
-  every push to `main`. One-time setup: in repo **Settings → Pages**, set Source to
-  **GitHub Actions**.
+- **`.github/workflows/deploy.yml`** — on every push to `main`, builds the site and
+  publishes `dist/` to the `gh-pages` branch, which GitHub Pages serves at
+  https://akorch16.github.io/korchindex/.
 - **`.github/workflows/update-prices.yml`** — weekdays after market close, fetches the
   latest prices from Stooq (`npm run update-prices`), commits `public/live/prices.json`,
   and redeploys. Also runnable manually from the Actions tab.

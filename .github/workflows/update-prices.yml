@@ -41,7 +41,5 @@ jobs:
     needs: update
     if: needs.update.outputs.changed == 'true'
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      contents: write
     uses: ./.github/workflows/deploy.yml
