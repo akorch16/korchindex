@@ -5,7 +5,7 @@ built as a system-design practice project: Postgres (with a read-replica seam),
 Redis cache-aside (Phase 2), a circuit-breaker-wrapped price-ingestion job
 (Phase 3), FastAPI in front. The static site keeps working unchanged until the
 Phase 7 cutover. Full phased plan lives with the repo owner; this README covers
-running what exists today (Phases 0–1).
+running what exists today (Phases 0–3).
 
 ## Run it
 
@@ -35,6 +35,24 @@ pytest                                       # integration tests against the see
 The replica pool falls back to the primary until Phase 5 stands up real
 streaming replication — routers already choose pools explicitly, so the
 cutover is config, not code.
+
+## Cache (Phase 2)
+
+Cache-aside over Redis (`app/cache.py`); every cached endpoint reports
+`X-Cache: HIT|MISS`. Historical keys carry a 24h TTL as a safety net with
+explicit busting on reseed; `live:prices:*` carries a 15-minute TTL and is
+explicitly invalidated by the ingestion job after each Postgres commit.
+Redis being down degrades reads to Postgres — it never takes the API down.
+
+## Ingestion + circuit breaker (Phase 3)
+
+`python -m app.ingestion.ingest_job` fetches the latest season's tickers from
+Yahoo behind a shared `pybreaker.CircuitBreaker(fail_max=3, reset_timeout=60)`:
+a couple of bad tickers won't trip it, but three consecutive failures mean
+Yahoo itself is down — the circuit opens, the remaining tickers are skipped
+without network calls, stale quotes stand, and the run is recorded in
+`ingestion_runs` (counts, breaker state, per-ticker failures). The API never
+depends on breaker state: `/api/live-prices` reads whatever Postgres has.
 
 ## Cohort derivation
 

@@ -13,6 +13,9 @@ async def lifespan(app: FastAPI):
     await db.connect()
     yield
     await db.disconnect()
+    from . import cache
+
+    await cache.close()
 
 
 app = FastAPI(
