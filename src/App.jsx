@@ -17,7 +17,7 @@ export default function App() {
     <div className="shell">
       <header className="masthead">
         <h1 className="wordmark">
-          K·O·R·C·H<span className="tick">↗</span>
+          KORCH<span className="tick">↗</span>
         </h1>
         <p className="tagline">
           A friends &amp; family index fund. One pick each, ~$1,000 a pick, October to October.
