@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Anton';
+  src: url('/fonts/Anton-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --page: #f9f9f7;
   --surface: #fcfcfb;
@@ -61,9 +69,12 @@ body {
 /* ---------- header ---------- */
 .masthead { padding: 40px 0 8px; }
 .wordmark {
-  font-size: 44px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-family: 'Anton', system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
   margin: 0;
 }
 .wordmark .tick { color: var(--accent); }
