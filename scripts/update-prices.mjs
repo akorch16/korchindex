@@ -10,9 +10,18 @@ import { readFile, writeFile } from 'node:fs/promises'
 
 const PRICES_PATH = new URL('../public/live/prices.json', import.meta.url)
 const YEAR2_PATH = new URL('../src/data/year2.json', import.meta.url)
+const YEAR3_PATH = new URL('../src/data/year3.json', import.meta.url)
 
 const year2 = JSON.parse(await readFile(YEAR2_PATH, 'utf8'))
-const tickers = [...new Set([...year2.people.map((p) => p.ticker.trim()), 'VOO', 'BRK.B'])]
+const year3 = JSON.parse(await readFile(YEAR3_PATH, 'utf8'))
+const tickers = [
+  ...new Set([
+    ...year2.people.map((p) => p.ticker.trim()),
+    ...year3.people.map((p) => p.ticker.trim()),
+    'VOO',
+    'BRK.B',
+  ]),
+]
 
 // Yahoo symbol format: class shares use '-' (BRK.B -> BRK-B)
 const toYahoo = (t) => t.replace('.', '-')
