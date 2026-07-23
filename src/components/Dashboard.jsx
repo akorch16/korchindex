@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import LineChart, { Legend, fmtPct } from './LineChart'
+import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year2 from '../data/year2.json'
 import groups from '../data/groups.json'
 import hold from '../data/hold.json'
@@ -14,24 +14,6 @@ function Tile({ label, value, note, cls, hero }) {
       <div className="label">{label}</div>
       <div className={`value ${cls || ''}`}>{value}</div>
       {note && <div className="note">{note}</div>}
-    </div>
-  )
-}
-
-function RaceChart() {
-  const series = [
-    { name: 'KORCH', color: 'var(--s1)', values: groups['KORCH'], emphasis: true },
-    { name: 'S&P 500', color: 'var(--muted)', values: groups['S&P 500'] },
-    { name: 'W. Buffett', color: 'var(--baseline)', values: groups['Warren Buffett'] },
-  ]
-  return (
-    <div className="card chart-card">
-      <div className="chart-head">
-        <h3 className="chart-title">The race: KORCH vs. the professionals</h3>
-        <p className="chart-sub">Cumulative return, Oct 10 2024 → Oct 10 2025. Read ’em and weep, Warren B.</p>
-      </div>
-      <Legend series={series} />
-      <LineChart series={series} xLabels={Q_LABELS} height={320} />
     </div>
   )
 }
@@ -64,11 +46,9 @@ function Chips() {
           <div className="q">Q{q}</div>
           <div className="win">
             <span className="who">▲ {best.ticker} {fmtPct(best.qoq, 0)}</span>
-            <span className="why"> — {best.name}</span>
           </div>
           <div className="lose">
             <span className="who">▼ {worst.ticker} {fmtPct(worst.qoq, 0)}</span>
-            <span className="why"> — {worst.name}</span>
           </div>
         </div>
       ))}
@@ -94,7 +74,6 @@ function ReturnBar({ value, min, max }) {
 }
 
 const COLS = [
-  { key: 'name', label: 'Person' },
   { key: 'ticker', label: 'Pick' },
   { key: 'q1', label: 'Q1', num: true },
   { key: 'q2', label: 'Q2', num: true },
@@ -122,7 +101,7 @@ export function Leaderboard({ people, title, sub }) {
   const max = Math.max(0, ...returns)
 
   const clickSort = (key) =>
-    setSort((s) => ({ key, dir: s.key === key ? -s.dir : key === 'name' || key === 'ticker' ? 1 : -1 }))
+    setSort((s) => ({ key, dir: s.key === key ? -s.dir : key === 'ticker' ? 1 : -1 }))
 
   return (
     <div className="card">
@@ -146,9 +125,8 @@ export function Leaderboard({ people, title, sub }) {
           </thead>
           <tbody>
             {rows.map((p, i) => (
-              <tr key={p.name}>
+              <tr key={p.name ?? p.ticker + i}>
                 <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                <td className="person">{p.name}</td>
                 <td><span className="ticker">{p.ticker}</span></td>
                 {[0, 1, 2].map((qi) => {
                   const v = p.changes?.[qi]
@@ -240,13 +218,12 @@ function DiamondHands() {
       <div className="table-wrap">
         <table className="data">
           <thead>
-            <tr><th className="num">#</th><th>Person</th><th>Pick</th><th className="num">Then</th><th className="num">Now</th><th>Since Oct ’23</th></tr>
+            <tr><th className="num">#</th><th>Pick</th><th className="num">Then</th><th className="num">Now</th><th>Since Oct ’23</th></tr>
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={r.name + r.ticker}>
+              <tr key={(r.name ?? '') + r.ticker}>
                 <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                <td className="person">{r.name}</td>
                 <td><span className="ticker">{r.ticker}</span></td>
                 <td className="num">${r.start.toFixed(2)}</td>
                 <td className="num">${r.end.toFixed(2)}</td>
@@ -266,6 +243,7 @@ export default function Dashboard() {
   const brk = year2.benchmarks.find((b) => b.ticker === 'BRK.B')?.return
   const endValue = START_VALUE * (1 + korch)
   const best = [...year2.people].sort((a, b) => (b.return ?? -9) - (a.return ?? -9))[0]
+  const worst = [...year2.people].sort((a, b) => (a.return ?? 9) - (b.return ?? 9))[0]
 
   return (
     <>
@@ -274,12 +252,22 @@ export default function Dashboard() {
           <Tile hero label="KORCH · FY25" value={fmtPct(korch)} cls="pos" note={`$${START_VALUE.toLocaleString()} → $${Math.round(endValue).toLocaleString()}`} />
           <Tile label="S&P 500" value={fmtPct(sp)} note="VOO, same window" />
           <Tile label="Warren Buffett" value={fmtPct(brk)} note="BRK.B, same window" />
-          <Tile label="Best pick" value={fmtPct(best.return, 0)} cls="pos" note={`${best.ticker} — ${best.name} (Uncle John)`} />
+          <Tile label="Best pick" value={fmtPct(best.return, 0)} cls="pos" note={best.ticker} />
+          <Tile label="Biggest loser" value={fmtPct(worst.return, 0)} cls="neg" note={worst.ticker} />
         </div>
       </section>
 
       <section className="section">
-        <RaceChart />
+        <RaceChart
+          title="The race: KORCH vs. the professionals"
+          sub="Cumulative return, Oct 10 2024 → Oct 10 2025. Read ’em and weep, Warren B."
+          series={[
+            { name: 'KORCH', color: 'var(--s1)', values: groups['KORCH'], emphasis: true },
+            { name: 'S&P 500', color: 'var(--muted)', values: groups['S&P 500'] },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: groups['Warren Buffett'] },
+          ]}
+          xLabels={Q_LABELS}
+        />
       </section>
 
       <section className="section">

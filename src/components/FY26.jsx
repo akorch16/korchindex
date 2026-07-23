@@ -1,9 +1,28 @@
 import { useEffect, useMemo, useState } from 'react'
-import { fmtPct } from './LineChart'
+import { RaceChart, fmtPct } from './LineChart'
 import year3 from '../data/year3.json'
 
 function sinceTracking(openingPrice, live) {
   return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
+}
+
+// [0, chg-at-Q1, chg-at-Q2, ..., chg-at-now] for one entity, from its
+// backfilled checkpointPrices plus the live "now" price as the open quarter.
+function series(entity, live) {
+  const cps = entity.checkpointPrices
+  const open = cps?.[0] ?? entity.openingPrice
+  const chg = (p) => (open != null && p != null ? (p - open) / open : null)
+  const historical = (cps ?? []).slice(1).map(chg)
+  return [0, ...historical, chg(live)]
+}
+
+// Average several entities' series index-by-index, ignoring gaps.
+function averageOf(seriesList) {
+  const len = Math.max(0, ...seriesList.map((s) => s.length))
+  return Array.from({ length: len }, (_, i) => {
+    const vals = seriesList.map((s) => s[i]).filter((v) => v != null)
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
+  })
 }
 
 export default function FY26() {
@@ -41,6 +60,17 @@ export default function FY26() {
   const sp = benchmarks.find((b) => b.ticker === 'VOO')
   const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
   const best = tracked[0]
+  const worst = tracked[tracked.length - 1]
+
+  const raceLabels = useMemo(() => {
+    const n = (year3.checkpointDates?.length ?? 1) + 1 // +1 for the live "now" point
+    const labels = (year3.checkpointDates ?? [year3.seasonOpened]).map((d) =>
+      new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+    )
+    labels.length = n - 1
+    labels.push('Now')
+    return labels
+  }, [])
 
   return (
     <>
@@ -80,9 +110,34 @@ export default function FY26() {
             <div className={`value ${best && best.since >= 0 ? 'pos' : best ? 'neg' : ''}`}>
               {best ? fmtPct(best.since) : '—'}
             </div>
-            <div className="note">{best ? `${best.ticker} — ${best.name}` : 'check back tomorrow'}</div>
+            <div className="note">{best ? best.ticker : 'check back tomorrow'}</div>
+          </div>
+          <div className="tile">
+            <div className="label">Biggest loser</div>
+            <div className={`value ${worst && worst.since >= 0 ? 'pos' : worst ? 'neg' : ''}`}>
+              {worst ? fmtPct(worst.since) : '—'}
+            </div>
+            <div className="note">{worst ? worst.ticker : 'check back tomorrow'}</div>
           </div>
         </div>
+      </section>
+
+      <section className="section">
+        <RaceChart
+          title="The race: KORCH vs. the professionals"
+          sub="Cumulative return since the FY26 open — updated live, one quarter at a time."
+          series={[
+            {
+              name: 'KORCH',
+              color: 'var(--s1)',
+              values: averageOf(rows.map((r) => series(r, r.live))),
+              emphasis: true,
+            },
+            { name: 'S&P 500', color: 'var(--muted)', values: sp ? series(sp, sp.live) : [] },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: brk ? series(brk, brk.live) : [] },
+          ]}
+          xLabels={raceLabels}
+        />
       </section>
 
       <section className="section">
@@ -91,7 +146,6 @@ export default function FY26() {
             <table className="data">
               <thead>
                 <tr>
-                  <th>Person</th>
                   <th>Pick</th>
                   <th className="num">Since FY26 open</th>
                   <th className="num">Opening price</th>
@@ -101,7 +155,6 @@ export default function FY26() {
               <tbody>
                 {rows.map((r) => (
                   <tr key={r.name}>
-                    <td className="person">{r.name}</td>
                     <td><span className="ticker">{r.ticker}</span></td>
                     <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
                       {r.since == null ? 'pending' : fmtPct(r.since)}
