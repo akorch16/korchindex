@@ -2,15 +2,11 @@ import { useState } from 'react'
 import FY26 from './components/FY26'
 import Dashboard from './components/Dashboard'
 import ArchiveY1 from './components/ArchiveY1'
-import Newsletter from './components/Newsletter'
-import Live from './components/Live'
 
 const TABS = [
   { id: 'fy26', label: 'FY26', el: <FY26 /> },
-  { id: 'dashboard', label: 'FY25 Dashboard', el: <Dashboard /> },
-  { id: 'year1', label: 'Year 1 Archive', el: <ArchiveY1 /> },
-  { id: 'letter', label: 'The Newsletter', el: <Newsletter /> },
-  { id: 'live', label: 'Live Tracker', el: <Live /> },
+  { id: 'dashboard', label: 'FY25', el: <Dashboard /> },
+  { id: 'year1', label: 'FY24', el: <ArchiveY1 /> },
 ]
 
 export default function App() {
