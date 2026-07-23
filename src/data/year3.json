@@ -7,253 +7,463 @@
    "name": "John Withers",
    "ticker": "SMCI",
    "openingPrice": 51.57,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    51.57,
+    31.2,
+    27.85
+   ]
   },
   {
    "name": "Tim Morris",
    "ticker": "MSFT",
    "openingPrice": 531.52,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    531.52,
+    480.58,
+    424.82
+   ]
   },
   {
    "name": "Suzanne Korchinski",
    "ticker": "SHOP",
    "openingPrice": 175.06,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    175.06,
+    137.5,
+    124.23
+   ]
   },
   {
    "name": "Betsy Arch",
    "ticker": "SG",
    "openingPrice": 7.24,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    7.24,
+    6.47,
+    6.74
+   ]
   },
   {
    "name": "Scott Mitchell",
    "ticker": "REVG",
    "openingPrice": null,
-   "openingDate": null
+   "openingDate": null,
+   "checkpointPrices": [
+    null,
+    null,
+    null
+   ]
   },
   {
    "name": "Alex Armstrong",
    "ticker": "MSTR",
    "openingPrice": 295.63,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    295.63,
+    161.58,
+    169.2
+   ]
   },
   {
    "name": "Scott Buckley",
    "ticker": "NEE",
    "openingPrice": 86.03,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    86.03,
+    87.15,
+    94.83
+   ]
   },
   {
    "name": "Alejandra Orozco",
    "ticker": "SMCI",
    "openingPrice": 51.57,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    51.57,
+    31.2,
+    27.85
+   ]
   },
   {
    "name": "Allie Mitchell",
    "ticker": "BEP",
    "openingPrice": 29.91,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    29.91,
+    28.81,
+    33.82
+   ]
   },
   {
    "name": "Adam Fried",
    "ticker": "RDDT",
    "openingPrice": 219.24,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    219.24,
+    196.3,
+    160.21
+   ]
   },
   {
    "name": "Jim Korchinski",
    "ticker": "NVDA",
    "openingPrice": 191.49,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    191.49,
+    188.52,
+    216.61
+   ]
   },
   {
    "name": "Michelle Fried",
    "ticker": "CMG",
    "openingPrice": 41.06,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    41.06,
+    39.65,
+    33.64
+   ]
   },
   {
    "name": "Todd Grover",
    "ticker": "BYND",
    "openingPrice": 1.81,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    1.81,
+    0.85,
+    0.91
+   ]
   },
   {
    "name": "Karen Korchinski",
    "ticker": "CAT",
    "openingPrice": 527.07,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    527.07,
+    638.91,
+    828.79
+   ]
   },
   {
    "name": "Nicole Haylock",
    "ticker": "MMM",
    "openingPrice": 168.4,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    168.4,
+    158.05,
+    145.77
+   ]
   },
   {
    "name": "Cynthia Withers",
    "ticker": "MSFT",
    "openingPrice": 531.52,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    531.52,
+    480.58,
+    424.82
+   ]
   },
   {
    "name": "Julia Korchinski",
    "ticker": "AMZN",
    "openingPrice": 226.97,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    226.97,
+    244.68,
+    261.12
+   ]
   },
   {
    "name": "Jason Feder",
    "ticker": "PLTR",
    "openingPrice": 189.18,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    189.18,
+    165.7,
+    143.1
+   ]
   },
   {
    "name": "Greg Arch",
    "ticker": "FSST",
    "openingPrice": null,
-   "openingDate": null
+   "openingDate": null,
+   "checkpointPrices": [
+    null,
+    null,
+    null
+   ]
   },
   {
    "name": "Isabelle Korchinski",
    "ticker": "AMD",
    "openingPrice": 259.67,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    259.67,
+    252.03,
+    334.63
+   ]
   },
   {
    "name": "Jack Korchinski",
    "ticker": "MSFT",
    "openingPrice": 531.52,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    531.52,
+    480.58,
+    424.82
+   ]
   },
   {
    "name": "Bibi Withers",
    "ticker": "COST",
    "openingPrice": 929.85,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    929.85,
+    970.28,
+    998.01
+   ]
   },
   {
    "name": "Adriana Withers",
    "ticker": "BITF",
    "openingPrice": null,
-   "openingDate": null
+   "openingDate": null,
+   "checkpointPrices": [
+    null,
+    null,
+    null
+   ]
   },
   {
    "name": "Kevin Perko",
    "ticker": "MRNA",
    "openingPrice": 26.66,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    26.66,
+    45.45,
+    48.7
+   ]
   },
   {
    "name": "Olivia Hardley",
    "ticker": "FIG",
    "openingPrice": 53.14,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    53.14,
+    28.46,
+    17.31
+   ]
   },
   {
    "name": "Chris Morris",
    "ticker": "FBTC",
    "openingPrice": 100.27,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    100.27,
+    77.83,
+    66.95
+   ]
   },
   {
    "name": "Natalie Lee",
    "ticker": "GOOGL",
    "openingPrice": 269.27,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    269.27,
+    334.55,
+    350.34
+   ]
   },
   {
    "name": "Jamie Armstrong",
    "ticker": "V",
    "openingPrice": 347.82,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    347.82,
+    325.26,
+    309.65
+   ]
   },
   {
    "name": "Brittany Buckley",
    "ticker": "GOOGL",
    "openingPrice": 269.27,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    269.27,
+    334.55,
+    350.34
+   ]
   },
   {
    "name": "Brenley",
    "ticker": "SHOP",
    "openingPrice": 175.06,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    175.06,
+    137.5,
+    124.23
+   ]
   },
   {
    "name": "Leala Wong",
    "ticker": "ASML",
    "openingPrice": 1059.98,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    1059.98,
+    1454.59,
+    1432.44
+   ]
   },
   {
    "name": "Hector Sarmiento",
    "ticker": "NOW",
    "openingPrice": 189.26,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    189.26,
+    131.8,
+    90.45
+   ]
   },
   {
    "name": "Ana Sarmiento",
    "ticker": "KTOS",
    "openingPrice": 90.68,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    90.68,
+    118.06,
+    63.16
+   ]
   },
   {
    "name": "Joe Hobbs",
    "ticker": "TSLA",
    "openingPrice": 452.42,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    452.42,
+    430.9,
+    378.67
+   ]
   },
   {
    "name": "Alex Morris",
    "ticker": "MP",
    "openingPrice": 65.57,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    65.57,
+    66.73,
+    64.92
+   ]
   },
   {
    "name": "Victoria Withers",
    "ticker": "ZS",
    "openingPrice": 326.33,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    326.33,
+    219.67,
+    134.11
+   ]
   },
   {
    "name": "Theo Lee",
    "ticker": "NKE",
    "openingPrice": 68.59,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    68.59,
+    63.09,
+    45.14
+   ]
   },
   {
    "name": "Scott Korchinski",
    "ticker": "CMG",
    "openingPrice": 41.06,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    41.06,
+    39.65,
+    33.64
+   ]
   },
   {
    "name": "Kelly Grover",
    "ticker": "EQIX",
    "openingPrice": 842.77,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    842.77,
+    809.55,
+    1089.85
+   ]
   },
   {
    "name": "Brett Morris",
    "ticker": "TDY",
    "openingPrice": 528.46,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    528.46,
+    616.02,
+    655.49
+   ]
   },
   {
    "name": "Anthony Fryar",
    "ticker": "PG",
    "openingPrice": 151.74,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    151.74,
+    148.34,
+    148.4
+   ]
   },
   {
    "name": "Stephen Hosea",
    "ticker": "META",
    "openingPrice": 750.82,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    750.82,
+    672.97,
+    678.62
+   ]
   }
  ],
  "trackingSince": "2026-07-23",
@@ -262,13 +472,28 @@
    "ticker": "VOO",
    "name": "S&P 500",
    "openingPrice": 630,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    630,
+    639.7,
+    657.5
+   ]
   },
   {
    "ticker": "BRK.B",
    "name": "Warren Buffett",
    "openingPrice": 488.07,
-   "openingDate": "2025-10-27"
+   "openingDate": "2025-10-27",
+   "checkpointPrices": [
+    488.07,
+    474.67,
+    472.81
+   ]
   }
+ ],
+ "checkpointDates": [
+  "2025-10-28",
+  "2026-01-28",
+  "2026-04-28"
  ]
 }
