@@ -1,0 +1,42 @@
+name: Backfill FY26 checkpoints
+
+# On-demand only. Run again after CHECKPOINT_DATES in the script gains a new
+# elapsed quarter, to backfill that quarter's real historical prices.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/backfill-checkpoints.mjs
+      - id: commit
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git config user.name "korch-bot"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/data/year3.json
+            git commit -m "chore: backfill FY26 quarterly checkpoints"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    needs: backfill
+    if: needs.backfill.outputs.changed == 'true'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/deploy.yml

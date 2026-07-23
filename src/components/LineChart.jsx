@@ -195,3 +195,18 @@ export function Legend({ series }) {
     </div>
   )
 }
+
+// A titled card wrapping Legend + LineChart — the "cumulative return over
+// checkpoints" pattern shared by every season's headline race chart.
+export function RaceChart({ title, sub, series, xLabels, height = 320 }) {
+  return (
+    <div className="card chart-card">
+      <div className="chart-head">
+        <h3 className="chart-title">{title}</h3>
+        <p className="chart-sub">{sub}</p>
+      </div>
+      <Legend series={series} />
+      <LineChart series={series} xLabels={xLabels} height={height} />
+    </div>
+  )
+}
