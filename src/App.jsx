@@ -18,8 +18,7 @@ export default function App() {
           KORCH<span className="tick">↗</span>
         </h1>
         <p className="tagline">
-          A friends &amp; family index fund. One pick each, ~$1,000 a pick, October to October.
-          Not financial advice — arguably the opposite.
+          “‘Invest with confidence.’ —T. Rowe Price” —Alex Korchinski
         </p>
       </header>
 
