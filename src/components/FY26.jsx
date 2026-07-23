@@ -2,6 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { fmtPct } from './LineChart'
 import year3 from '../data/year3.json'
 
+function sinceTracking(openingPrice, live) {
+  return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
+}
+
 export default function FY26() {
   const [data, setData] = useState(null)
   const [err, setErr] = useState(false)
@@ -18,50 +22,65 @@ export default function FY26() {
       .map((p) => {
         const q = data?.quotes[p.ticker]
         const live = q?.price ?? p.openingPrice
-        const since =
-          live != null && p.openingPrice != null ? (live - p.openingPrice) / p.openingPrice : null
-        return { ...p, live, since }
+        return { ...p, live, since: sinceTracking(p.openingPrice, live) }
       })
       .sort((a, b) => (b.since ?? -Infinity) - (a.since ?? -Infinity))
   }, [data])
 
-  const tracked = rows.filter((r) => r.openingPrice != null)
+  const benchmarks = useMemo(() => {
+    return year3.benchmarks.map((b) => {
+      const q = data?.quotes[b.ticker]
+      const live = q?.price ?? b.openingPrice
+      return { ...b, live, since: sinceTracking(b.openingPrice, live) }
+    })
+  }, [data])
+
+  const tracked = rows.filter((r) => r.since != null)
   const pending = rows.filter((r) => r.openingPrice == null)
-  const movers = tracked.filter((r) => r.since !== 0)
-  const best = movers.length ? movers[0] : null
+  const korch = tracked.length ? tracked.reduce((sum, r) => sum + r.since, 0) / tracked.length : null
+  const sp = benchmarks.find((b) => b.ticker === 'VOO')
+  const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
+  const best = tracked[0]
 
   return (
     <>
       <section className="section">
         <h2 className="section-title">FY26 — the picks are in</h2>
         <p className="section-sub">
-          KORCH Year 3 opened October 28, 2025. Forty-two picks, tracking live now — prices refresh
-          automatically every weekday via the same scheduled updater as everything else here.
+          KORCH Year 3 opened October 28, 2025. Forty-two picks, tracking live since{' '}
+          {year3.trackingSince} — prices refresh automatically every weekday via the same scheduled
+          updater as everything else here.
+          {pending.length > 0 &&
+            ` Still pending a quote: ${pending.map((p) => p.ticker).join(', ')}.`}
         </p>
         <div className="kpi-row">
           <div className="tile hero">
-            <div className="label">Picks locked in</div>
-            <div className="value">{year3.people.length}</div>
-            <div className="note">FY26 roster</div>
+            <div className="label">KORCH · FY26</div>
+            <div className={`value ${korch != null && korch >= 0 ? 'pos' : korch != null ? 'neg' : ''}`}>
+              {korch != null ? fmtPct(korch) : '—'}
+            </div>
+            <div className="note">avg. of {tracked.length} picks, since {year3.trackingSince}</div>
           </div>
           <div className="tile">
-            <div className="label">Tracking since</div>
-            <div className="value">{year3.trackingSince}</div>
-            <div className="note">first verified price for each pick</div>
+            <div className="label">S&P 500</div>
+            <div className={`value ${sp?.since != null && sp.since >= 0 ? 'pos' : sp?.since != null ? 'neg' : ''}`}>
+              {sp?.since != null ? fmtPct(sp.since) : '—'}
+            </div>
+            <div className="note">VOO, same window</div>
           </div>
           <div className="tile">
-            <div className="label">Early mover</div>
+            <div className="label">Warren Buffett</div>
+            <div className={`value ${brk?.since != null && brk.since >= 0 ? 'pos' : brk?.since != null ? 'neg' : ''}`}>
+              {brk?.since != null ? fmtPct(brk.since) : '—'}
+            </div>
+            <div className="note">BRK.B, same window</div>
+          </div>
+          <div className="tile">
+            <div className="label">Best pick</div>
             <div className={`value ${best && best.since >= 0 ? 'pos' : best ? 'neg' : ''}`}>
               {best ? fmtPct(best.since) : '—'}
             </div>
             <div className="note">{best ? `${best.ticker} — ${best.name}` : 'check back tomorrow'}</div>
-          </div>
-          <div className="tile">
-            <div className="label">Pending quotes</div>
-            <div className="value">{pending.length}</div>
-            <div className="note">
-              {pending.length ? pending.map((p) => p.ticker).join(', ') : 'all tickers resolved'}
-            </div>
           </div>
         </div>
       </section>
@@ -101,10 +120,10 @@ export default function FY26() {
           </p>
         )}
         <p className="footnote">
-          “Since tracking began” compares each price against the first verified quote captured for
-          that ticker ({year3.trackingSince}), not the true October 28 season open — historical
-          pricing that far back wasn’t available when this page went up. It’ll read as 0.0% today
-          and start moving with tomorrow’s price update.
+          “Since tracking began” compares each price (including the S&P 500 and Warren Buffett
+          benchmarks above) against the first verified quote captured on {year3.trackingSince}, not
+          the true October 28 season open — historical pricing that far back wasn’t available when
+          this page went up. It’ll read as 0.0% today and start moving with tomorrow’s price update.
         </p>
       </section>
     </>

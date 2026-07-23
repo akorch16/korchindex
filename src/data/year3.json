@@ -256,5 +256,19 @@
    "openingDate": "2026-07-23"
   }
  ],
- "trackingSince": "2026-07-23"
+ "trackingSince": "2026-07-23",
+ "benchmarks": [
+  {
+   "ticker": "VOO",
+   "name": "S&P 500",
+   "openingPrice": 678.61,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "ticker": "BRK.B",
+   "name": "Warren Buffett",
+   "openingPrice": 490.85,
+   "openingDate": "2026-07-23"
+  }
+ ]
 }
