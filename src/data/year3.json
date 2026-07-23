@@ -114,8 +114,8 @@
   {
    "name": "Greg Arch",
    "ticker": "FSST",
-   "openingPrice": 30.885,
-   "openingDate": "2025-11-13"
+   "openingPrice": null,
+   "openingDate": null
   },
   {
    "name": "Isabelle Korchinski",

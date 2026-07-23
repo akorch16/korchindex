@@ -47,11 +47,11 @@ export default function FY26() {
       <section className="section">
         <h2 className="section-title">FY26 — the picks are in</h2>
         <p className="section-sub">
-          KORCH Year 3 opened October 28, 2025. Forty-two picks, tracking live since{' '}
-          {year3.trackingSince} — prices refresh automatically every weekday via the same scheduled
-          updater as everything else here.
+          KORCH Year 3 opened October 28, 2025. Forty-two picks, tracked against each ticker’s
+          actual opening price at the season start — prices refresh automatically every weekday via
+          the same scheduled updater as everything else here.
           {pending.length > 0 &&
-            ` Still pending a quote: ${pending.map((p) => p.ticker).join(', ')}.`}
+            ` Still pending an opening price: ${pending.map((p) => p.ticker).join(', ')}.`}
         </p>
         <div className="kpi-row">
           <div className="tile hero">
@@ -59,7 +59,7 @@ export default function FY26() {
             <div className={`value ${korch != null && korch >= 0 ? 'pos' : korch != null ? 'neg' : ''}`}>
               {korch != null ? fmtPct(korch) : '—'}
             </div>
-            <div className="note">avg. of {tracked.length} picks, since {year3.trackingSince}</div>
+            <div className="note">avg. of {tracked.length} picks, since the FY26 open</div>
           </div>
           <div className="tile">
             <div className="label">S&P 500</div>
@@ -93,8 +93,8 @@ export default function FY26() {
                 <tr>
                   <th>Person</th>
                   <th>Pick</th>
-                  <th className="num">Since tracking began</th>
-                  <th className="num">Price</th>
+                  <th className="num">Since FY26 open</th>
+                  <th className="num">Opening price</th>
                   <th className="num">Latest</th>
                 </tr>
               </thead>
@@ -116,14 +116,15 @@ export default function FY26() {
         </div>
         {err && (
           <p className="footnote">
-            Live prices haven’t published yet today — showing each pick’s tracked-since price.
+            Live prices haven’t published yet today — showing each pick’s opening price.
           </p>
         )}
         <p className="footnote">
-          “Since tracking began” compares each price (including the S&P 500 and Warren Buffett
-          benchmarks above) against the first verified quote captured on {year3.trackingSince}, not
-          the true October 28 season open — historical pricing that far back wasn’t available when
-          this page went up. It’ll read as 0.0% today and start moving with tomorrow’s price update.
+          “Since FY26 open” compares each price (including the S&P 500 and Warren Buffett benchmarks
+          above) against that ticker’s actual close on the season’s October 28, 2025 start —
+          backfilled from historical data, the same way FY24 and FY25 are tracked.
+          {pending.length > 0 &&
+            ` ${pending.map((p) => p.ticker).join(', ')} ${pending.length === 1 ? 'has' : 'have'} no reliable opening price yet (thin trading or a delisting around that date) and show as pending until that resolves.`}
         </p>
       </section>
     </>
