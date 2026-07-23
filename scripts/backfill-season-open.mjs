@@ -31,15 +31,25 @@ async function fetchHistoricalClose(ticker, targetDate) {
   const closes = result?.indicators?.quote?.[0]?.close
   if (!timestamps?.length || !closes?.length) throw new Error('no historical data')
 
-  // Pick the bar closest to (but not after) the target date -- the season's
-  // actual open, or the prior trading day if the open date itself has no bar.
-  let bestIdx = -1
+  // Pick the bar closest to the target date by absolute distance -- robust to
+  // thin/illiquid tickers whose only bar in the window is a day or two off in
+  // either direction (a "last bar on-or-before" rule silently fell through to
+  // index 0 -- an arbitrary, possibly far-off bar -- when nothing qualified).
+  let bestIdx = 0
+  let bestDist = Infinity
   for (let i = 0; i < timestamps.length; i++) {
-    if (timestamps[i] * 1000 <= targetDate.getTime() + 86400000) bestIdx = i
+    if (!Number.isFinite(closes[i])) continue
+    const dist = Math.abs(timestamps[i] * 1000 - targetDate.getTime())
+    if (dist < bestDist) {
+      bestDist = dist
+      bestIdx = i
+    }
   }
-  if (bestIdx === -1) bestIdx = 0
   const price = closes[bestIdx]
-  if (!Number.isFinite(price)) throw new Error('close price not finite')
+  if (!Number.isFinite(price)) throw new Error('no close price in window')
+  // Sanity check: reject anything wildly off-target rather than silently
+  // writing a misleading date (the failure then shows as "pending", not wrong).
+  if (bestDist > 10 * 86400000) throw new Error(`closest bar is ${Math.round(bestDist / 86400000)}d from target`)
   const date = new Date(timestamps[bestIdx] * 1000).toISOString().slice(0, 10)
   return { price: Math.round(price * 100) / 100, date }
 }
