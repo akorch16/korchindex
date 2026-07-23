@@ -1,6 +1,40 @@
 import { useEffect, useMemo, useState } from 'react'
 import { fmtPct } from './LineChart'
 import year2 from '../data/year2.json'
+import year3 from '../data/year3.json'
+
+function LiveTable({ rows, columns }) {
+  return (
+    <div className="card">
+      <div className="table-wrap">
+        <table className="data">
+          <thead>
+            <tr>
+              <th>Person</th>
+              <th>Pick</th>
+              {columns.map((c) => (
+                <th key={c.key} className="num">{c.label}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.name}>
+                <td className="person">{r.name}</td>
+                <td><span className="ticker">{r.ticker}</span></td>
+                {columns.map((c) => (
+                  <td key={c.key} className={c.numClass ? c.numClass(r) : 'num'}>
+                    {c.render(r)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
 
 export default function Live() {
   const [data, setData] = useState(null)
@@ -13,7 +47,19 @@ export default function Live() {
       .catch(() => setErr(true))
   }, [])
 
-  const rows = useMemo(() => {
+  const fy26Rows = useMemo(() => {
+    return year3.people
+      .map((p) => {
+        const q = data?.quotes[p.ticker]
+        const live = q?.price ?? null
+        const since =
+          live != null && p.openingPrice != null ? (live - p.openingPrice) / p.openingPrice : null
+        return { ...p, live, since }
+      })
+      .sort((a, b) => (b.since ?? -Infinity) - (a.since ?? -Infinity))
+  }, [data])
+
+  const fy25Rows = useMemo(() => {
     if (!data) return []
     return year2.people
       .map((p) => {
@@ -25,7 +71,6 @@ export default function Live() {
           close,
           live,
           since: live != null && close != null ? (live - close) / close : null,
-          date: q?.date,
         }
       })
       .sort((a, b) => (b.since ?? -Infinity) - (a.since ?? -Infinity))
@@ -34,10 +79,10 @@ export default function Live() {
   return (
     <>
       <section className="section">
-        <h2 className="section-title">Live tracker — where are they now?</h2>
+        <h2 className="section-title">Live tracker</h2>
         <p className="section-sub">
-          Every Year 2 pick, tracked past the closing bell. Prices refresh automatically every
-          weekday via a scheduled GitHub Action — no servers, no fees, no fiduciary duty.
+          Every currently-tracked pick, refreshed automatically every weekday via the same
+          scheduled GitHub Action — no servers, no fees, no fiduciary duty.
         </p>
         {data?.updated && (
           <p className="updated">Last updated {new Date(data.updated).toLocaleString()}</p>
@@ -50,40 +95,44 @@ export default function Live() {
         )}
       </section>
 
-      {rows.length > 0 && (
+      <section className="section">
+        <h3 className="chart-title" style={{ marginBottom: 4 }}>FY26 — current season</h3>
+        <p className="chart-sub" style={{ margin: '0 0 12px' }}>
+          Since each pick’s first tracked price ({year3.trackingSince}).
+        </p>
+        <LiveTable
+          rows={fy26Rows}
+          columns={[
+            {
+              key: 'since',
+              label: `Since ${year3.trackingSince}`,
+              render: (r) => (r.since == null ? (r.openingPrice == null ? 'pending' : '—') : fmtPct(r.since)),
+              numClass: (r) => `num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`,
+            },
+            { key: 'latest', label: 'Latest', render: (r) => (r.live != null ? `$${r.live.toFixed(2)}` : '—') },
+          ]}
+        />
+      </section>
+
+      {fy25Rows.length > 0 && (
         <section className="section">
-          <div className="card">
-            <div className="table-wrap">
-              <table className="data">
-                <thead>
-                  <tr>
-                    <th>Person</th>
-                    <th>Pick</th>
-                    <th className="num">FY25 close</th>
-                    <th className="num">Latest</th>
-                    <th className="num">Since Oct 10 ’25</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r) => (
-                    <tr key={r.name}>
-                      <td className="person">{r.name}</td>
-                      <td><span className="ticker">{r.ticker}</span></td>
-                      <td className="num">{r.close != null ? `$${r.close.toFixed(2)}` : '—'}</td>
-                      <td className="num">{r.live != null ? `$${r.live.toFixed(2)}` : '—'}</td>
-                      <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
-                        {r.since == null ? '—' : fmtPct(r.since)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <p className="footnote">
-            KORCH Year 3 opened October 10, 2025. When the picks are in, they’ll show up here —
-            start thinking of your stock picks.
+          <h3 className="chart-title" style={{ marginBottom: 4 }}>FY25 — closed season, where are they now</h3>
+          <p className="chart-sub" style={{ margin: '0 0 12px' }}>
+            Drift since the October 10, 2025 close — for curiosity, not competition anymore.
           </p>
+          <LiveTable
+            rows={fy25Rows}
+            columns={[
+              { key: 'close', label: 'FY25 close', render: (r) => (r.close != null ? `$${r.close.toFixed(2)}` : '—') },
+              { key: 'latest', label: 'Latest', render: (r) => (r.live != null ? `$${r.live.toFixed(2)}` : '—') },
+              {
+                key: 'since',
+                label: 'Since close',
+                render: (r) => (r.since == null ? '—' : fmtPct(r.since)),
+                numClass: (r) => `num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`,
+              },
+            ]}
+          />
         </section>
       )}
     </>
