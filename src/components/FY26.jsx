@@ -35,7 +35,7 @@ export default function FY26() {
       <section className="section">
         <h2 className="section-title">FY26 — the picks are in</h2>
         <p className="section-sub">
-          KORCH Year 3 opened October 10, 2025. Forty-two picks, tracking live now — prices refresh
+          KORCH Year 3 opened October 28, 2025. Forty-two picks, tracking live now — prices refresh
           automatically every weekday via the same scheduled updater as everything else here.
         </p>
         <div className="kpi-row">
@@ -102,7 +102,7 @@ export default function FY26() {
         )}
         <p className="footnote">
           “Since tracking began” compares each price against the first verified quote captured for
-          that ticker ({year3.trackingSince}), not the true October 10 season open — historical
+          that ticker ({year3.trackingSince}), not the true October 28 season open — historical
           pricing that far back wasn’t available when this page went up. It’ll read as 0.0% today
           and start moving with tomorrow’s price update.
         </p>
