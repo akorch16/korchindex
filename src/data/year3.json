@@ -3,47 +3,258 @@
  "fiscal": "FY26",
  "seasonOpened": "2025-10-10",
  "people": [
-  { "name": "John Withers", "ticker": "SMCI" },
-  { "name": "Tim Morris", "ticker": "MSFT" },
-  { "name": "Suzanne Korchinski", "ticker": "SHOP" },
-  { "name": "Betsy Arch", "ticker": "SG" },
-  { "name": "Scott Mitchell", "ticker": "REVG" },
-  { "name": "Alex Armstrong", "ticker": "MSTR" },
-  { "name": "Scott Buckley", "ticker": "NEE" },
-  { "name": "Alejandra Orozco", "ticker": "SMCI" },
-  { "name": "Allie Mitchell", "ticker": "BEP" },
-  { "name": "Adam Fried", "ticker": "RDDT" },
-  { "name": "Jim Korchinski", "ticker": "NVDA" },
-  { "name": "Michelle Fried", "ticker": "CMG" },
-  { "name": "Todd Grover", "ticker": "BYND" },
-  { "name": "Karen Korchinski", "ticker": "CAT" },
-  { "name": "Nicole Haylock", "ticker": "MMM" },
-  { "name": "Cynthia Withers", "ticker": "MSFT" },
-  { "name": "Julia Korchinski", "ticker": "AMZN" },
-  { "name": "Jason Feder", "ticker": "PLTR" },
-  { "name": "Greg Arch", "ticker": "FSST" },
-  { "name": "Isabelle Korchinski", "ticker": "AMD" },
-  { "name": "Jack Korchinski", "ticker": "MSFT" },
-  { "name": "Bibi Withers", "ticker": "COST" },
-  { "name": "Adriana Withers", "ticker": "BITF" },
-  { "name": "Kevin Perko", "ticker": "MRNA" },
-  { "name": "Olivia Hardley", "ticker": "FIG" },
-  { "name": "Chris Morris", "ticker": "FBTC" },
-  { "name": "Natalie Lee", "ticker": "GOOGL" },
-  { "name": "Jamie Armstrong", "ticker": "V" },
-  { "name": "Brittany Buckley", "ticker": "GOOGL" },
-  { "name": "Brenley", "ticker": "SHOP" },
-  { "name": "Leala Wong", "ticker": "ASML" },
-  { "name": "Hector Sarmiento", "ticker": "NOW" },
-  { "name": "Ana Sarmiento", "ticker": "KTOS" },
-  { "name": "Joe Hobbs", "ticker": "TSLA" },
-  { "name": "Alex Morris", "ticker": "MP" },
-  { "name": "Victoria Withers", "ticker": "ZS" },
-  { "name": "Theo Lee", "ticker": "NKE" },
-  { "name": "Scott Korchinski", "ticker": "CMG" },
-  { "name": "Kelly Grover", "ticker": "EQIX" },
-  { "name": "Brett Morris", "ticker": "TDY" },
-  { "name": "Anthony Fryar", "ticker": "PG" },
-  { "name": "Stephen Hosea", "ticker": "META" }
- ]
+  {
+   "name": "John Withers",
+   "ticker": "SMCI",
+   "openingPrice": 31.2,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Tim Morris",
+   "ticker": "MSFT",
+   "openingPrice": 381.58,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Suzanne Korchinski",
+   "ticker": "SHOP",
+   "openingPrice": 112,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Betsy Arch",
+   "ticker": "SG",
+   "openingPrice": 6.04,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Scott Mitchell",
+   "ticker": "REVG",
+   "openingPrice": null,
+   "openingDate": null
+  },
+  {
+   "name": "Alex Armstrong",
+   "ticker": "MSTR",
+   "openingPrice": 93.63,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Scott Buckley",
+   "ticker": "NEE",
+   "openingPrice": 89.79,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Alejandra Orozco",
+   "ticker": "SMCI",
+   "openingPrice": 31.2,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Allie Mitchell",
+   "ticker": "BEP",
+   "openingPrice": 33.07,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Adam Fried",
+   "ticker": "RDDT",
+   "openingPrice": 168.78,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Jim Korchinski",
+   "ticker": "NVDA",
+   "openingPrice": 208.76,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Michelle Fried",
+   "ticker": "CMG",
+   "openingPrice": 32.01,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Todd Grover",
+   "ticker": "BYND",
+   "openingPrice": 0.5601,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Karen Korchinski",
+   "ticker": "CAT",
+   "openingPrice": 894.54,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Nicole Haylock",
+   "ticker": "MMM",
+   "openingPrice": 169.59,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Cynthia Withers",
+   "ticker": "MSFT",
+   "openingPrice": 381.58,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Julia Korchinski",
+   "ticker": "AMZN",
+   "openingPrice": 233.66,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Jason Feder",
+   "ticker": "PLTR",
+   "openingPrice": 123.37,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Greg Arch",
+   "ticker": "FSST",
+   "openingPrice": 30.885,
+   "openingDate": "2025-11-13"
+  },
+  {
+   "name": "Isabelle Korchinski",
+   "ticker": "AMD",
+   "openingPrice": 539.69,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Jack Korchinski",
+   "ticker": "MSFT",
+   "openingPrice": 381.58,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Bibi Withers",
+   "ticker": "COST",
+   "openingPrice": 926.06,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Adriana Withers",
+   "ticker": "BITF",
+   "openingPrice": null,
+   "openingDate": null
+  },
+  {
+   "name": "Kevin Perko",
+   "ticker": "MRNA",
+   "openingPrice": 57.02,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Olivia Hardley",
+   "ticker": "FIG",
+   "openingPrice": 20,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Chris Morris",
+   "ticker": "FBTC",
+   "openingPrice": 56.39,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Natalie Lee",
+   "ticker": "GOOGL",
+   "openingPrice": 317.69,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Jamie Armstrong",
+   "ticker": "V",
+   "openingPrice": 351.6,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Brittany Buckley",
+   "ticker": "GOOGL",
+   "openingPrice": 317.69,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Brenley",
+   "ticker": "SHOP",
+   "openingPrice": 112,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Leala Wong",
+   "ticker": "ASML",
+   "openingPrice": 1803,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Hector Sarmiento",
+   "ticker": "NOW",
+   "openingPrice": 91.94,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Ana Sarmiento",
+   "ticker": "KTOS",
+   "openingPrice": 49.44,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Joe Hobbs",
+   "ticker": "TSLA",
+   "openingPrice": 319.69,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Alex Morris",
+   "ticker": "MP",
+   "openingPrice": 44.65,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Victoria Withers",
+   "ticker": "ZS",
+   "openingPrice": 139.7,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Theo Lee",
+   "ticker": "NKE",
+   "openingPrice": 40.99,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Scott Korchinski",
+   "ticker": "CMG",
+   "openingPrice": 32.01,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Kelly Grover",
+   "ticker": "EQIX",
+   "openingPrice": 1033.55,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Brett Morris",
+   "ticker": "TDY",
+   "openingPrice": 651.22,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Anthony Fryar",
+   "ticker": "PG",
+   "openingPrice": 146.97,
+   "openingDate": "2026-07-23"
+  },
+  {
+   "name": "Stephen Hosea",
+   "ticker": "META",
+   "openingPrice": 606.1,
+   "openingDate": "2026-07-23"
+  }
+ ],
+ "trackingSince": "2026-07-23"
 }
