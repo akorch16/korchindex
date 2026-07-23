@@ -13,44 +13,9 @@ export default function ArchiveY1() {
   const voo = year1.benchmarks.find((b) => b.ticker === 'VOO')
   const brk = year1.benchmarks.find((b) => b.ticker === 'BRK.B')
   const quotes = year1.people.filter((p) => p.rationale)
-  const jim = year1.people.find((p) => p.name === 'Jim Korchinski')
-  const gap = jim ? jim.return - voo.return : null
 
   return (
     <>
-      {jim && (
-        <section className="section">
-          <div className="card">
-            <h3 className="chart-title" style={{ marginBottom: 4 }}>
-              Spotlight: Jim Korchinski vs. the S&P 500
-            </h3>
-            <p className="chart-sub" style={{ margin: '0 0 16px' }}>
-              His FY24 pick, {jim.ticker}, over the full 12-month season ({year1.dates[0]} →{' '}
-              {year1.dates[year1.dates.length - 1]}).
-            </p>
-            <div className="kpi-row">
-              <div className="tile">
-                <div className="label">Jim Korchinski — {jim.ticker}</div>
-                <div className={`value ${jim.return >= 0 ? 'pos' : 'neg'}`}>{fmtPct(jim.return)}</div>
-                <div className="note">
-                  ${jim.prices[0].toFixed(2)} → ${jim.prices[jim.prices.length - 1].toFixed(2)}
-                </div>
-              </div>
-              <div className="tile">
-                <div className="label">S&P 500 (VOO)</div>
-                <div className={`value ${voo.return >= 0 ? 'pos' : 'neg'}`}>{fmtPct(voo.return)}</div>
-                <div className="note">same 12-month window</div>
-              </div>
-              <div className="tile">
-                <div className="label">Gap to the index</div>
-                <div className={`value ${gap >= 0 ? 'pos' : 'neg'}`}>{fmtPct(gap)}</div>
-                <div className="note">{gap >= 0 ? 'ahead of' : 'trailed'} the S&P 500</div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
       <section className="section">
         <h2 className="section-title">Year 1 — FY24 archive</h2>
         <p className="section-sub">
