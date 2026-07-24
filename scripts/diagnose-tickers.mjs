@@ -1,65 +1,62 @@
-// One-off diagnostic: why do REVG, FSST, BITF fail to get season-open /
-// checkpoint prices? Fetches a wide historical window for each ticker and
-// reports what data (if any) Yahoo actually has, plus the nearest bar to
-// each date of interest. Not part of the regular pipeline -- read the logs
-// from the "Diagnose tickers" workflow run, then delete this + its workflow.
-const TICKERS = ['REVG', 'FSST', 'BITF']
-const DATES_OF_INTEREST = ['2025-10-28', '2026-01-28', '2026-04-28']
+// One-off diagnostic: BITF and FSST return 404/wrong-instrument from Yahoo's
+// v8 chart endpoint, but both are confirmed still trading. Try alternate
+// free, no-key sources to see what's actually available. Not part of the
+// regular pipeline -- read the logs from the "Diagnose tickers" workflow
+// run, then delete this + its workflow once resolved.
+const TICKERS = ['BITF', 'FSST']
 
-const toYahoo = (t) => t.trim().replace('.', '-')
-
-async function fetchWide(ticker) {
-  // 2025-01-01 through now
-  const period1 = Math.floor(new Date('2025-01-01T00:00:00Z').getTime() / 1000)
-  const period2 = Math.floor(Date.now() / 1000)
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(toYahoo(ticker))}?period1=${period1}&period2=${period2}&interval=1d`
-  const res = await fetch(url, {
-    headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) korchindex-price-updater' },
-  })
-  console.log(`\n=== ${ticker} === HTTP ${res.status}`)
-  if (!res.ok) {
-    const body = await res.text()
-    console.log('body:', body.slice(0, 500))
-    return
-  }
+async function tryYahooSearch(ticker) {
+  const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(ticker)}`
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
+  console.log(`  yahoo search HTTP ${res.status}`)
+  if (!res.ok) return
   const json = await res.json()
-  const result = json?.chart?.result?.[0]
-  const error = json?.chart?.error
-  if (error) console.log('chart.error:', JSON.stringify(error))
-  const timestamps = result?.timestamp
-  const closes = result?.indicators?.quote?.[0]?.close
-  if (!timestamps?.length) {
-    console.log('no timestamps returned. meta:', JSON.stringify(result?.meta))
-    return
-  }
-  console.log(`bars: ${timestamps.length}`)
-  console.log(`first bar: ${new Date(timestamps[0] * 1000).toISOString().slice(0, 10)} close=${closes[0]}`)
-  console.log(`last bar:  ${new Date(timestamps[timestamps.length - 1] * 1000).toISOString().slice(0, 10)} close=${closes[timestamps.length - 1]}`)
-  console.log('meta.symbol:', result?.meta?.symbol, 'exchangeName:', result?.meta?.exchangeName, 'instrumentType:', result?.meta?.instrumentType)
-
-  for (const dateStr of DATES_OF_INTEREST) {
-    const target = new Date(`${dateStr}T00:00:00Z`).getTime()
-    let bestIdx = -1
-    let bestDist = Infinity
-    for (let i = 0; i < timestamps.length; i++) {
-      if (!Number.isFinite(closes[i])) continue
-      const dist = Math.abs(timestamps[i] * 1000 - target)
-      if (dist < bestDist) { bestDist = dist; bestIdx = i }
-    }
-    if (bestIdx === -1) {
-      console.log(`  ${dateStr}: no valid close bar found at all`)
-    } else {
-      const days = Math.round(bestDist / 86400000)
-      console.log(`  ${dateStr}: closest bar ${new Date(timestamps[bestIdx] * 1000).toISOString().slice(0, 10)} close=${closes[bestIdx]} (${days}d away)`)
-    }
+  for (const q of json.quotes ?? []) {
+    console.log(`    ${q.symbol} | ${q.shortname ?? q.longname ?? ''} | exch=${q.exchange} | type=${q.quoteType}`)
   }
 }
 
+async function tryYahooQuoteV7(ticker) {
+  const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(ticker)}`
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
+  console.log(`  yahoo v7 quote HTTP ${res.status}`)
+  if (!res.ok) { console.log('   body:', (await res.text()).slice(0, 300)); return }
+  const json = await res.json()
+  console.log('   result:', JSON.stringify(json?.quoteResponse?.result?.[0] ?? json?.quoteResponse))
+}
+
+async function tryNasdaqApi(ticker) {
+  const url = `https://api.nasdaq.com/api/quote/${encodeURIComponent(ticker)}/info?assetclass=stocks`
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      Accept: 'application/json, text/plain, */*',
+      Origin: 'https://www.nasdaq.com',
+      Referer: 'https://www.nasdaq.com/',
+    },
+  })
+  console.log(`  nasdaq.com HTTP ${res.status}`)
+  if (!res.ok) { console.log('   body:', (await res.text()).slice(0, 300)); return }
+  const json = await res.json()
+  console.log('   data:', JSON.stringify(json?.data?.primaryData ?? json?.data).slice(0, 500))
+}
+
+async function tryStooq(ticker) {
+  const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(ticker.toLowerCase())}.us&i=d`
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
+  console.log(`  stooq.com HTTP ${res.status}`)
+  const text = await res.text()
+  console.log('   body (first 300 chars):', text.slice(0, 300))
+}
+
 for (const t of TICKERS) {
-  try {
-    await fetchWide(t)
-  } catch (err) {
-    console.log(`\n=== ${t} === FETCH FAILED: ${err.message}`)
+  console.log(`\n=== ${t} ===`)
+  for (const fn of [tryYahooSearch, tryYahooQuoteV7, tryNasdaqApi, tryStooq]) {
+    try {
+      await fn(t)
+    } catch (err) {
+      console.log(`  ${fn.name} FAILED: ${err.message}`)
+    }
+    await new Promise((r) => setTimeout(r, 300))
   }
-  await new Promise((r) => setTimeout(r, 300))
 }
