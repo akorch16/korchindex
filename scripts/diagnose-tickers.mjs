@@ -1,62 +1,44 @@
-// One-off diagnostic: BITF and FSST return 404/wrong-instrument from Yahoo's
-// v8 chart endpoint, but both are confirmed still trading. Try alternate
-// free, no-key sources to see what's actually available. Not part of the
-// regular pipeline -- read the logs from the "Diagnose tickers" workflow
-// run, then delete this + its workflow once resolved.
-const TICKERS = ['BITF', 'FSST']
+// One-off diagnostic: BITF (Bitfarms) is dual-listed NASDAQ + TSX; if the
+// NASDAQ leg got consolidated/delisted, the .TO listing may still resolve.
+// FSST's symbol got reassigned to an unrelated ETF on Yahoo -- check if a
+// suffixed variant (foreign listing) still has the original equity.
+const CANDIDATES = ['BITF.TO', 'BITF.V', 'BITF.NE', 'FSST.TO', 'FSST.V']
 
-async function tryYahooSearch(ticker) {
-  const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(ticker)}`
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
-  console.log(`  yahoo search HTTP ${res.status}`)
-  if (!res.ok) return
-  const json = await res.json()
-  for (const q of json.quotes ?? []) {
-    console.log(`    ${q.symbol} | ${q.shortname ?? q.longname ?? ''} | exch=${q.exchange} | type=${q.quoteType}`)
-  }
-}
+const toYahoo = (t) => t.trim().replace('.', '-').replace('--', '.')
+// Note: Yahoo suffix tickers use a literal dot for exchange (BITF.TO), only
+// share-class dots (BRK.B) become dashes. Don't mangle exchange suffixes.
+const yahooSymbol = (t) => (t.includes('.') && /^[A-Z]{1,5}\.[A-Z]{1,3}$/.test(t) && ['TO', 'V', 'NE', 'L'].includes(t.split('.')[1]) ? t : t.replace('.', '-'))
 
-async function tryYahooQuoteV7(ticker) {
-  const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(ticker)}`
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
-  console.log(`  yahoo v7 quote HTTP ${res.status}`)
-  if (!res.ok) { console.log('   body:', (await res.text()).slice(0, 300)); return }
-  const json = await res.json()
-  console.log('   result:', JSON.stringify(json?.quoteResponse?.result?.[0] ?? json?.quoteResponse))
-}
-
-async function tryNasdaqApi(ticker) {
-  const url = `https://api.nasdaq.com/api/quote/${encodeURIComponent(ticker)}/info?assetclass=stocks`
+async function fetchWide(ticker) {
+  const symbol = yahooSymbol(ticker)
+  const period1 = Math.floor(new Date('2025-09-01T00:00:00Z').getTime() / 1000)
+  const period2 = Math.floor(Date.now() / 1000)
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?period1=${period1}&period2=${period2}&interval=1d`
   const res = await fetch(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      Accept: 'application/json, text/plain, */*',
-      Origin: 'https://www.nasdaq.com',
-      Referer: 'https://www.nasdaq.com/',
-    },
+    headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) korchindex-price-updater' },
   })
-  console.log(`  nasdaq.com HTTP ${res.status}`)
-  if (!res.ok) { console.log('   body:', (await res.text()).slice(0, 300)); return }
-  const json = await res.json()
-  console.log('   data:', JSON.stringify(json?.data?.primaryData ?? json?.data).slice(0, 500))
-}
-
-async function tryStooq(ticker) {
-  const url = `https://stooq.com/q/d/l/?s=${encodeURIComponent(ticker.toLowerCase())}.us&i=d`
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
-  console.log(`  stooq.com HTTP ${res.status}`)
-  const text = await res.text()
-  console.log('   body (first 300 chars):', text.slice(0, 300))
-}
-
-for (const t of TICKERS) {
-  console.log(`\n=== ${t} ===`)
-  for (const fn of [tryYahooSearch, tryYahooQuoteV7, tryNasdaqApi, tryStooq]) {
-    try {
-      await fn(t)
-    } catch (err) {
-      console.log(`  ${fn.name} FAILED: ${err.message}`)
-    }
-    await new Promise((r) => setTimeout(r, 300))
+  console.log(`\n=== ${ticker} (as ${symbol}) === HTTP ${res.status}`)
+  if (!res.ok) {
+    console.log('body:', (await res.text()).slice(0, 300))
+    return
   }
+  const json = await res.json()
+  const result = json?.chart?.result?.[0]
+  const timestamps = result?.timestamp
+  const closes = result?.indicators?.quote?.[0]?.close
+  if (!timestamps?.length) {
+    console.log('no timestamps. meta:', JSON.stringify(result?.meta))
+    return
+  }
+  console.log(`bars: ${timestamps.length}, first: ${new Date(timestamps[0] * 1000).toISOString().slice(0, 10)}, last: ${new Date(timestamps[timestamps.length - 1] * 1000).toISOString().slice(0, 10)}, lastClose: ${closes[closes.length - 1]}`)
+  console.log('meta:', JSON.stringify({ symbol: result?.meta?.symbol, exchangeName: result?.meta?.exchangeName, instrumentType: result?.meta?.instrumentType, currency: result?.meta?.currency, longName: result?.meta?.longName }))
+}
+
+for (const t of CANDIDATES) {
+  try {
+    await fetchWide(t)
+  } catch (err) {
+    console.log(`\n=== ${t} === FAILED: ${err.message}`)
+  }
+  await new Promise((r) => setTimeout(r, 300))
 }
