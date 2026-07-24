@@ -1,0 +1,280 @@
+{
+ "S&P 500": {
+  "category": "benchmark",
+  "derived": false,
+  "members": [],
+  "note": "market benchmark series"
+ },
+ "Warren Buffett": {
+  "category": "benchmark",
+  "derived": false,
+  "members": [],
+  "note": "market benchmark series"
+ },
+ "KORCH": {
+  "category": "fund",
+  "derived": true,
+  "members": [
+   "Adam Fried",
+   "Adriana Withers",
+   "Alejandra Orozco",
+   "Alex Morris",
+   "Alexander Armstrong",
+   "Allie Mitchell",
+   "Ana Sarmiento",
+   "Anthony Fryar",
+   "Betsy Arch",
+   "Bibi Withers",
+   "Brenley",
+   "Brett Morris",
+   "Brittany Buckley",
+   "Christopher Morris",
+   "Cynthia Withers",
+   "Greg Arch",
+   "Hector Sarmiento",
+   "Isabelle Korchinski",
+   "Jack Korchinski",
+   "Jamie Armstrong",
+   "Jason Feder",
+   "Jim Korchinski",
+   "Joe Hobbs",
+   "John Withers",
+   "Julia Korchinski",
+   "Karin Korchinski",
+   "Kelly Grover",
+   "Kevin Perko",
+   "Leala Wong",
+   "Michelle Sullivan",
+   "Natalie Lee",
+   "Nicole Haylock",
+   "Olivia Hardley",
+   "Scott Buckley",
+   "Scott Korchinski",
+   "Scott Mitchell",
+   "Suzy Walker",
+   "Theodore Lee",
+   "Tim Morris",
+   "Todd Grover",
+   "Victoria Withers"
+  ],
+  "note": null
+ },
+ "Everyone": {
+  "category": "fund",
+  "derived": false,
+  "members": [],
+  "note": "equals the roster minus one CRWD holder; two people picked CRWD, exclusion is interchangeable"
+ },
+ "Scott": {
+  "category": "name",
+  "derived": true,
+  "members": [
+   "Scott Buckley",
+   "Scott Korchinski",
+   "Scott Mitchell"
+  ],
+  "note": null
+ },
+ "Alex": {
+  "category": "name",
+  "derived": true,
+  "members": [
+   "Alex Morris",
+   "Alexander Armstrong"
+  ],
+  "note": null
+ },
+ "Men": {
+  "category": "gender",
+  "derived": true,
+  "members": [
+   "Adam Fried",
+   "Alex Morris",
+   "Alexander Armstrong",
+   "Anthony Fryar",
+   "Brett Morris",
+   "Christopher Morris",
+   "Greg Arch",
+   "Hector Sarmiento",
+   "Jack Korchinski",
+   "Jason Feder",
+   "Jim Korchinski",
+   "Joe Hobbs",
+   "John Withers",
+   "Kevin Perko",
+   "Scott Buckley",
+   "Scott Korchinski",
+   "Scott Mitchell",
+   "Theodore Lee",
+   "Tim Morris",
+   "Todd Grover"
+  ],
+  "note": null
+ },
+ "Women": {
+  "category": "gender",
+  "derived": true,
+  "members": [
+   "Adriana Withers",
+   "Alejandra Orozco",
+   "Allie Mitchell",
+   "Ana Sarmiento",
+   "Betsy Arch",
+   "Bibi Withers",
+   "Brenley",
+   "Brittany Buckley",
+   "Cynthia Withers",
+   "Isabelle Korchinski",
+   "Jamie Armstrong",
+   "Julia Korchinski",
+   "Karin Korchinski",
+   "Kelly Grover",
+   "Leala Wong",
+   "Michelle Sullivan",
+   "Natalie Lee",
+   "Nicole Haylock",
+   "Olivia Hardley",
+   "Tim Morris",
+   "Victoria Withers"
+  ],
+  "note": null
+ },
+ "Wife": {
+  "category": "family",
+  "derived": true,
+  "members": [
+   "Alejandra Orozco"
+  ],
+  "note": null
+ },
+ "Mexicans": {
+  "category": "country",
+  "derived": true,
+  "members": [
+   "Alejandra Orozco"
+  ],
+  "note": null
+ },
+ "English": {
+  "category": "country",
+  "derived": false,
+  "members": [],
+  "note": "ambiguous: 2 class-count solutions"
+ },
+ "Canadians": {
+  "category": "country",
+  "derived": false,
+  "members": [],
+  "note": "search capped at k=10"
+ },
+ "Americans": {
+  "category": "country",
+  "derived": false,
+  "members": [],
+  "note": "pending partition resolution"
+ },
+ "Gen Z": {
+  "category": "generation",
+  "derived": false,
+  "members": [],
+  "note": "underdetermined: takes 1 of interchangeable {Isabelle Korchinski, Jack Korchinski}"
+ },
+ "Gen X": {
+  "category": "generation",
+  "derived": false,
+  "members": [],
+  "note": "ambiguous: 2 class-count solutions"
+ },
+ "Boomers": {
+  "category": "generation",
+  "derived": false,
+  "members": [],
+  "note": "underdetermined: takes 1 of interchangeable {Alex Morris, Joe Hobbs}"
+ },
+ "Millennials": {
+  "category": "generation",
+  "derived": false,
+  "members": [],
+  "note": "complement composition known by ticker multiset, exact members interchangeable"
+ },
+ "Uncles": {
+  "category": "family",
+  "derived": false,
+  "members": [],
+  "note": "underdetermined: takes 1 of interchangeable {Alex Morris, Joe Hobbs}"
+ },
+ "Aunts": {
+  "category": "family",
+  "derived": true,
+  "members": [
+   "Bibi Withers",
+   "Karin Korchinski",
+   "Suzy Walker",
+   "Victoria Withers"
+  ],
+  "note": null
+ },
+ "Cousins": {
+  "category": "family",
+  "derived": true,
+  "members": [
+   "Adriana Withers",
+   "Brett Morris",
+   "Christopher Morris",
+   "Isabelle Korchinski",
+   "Jack Korchinski"
+  ],
+  "note": null
+ },
+ "Santa Barbara High Grad": {
+  "category": "school",
+  "derived": true,
+  "members": [
+   "Adam Fried",
+   "Alexander Armstrong",
+   "Greg Arch",
+   "Scott Korchinski"
+  ],
+  "note": null
+ },
+ "Wife of SBHS": {
+  "category": "school",
+  "derived": true,
+  "members": [
+   "Alejandra Orozco",
+   "Betsy Arch",
+   "Jamie Armstrong",
+   "Michelle Sullivan",
+   "Olivia Hardley"
+  ],
+  "note": null
+ },
+ "UCLA Grad": {
+  "category": "school",
+  "derived": true,
+  "members": [
+   "Allie Mitchell",
+   "Anthony Fryar",
+   "Jason Feder",
+   "Kelly Grover",
+   "Scott Buckley",
+   "Scott Korchinski",
+   "Theodore Lee",
+   "Todd Grover"
+  ],
+  "note": null
+ },
+ "Wife of UCLA Grad": {
+  "category": "school",
+  "derived": true,
+  "members": [
+   "Alejandra Orozco",
+   "Allie Mitchell",
+   "Brittany Buckley",
+   "Kelly Grover",
+   "Natalie Lee",
+   "Olivia Hardley"
+  ],
+  "note": null
+ }
+}
