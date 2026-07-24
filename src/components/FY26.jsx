@@ -76,13 +76,6 @@ export default function FY26() {
     <>
       <section className="section">
         <h2 className="section-title">FY26 — the picks are in</h2>
-        <p className="section-sub">
-          KORCH Year 3 opened October 28, 2025. Forty-two picks, tracked against each ticker’s
-          actual opening price at the season start — prices refresh automatically every weekday via
-          the same scheduled updater as everything else here.
-          {pending.length > 0 &&
-            ` Still pending an opening price: ${pending.map((p) => p.ticker).join(', ')}.`}
-        </p>
         <div className="kpi-row">
           <div className="tile hero">
             <div className="label">KORCH · FY26</div>
