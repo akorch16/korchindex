@@ -138,12 +138,15 @@
   {
    "name": "Todd Grover",
    "ticker": "BYND",
-   "openingPrice": 1.81,
+   "openingPrice": 54.3,
    "openingDate": "2025-10-27",
    "checkpointPrices": [
-    1.81,
-    0.85,
-    0.91
+    54.3,
+    25.5,
+    27.3
+   ],
+   "splitAdjusted": [
+    "1:30 reverse split, 2026-08-14"
    ]
   },
   {
