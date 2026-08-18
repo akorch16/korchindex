@@ -18,7 +18,7 @@ export default function App() {
           KORCH<span className="tick">↗</span>
         </h1>
         <p className="tagline">
-          “‘Invest with confidence.’ —T. Rowe Price” —Alex Korchinski
+          Can stock tips from 35 friends and family members beat the market? Only one way to find out!
         </p>
       </header>
 
