@@ -69,12 +69,12 @@ export default function ArchiveY1() {
             <div className="value">{fmtPct(brk.return)}</div>
             <div className="note">BRK.B, same window</div>
           </div>
-          <div className="tile">
+          <div className="tile callout">
             <div className="label">Best pick</div>
             <div className="value pos">{fmtPct(best.return, 0)}</div>
             <div className="note">{best.ticker}</div>
           </div>
-          <div className="tile">
+          <div className="tile callout">
             <div className="label">Biggest loser</div>
             <div className="value neg">{fmtPct(worst.return, 0)}</div>
             <div className="note">{worst.ticker}</div>

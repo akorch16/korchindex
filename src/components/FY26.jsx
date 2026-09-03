@@ -105,32 +105,29 @@ export default function FY26() {
             <div className={`value ${korch != null && korch >= 0 ? 'pos' : korch != null ? 'neg' : ''}`}>
               {korch != null ? fmtPct(korch) : '—'}
             </div>
-            <div className="note">avg. of {tracked.length} picks, since the FY26 open</div>
           </div>
           <div className="tile">
             <div className="label">S&P 500</div>
             <div className={`value ${sp?.since != null && sp.since >= 0 ? 'pos' : sp?.since != null ? 'neg' : ''}`}>
               {sp?.since != null ? fmtPct(sp.since) : '—'}
             </div>
-            <div className="note">VOO, same window</div>
           </div>
           <div className="tile">
             <div className="label">Warren Buffett</div>
             <div className={`value ${brk?.since != null && brk.since >= 0 ? 'pos' : brk?.since != null ? 'neg' : ''}`}>
               {brk?.since != null ? fmtPct(brk.since) : '—'}
             </div>
-            <div className="note">BRK.B, same window</div>
           </div>
-          <div className="tile">
+          <div className="tile callout">
             <div className="label">Best pick</div>
-            <div className={`value ${best && best.since >= 0 ? 'pos' : best ? 'neg' : ''}`}>
+            <div className="value pos">
               {best ? fmtPct(best.since) : '—'}
             </div>
             <div className="note">{best ? best.ticker : 'check back tomorrow'}</div>
           </div>
-          <div className="tile">
+          <div className="tile callout">
             <div className="label">Biggest loser</div>
-            <div className={`value ${worst && worst.since >= 0 ? 'pos' : worst ? 'neg' : ''}`}>
+            <div className="value neg">
               {worst ? fmtPct(worst.since) : '—'}
             </div>
             <div className="note">{worst ? worst.ticker : 'check back tomorrow'}</div>

@@ -8,9 +8,9 @@ const START_VALUE = 41000
 
 const Q_LABELS = ['Oct ’24', 'Jan ’25', 'Apr ’25', 'Jul ’25', 'Oct ’25']
 
-function Tile({ label, value, note, cls, hero }) {
+function Tile({ label, value, note, cls, hero, callout }) {
   return (
-    <div className={`tile${hero ? ' hero' : ''}`}>
+    <div className={`tile${hero ? ' hero' : ''}${callout ? ' callout' : ''}`}>
       <div className="label">{label}</div>
       <div className={`value ${cls || ''}`}>{value}</div>
       {note && <div className="note">{note}</div>}
@@ -252,8 +252,8 @@ export default function Dashboard() {
           <Tile hero label="KORCH · FY25" value={fmtPct(korch)} cls="pos" note={`$${START_VALUE.toLocaleString()} → $${Math.round(endValue).toLocaleString()}`} />
           <Tile label="S&P 500" value={fmtPct(sp)} note="VOO, same window" />
           <Tile label="Warren Buffett" value={fmtPct(brk)} note="BRK.B, same window" />
-          <Tile label="Best pick" value={fmtPct(best.return, 0)} cls="pos" note={best.ticker} />
-          <Tile label="Biggest loser" value={fmtPct(worst.return, 0)} cls="neg" note={worst.ticker} />
+          <Tile label="Best pick" value={fmtPct(best.return, 0)} cls="pos" callout note={best.ticker} />
+          <Tile label="Biggest loser" value={fmtPct(worst.return, 0)} cls="neg" callout note={worst.ticker} />
         </div>
       </section>
 
