@@ -6,7 +6,23 @@ import hold from '../data/hold.json'
 
 const START_VALUE = 41000
 
-const Q_LABELS = ['Oct ’24', 'Jan ’25', 'Apr ’25', 'Jul ’25', 'Oct ’25']
+const monthLabels = (dates) =>
+  (dates ?? []).map((d) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }))
+
+// Cumulative change at each monthly checkpoint, relative to the opening price.
+function monthlySeries(prices) {
+  const open = prices?.[0]
+  return (prices ?? []).map((v) => (open != null && v != null ? (v - open) / open : null))
+}
+
+// Average several people's monthly series index-by-index, ignoring gaps.
+function averageMonthlySeries(people) {
+  const len = Math.max(0, ...people.map((p) => p.monthlyPrices?.length ?? 0))
+  return Array.from({ length: len }, (_, i) => {
+    const vals = people.map((p) => monthlySeries(p.monthlyPrices)[i]).filter((v) => v != null)
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
+  })
+}
 
 function Tile({ label, value, note, cls, hero, callout }) {
   return (
@@ -262,11 +278,11 @@ export default function Dashboard() {
           title="The race: KORCH vs. the professionals"
           sub="Cumulative return, Oct 10 2024 → Oct 10 2025. Read ’em and weep, Warren B."
           series={[
-            { name: 'KORCH', color: 'var(--s1)', values: groups['KORCH'], emphasis: true },
-            { name: 'S&P 500', color: 'var(--muted)', values: groups['S&P 500'] },
-            { name: 'W. Buffett', color: 'var(--baseline)', values: groups['Warren Buffett'] },
+            { name: 'KORCH', color: 'var(--s1)', values: averageMonthlySeries(year2.people), emphasis: true },
+            { name: 'S&P 500', color: 'var(--muted)', values: monthlySeries(year2.benchmarks.find((b) => b.ticker === 'VOO')?.monthlyPrices) },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: monthlySeries(year2.benchmarks.find((b) => b.ticker === 'BRK.B')?.monthlyPrices) },
           ]}
-          xLabels={Q_LABELS}
+          xLabels={monthLabels(year2.monthlyDates)}
         />
       </section>
 
