@@ -20,6 +20,10 @@ const tickers = [
     ...year3.people.map((p) => p.ticker.trim()),
     'VOO',
     'BRK.B',
+    // Successor tickers for picks caught in corporate actions mid-season
+    // (REVG -> TEX merger, BITF -> KEEL rebrand) -- see year3.json.
+    'TEX',
+    'KEEL',
   ]),
 ]
 

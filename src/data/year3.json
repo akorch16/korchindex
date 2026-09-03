@@ -56,7 +56,15 @@
     null,
     null,
     null
-   ]
+   ],
+   "corporateAction": {
+    "type": "merger",
+    "date": "2026-02-02",
+    "successorTicker": "TEX",
+    "cashPerShare": 8.71,
+    "shareRatio": 0.9809,
+    "note": "REV Group merged into Terex Corp (TEX): $8.71 cash + 0.9809 TEX shares per REVG share. Final independent trading price $63.90 (Jan 30, 2026)."
+   }
   },
   {
    "name": "Alex Armstrong",
@@ -213,7 +221,13 @@
     null,
     null,
     null
-   ]
+   ],
+   "corporateAction": {
+    "type": "liquidation",
+    "date": "2025-11-13",
+    "payout": 30.8963,
+    "note": "Fidelity liquidated the fund. Final trading price $30.88 (Nov 13, 2025); cash payout $30.8963/share (Nov 25, 2025)."
+   }
   },
   {
    "name": "Isabelle Korchinski",
@@ -256,8 +270,15 @@
    "checkpointPrices": [
     null,
     null,
-    null
-   ]
+    2.89
+   ],
+   "corporateAction": {
+    "type": "rebrand",
+    "date": "2026-04-06",
+    "successorTicker": "KEEL",
+    "shareRatio": 1,
+    "note": "Bitfarms completed a US redomiciliation and rebranded 1:1 to Keel Infrastructure Corp (KEEL)."
+   }
   },
   {
    "name": "Kevin Perko",

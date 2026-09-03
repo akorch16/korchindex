@@ -6,6 +6,27 @@ function sinceTracking(openingPrice, live) {
   return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
 }
 
+// A pick caught in a corporate action mid-season no longer has a live quote
+// under its original ticker -- derive an equivalent per-original-share value
+// instead: a liquidation's frozen cash payout, or a merger/rebrand's cash-plus-
+// successor-shares conversion (ratio 1 with no cash covers a plain rebrand).
+function corporateActionValue(ca, quotes) {
+  if (!ca) return null
+  if (ca.payout != null) return ca.payout
+  if (ca.successorTicker) {
+    const successorPrice = quotes?.[ca.successorTicker]?.price
+    if (successorPrice == null) return null
+    return (ca.cashPerShare ?? 0) + (ca.shareRatio ?? 1) * successorPrice
+  }
+  return null
+}
+
+function displayTicker(p) {
+  const ca = p.corporateAction
+  if (!ca) return p.ticker
+  return ca.successorTicker ? `${p.ticker} (${ca.successorTicker})` : `${p.ticker} (liquidated)`
+}
+
 // [0, chg-at-Q1, chg-at-Q2, ..., chg-at-now] for one entity, from its
 // backfilled checkpointPrices plus the live "now" price as the open quarter.
 function series(entity, live) {
@@ -39,8 +60,9 @@ export default function FY26() {
   const rows = useMemo(() => {
     return year3.people
       .map((p) => {
+        const caValue = corporateActionValue(p.corporateAction, data?.quotes)
         const q = data?.quotes[p.ticker]
-        const live = q?.price ?? p.openingPrice
+        const live = caValue ?? q?.price ?? p.openingPrice
         return { ...p, live, since: sinceTracking(p.openingPrice, live) }
       })
       .sort((a, b) => (b.since ?? -Infinity) - (a.since ?? -Infinity))
@@ -55,7 +77,8 @@ export default function FY26() {
   }, [data])
 
   const tracked = rows.filter((r) => r.since != null)
-  const pending = rows.filter((r) => r.openingPrice == null)
+  const pending = rows.filter((r) => r.openingPrice == null && !r.corporateAction)
+  const corporateActions = rows.filter((r) => r.corporateAction)
   const korch = tracked.length ? tracked.reduce((sum, r) => sum + r.since, 0) / tracked.length : null
   const sp = benchmarks.find((b) => b.ticker === 'VOO')
   const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
@@ -148,7 +171,7 @@ export default function FY26() {
               <tbody>
                 {rows.map((r) => (
                   <tr key={r.name}>
-                    <td><span className="ticker">{r.ticker}</span></td>
+                    <td><span className="ticker">{displayTicker(r)}</span></td>
                     <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
                       {r.since == null ? 'pending' : fmtPct(r.since)}
                     </td>
@@ -172,6 +195,16 @@ export default function FY26() {
           {pending.length > 0 &&
             ` ${pending.map((p) => p.ticker).join(', ')} ${pending.length === 1 ? 'has' : 'have'} no reliable opening price yet (thin trading or a delisting around that date) and show as pending until that resolves.`}
         </p>
+        {corporateActions.length > 0 && (
+          <p className="footnote">
+            Three picks were caught up in corporate actions mid-season: REVG merged into Terex
+            (TEX) on Feb 2, 2026 ($8.71 cash + 0.9809 TEX shares per share); FSST was liquidated
+            by Fidelity on Nov 13, 2025 (cash payout $30.8963/share); BITF completed a US
+            redomiciliation and rebranded 1:1 to Keel Infrastructure Corp (KEEL) on Apr 6, 2026.
+            Each “Latest” value above reflects the real successor price or payout — “Since FY26
+            open” stays pending until we confirm their exact October 2025 opening prices.
+          </p>
+        )}
       </section>
     </>
   )
