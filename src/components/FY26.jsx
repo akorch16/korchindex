@@ -261,8 +261,8 @@ export default function FY26() {
             (TEX) on Feb 2, 2026 ($8.71 cash + 0.9809 TEX shares per share); FSST was liquidated
             by Fidelity on Nov 13, 2025 (cash payout $30.8963/share); BITF completed a US
             redomiciliation and rebranded 1:1 to Keel Infrastructure Corp (KEEL) on Apr 6, 2026.
-            Each “Latest” value above reflects the real successor price or payout — “Since FY26
-            open” stays pending until we confirm their exact October 2025 opening prices.
+            Each “Latest” value above reflects the real successor price or payout, tracked against
+            their actual October 28, 2025 opening prices like every other pick.
           </p>
         )}
       </section>
