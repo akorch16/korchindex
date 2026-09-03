@@ -81,7 +81,7 @@ function averageOf(seriesList) {
   })
 }
 
-function Showdowns({ rows, raceLabels }) {
+function Showdowns({ rows, showdownLabels }) {
   return (
     <div className="showdown-grid">
       {SHOWDOWNS.map((s) => {
@@ -101,7 +101,7 @@ function Showdowns({ rows, raceLabels }) {
               <p className="chart-sub">{s.sub}</p>
             </div>
             <Legend series={chartSeries} />
-            <LineChart series={chartSeries} xLabels={raceLabels} height={220} />
+            <LineChart series={chartSeries} xLabels={showdownLabels} height={220} />
           </div>
         )
       })}
@@ -152,6 +152,18 @@ export default function FY26() {
     const n = (year3.checkpointDates?.length ?? 1) + 1 // +1 for the live "now" point
     const labels = (year3.checkpointDates ?? [year3.seasonOpened]).map((d) =>
       new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+    )
+    labels.length = n - 1
+    labels.push('Now')
+    return labels
+  }, [])
+
+  // Bare month name, no year -- the showdown cards are too narrow for 11
+  // "Oct '25"-style labels to fit without breaking.
+  const showdownLabels = useMemo(() => {
+    const n = (year3.checkpointDates?.length ?? 1) + 1
+    const labels = (year3.checkpointDates ?? [year3.seasonOpened]).map((d) =>
+      new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short' })
     )
     labels.length = n - 1
     labels.push('Now')
@@ -274,7 +286,7 @@ export default function FY26() {
           prices. Group lines are the average cumulative return of each cohort; the dashed line is
           everyone.
         </p>
-        <Showdowns rows={rows} raceLabels={raceLabels} />
+        <Showdowns rows={rows} showdownLabels={showdownLabels} />
       </section>
     </>
   )
