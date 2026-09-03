@@ -61,9 +61,50 @@
  },
  "Everyone": {
   "category": "fund",
-  "derived": false,
-  "members": [],
-  "note": "equals the roster minus one CRWD holder; two people picked CRWD, exclusion is interchangeable"
+  "derived": true,
+  "members": [
+   "Adam Fried",
+   "Adriana Withers",
+   "Alex Morris",
+   "Alexander Armstrong",
+   "Allie Mitchell",
+   "Ana Sarmiento",
+   "Anthony Fryar",
+   "Betsy Arch",
+   "Bibi Withers",
+   "Brenley",
+   "Brett Morris",
+   "Brittany Buckley",
+   "Christopher Morris",
+   "Cynthia Withers",
+   "Greg Arch",
+   "Hector Sarmiento",
+   "Isabelle Korchinski",
+   "Jack Korchinski",
+   "Jamie Armstrong",
+   "Jason Feder",
+   "Jim Korchinski",
+   "Joe Hobbs",
+   "John Withers",
+   "Julia Korchinski",
+   "Karin Korchinski",
+   "Kelly Grover",
+   "Kevin Perko",
+   "Leala Wong",
+   "Michelle Sullivan",
+   "Natalie Lee",
+   "Nicole Haylock",
+   "Olivia Hardley",
+   "Scott Buckley",
+   "Scott Korchinski",
+   "Scott Mitchell",
+   "Suzy Walker",
+   "Theodore Lee",
+   "Tim Morris",
+   "Todd Grover",
+   "Victoria Withers"
+  ],
+  "note": "roster minus Alejandra Orozco (CRWD), per spreadsheet formula D1:D8,D10:D42 (row 9 excluded)"
  },
  "Scott": {
   "category": "name",
@@ -134,10 +175,10 @@
    "Natalie Lee",
    "Nicole Haylock",
    "Olivia Hardley",
-   "Tim Morris",
+   "Suzy Walker",
    "Victoria Withers"
   ],
-  "note": null
+  "note": "spreadsheet formula bug: source Women formula referenced Tim Morris (also in Men) and omitted Suzy Walker entirely; resolved by name convention"
  },
  "Wife": {
   "category": "family",
@@ -157,51 +198,144 @@
  },
  "English": {
   "category": "country",
-  "derived": false,
-  "members": [],
-  "note": "ambiguous: 2 class-count solutions"
+  "derived": true,
+  "members": [
+   "Joe Hobbs"
+  ],
+  "note": null
  },
  "Canadians": {
   "category": "country",
-  "derived": false,
-  "members": [],
-  "note": "search capped at k=10"
+  "derived": true,
+  "members": [
+   "Adriana Withers",
+   "Alex Morris",
+   "Bibi Withers",
+   "Brenley",
+   "Brett Morris",
+   "Christopher Morris",
+   "Cynthia Withers",
+   "Isabelle Korchinski",
+   "Jack Korchinski",
+   "Jim Korchinski",
+   "John Withers",
+   "Julia Korchinski",
+   "Karin Korchinski",
+   "Leala Wong",
+   "Nicole Haylock",
+   "Olivia Hardley",
+   "Scott Korchinski",
+   "Suzy Walker",
+   "Tim Morris",
+   "Victoria Withers"
+  ],
+  "note": null
  },
  "Americans": {
   "category": "country",
-  "derived": false,
-  "members": [],
-  "note": "pending partition resolution"
+  "derived": true,
+  "members": [
+   "Adam Fried",
+   "Alexander Armstrong",
+   "Allie Mitchell",
+   "Ana Sarmiento",
+   "Anthony Fryar",
+   "Betsy Arch",
+   "Brittany Buckley",
+   "Greg Arch",
+   "Hector Sarmiento",
+   "Jamie Armstrong",
+   "Jason Feder",
+   "Kelly Grover",
+   "Kevin Perko",
+   "Michelle Sullivan",
+   "Natalie Lee",
+   "Olivia Hardley",
+   "Scott Buckley",
+   "Scott Mitchell",
+   "Theodore Lee",
+   "Todd Grover"
+  ],
+  "note": null
  },
  "Gen Z": {
   "category": "generation",
-  "derived": false,
-  "members": [],
-  "note": "underdetermined: takes 1 of interchangeable {Isabelle Korchinski, Jack Korchinski}"
- },
- "Gen X": {
-  "category": "generation",
-  "derived": false,
-  "members": [],
-  "note": "ambiguous: 2 class-count solutions"
- },
- "Boomers": {
-  "category": "generation",
-  "derived": false,
-  "members": [],
-  "note": "underdetermined: takes 1 of interchangeable {Alex Morris, Joe Hobbs}"
+  "derived": true,
+  "members": [
+   "Isabelle Korchinski",
+   "Olivia Hardley"
+  ],
+  "note": null
  },
  "Millennials": {
   "category": "generation",
-  "derived": false,
-  "members": [],
-  "note": "complement composition known by ticker multiset, exact members interchangeable"
+  "derived": true,
+  "members": [
+   "Adam Fried",
+   "Alejandra Orozco",
+   "Alexander Armstrong",
+   "Allie Mitchell",
+   "Ana Sarmiento",
+   "Anthony Fryar",
+   "Betsy Arch",
+   "Brett Morris",
+   "Brittany Buckley",
+   "Christopher Morris",
+   "Greg Arch",
+   "Hector Sarmiento",
+   "Jack Korchinski",
+   "Jamie Armstrong",
+   "Jason Feder",
+   "Joe Hobbs",
+   "Julia Korchinski",
+   "Kelly Grover",
+   "Kevin Perko",
+   "Leala Wong",
+   "Michelle Sullivan",
+   "Natalie Lee",
+   "Nicole Haylock",
+   "Scott Buckley",
+   "Scott Korchinski",
+   "Scott Mitchell",
+   "Theodore Lee",
+   "Tim Morris",
+   "Todd Grover"
+  ],
+  "note": null
+ },
+ "Gen X": {
+  "category": "generation",
+  "derived": true,
+  "members": [
+   "Adriana Withers",
+   "Brenley"
+  ],
+  "note": null
+ },
+ "Boomers": {
+  "category": "generation",
+  "derived": true,
+  "members": [
+   "Alex Morris",
+   "Bibi Withers",
+   "Cynthia Withers",
+   "Jim Korchinski",
+   "John Withers",
+   "Karin Korchinski",
+   "Suzy Walker",
+   "Victoria Withers"
+  ],
+  "note": null
  },
  "Uncles": {
   "category": "family",
-  "derived": false,
-  "members": [],
-  "note": "underdetermined: takes 1 of interchangeable {Alex Morris, Joe Hobbs}"
+  "derived": true,
+  "members": [
+   "Alex Morris",
+   "Jim Korchinski",
+   "John Withers"
+  ],
+  "note": null
  },
  "Aunts": {
   "category": "family",
