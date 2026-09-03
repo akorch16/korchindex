@@ -24,6 +24,20 @@ const year3 = JSON.parse(await readFile(YEAR3_PATH, 'utf8'))
 const toYahoo = (t) => t.trim().replace('.', '-')
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
+// FY26 is ongoing, so a mid-season split (unlike FY24/FY25, whose checkpoints
+// are all fetched fresh, after the fact, on one consistent post-split basis)
+// leaves some checkpoint dates on the old share basis and some on the new one
+// within the SAME array -- a fake multi-hundred-percent jump right where the
+// split falls. Rescale every checkpoint before the split date to the current
+// (post-split) basis so the whole array stays on one consistent basis, same
+// as openingPrice already is. Add an entry here the day a new split is found.
+const KNOWN_SPLITS = { BYND: { ratio: 30, before: '2026-08-14' } }
+function applySplitAdjustment(ticker, dates, prices) {
+  const split = KNOWN_SPLITS[ticker]
+  if (!split) return prices
+  return prices.map((v, i) => (v != null && dates[i] < split.before ? Math.round(v * split.ratio * 10000) / 10000 : v))
+}
+
 // Monthly dates from startStr, stepping by 1 calendar month, stopping once
 // a step reaches/exceeds boundStr. includeBound appends boundStr itself as
 // the final point (for a closed season's real end date); omit it for an
@@ -117,9 +131,12 @@ year3.checkpointDates = y3Dates
 allFailed.push(
   ...(await backfillSeason('FY26', y3Dates, [...year3.people, ...year3.benchmarks]).then((failed) => {
     // Reuse the existing checkpointPrices field name (only the race chart
-    // reads it) -- backfillSeason wrote monthlyPrices, copy it over.
+    // reads it) -- backfillSeason wrote monthlyPrices, copy it over. Only
+    // FY26 is ongoing, so only it needs mid-season split rescaling (FY24/
+    // FY25's checkpoints are all fetched fresh, after the fact, on one
+    // consistent basis already).
     for (const e of [...year3.people, ...year3.benchmarks]) {
-      e.checkpointPrices = e.monthlyPrices
+      e.checkpointPrices = applySplitAdjustment(e.ticker, y3Dates, e.monthlyPrices)
       delete e.monthlyPrices
     }
     return failed
