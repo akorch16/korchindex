@@ -1,53 +1,50 @@
-// One-off diagnostic: (1) check BYND for a reverse-split event that would
-// explain its live price jumping from ~$0.91 to ~$11.63 with no real gain;
-// (2) try bankruptcy/OTC-suffix ticker variants for REVG/FSST/BITF (a "Q"
-// suffix is standard for companies in Chapter 11). Not part of the regular
-// pipeline -- read logs from the "Diagnose tickers" run, then delete this +
-// its workflow once resolved.
-const toYahoo = (t) => t.trim().replace('.', '-')
+// One-off diagnostic: identify REVG, FSST, BITF via authoritative,
+// keyless/anonymous sources -- SEC's official ticker registry (confirms
+// whether a symbol is currently SEC-registered, with company name + CIK)
+// and OpenFIGI's anonymous mapping API (Bloomberg instrument identifiers,
+// works without a key at low volume). Not part of the regular pipeline --
+// read logs from the "Diagnose tickers" run, then delete this + its
+// workflow once resolved.
+const TICKERS = ['REVG', 'FSST', 'BITF']
 
-async function checkSplits(ticker) {
-  const period1 = Math.floor(new Date('2025-09-01T00:00:00Z').getTime() / 1000)
-  const period2 = Math.floor(Date.now() / 1000)
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(toYahoo(ticker))}?period1=${period1}&period2=${period2}&interval=1d&events=split,div`
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
-  console.log(`\n=== ${ticker} splits/events === HTTP ${res.status}`)
+async function checkSecRegistry(tickers) {
+  console.log('\n=== SEC company_tickers.json ===')
+  const res = await fetch('https://www.sec.gov/files/company_tickers.json', {
+    headers: { 'User-Agent': 'korchindex research contact@korch.co' },
+  })
+  console.log(`HTTP ${res.status}`)
   if (!res.ok) { console.log('body:', (await res.text()).slice(0, 300)); return }
   const json = await res.json()
-  const result = json?.chart?.result?.[0]
-  const splits = result?.events?.splits
-  const timestamps = result?.timestamp
-  const closes = result?.indicators?.quote?.[0]?.close
-  const adjcloses = result?.indicators?.adjclose?.[0]?.adjclose
-  console.log('splits found:', splits ? JSON.stringify(Object.values(splits)) : 'none')
-  if (timestamps?.length) {
-    // print last 10 bars raw close vs adjclose to spot a discontinuity
-    const n = timestamps.length
-    for (let i = Math.max(0, n - 12); i < n; i++) {
-      const d = new Date(timestamps[i] * 1000).toISOString().slice(0, 10)
-      console.log(`  ${d}: close=${closes[i]}  adjclose=${adjcloses?.[i]}`)
-    }
+  const entries = Object.values(json)
+  console.log(`total entries: ${entries.length}`)
+  for (const t of tickers) {
+    const match = entries.find((e) => e.ticker === t)
+    console.log(`  ${t}: ${match ? `CIK=${match.cik_str}, name="${match.title}"` : 'NOT FOUND in current SEC registry'}`)
   }
 }
 
-async function tryVariants(ticker) {
-  console.log(`\n=== ${ticker} variants ===`)
-  for (const suffix of ['Q', 'F', 'D', 'W']) {
-    const symbol = `${ticker}${suffix}`
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1mo&interval=1d`
-    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
-    if (res.ok) {
-      const json = await res.json()
-      const meta = json?.chart?.result?.[0]?.meta
-      console.log(`  ${symbol}: HTTP 200, meta=${JSON.stringify({ longName: meta?.longName, exchangeName: meta?.exchangeName, regularMarketPrice: meta?.regularMarketPrice, instrumentType: meta?.instrumentType })}`)
+async function checkOpenFigi(tickers) {
+  console.log('\n=== OpenFIGI mapping (anonymous) ===')
+  const jobs = tickers.map((t) => ({ idType: 'TICKER', idValue: t }))
+  const res = await fetch('https://api.openfigi.com/v3/mapping', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(jobs),
+  })
+  console.log(`HTTP ${res.status}`)
+  const text = await res.text()
+  if (!res.ok) { console.log('body:', text.slice(0, 500)); return }
+  const json = JSON.parse(text)
+  json.forEach((result, i) => {
+    if (result.error) {
+      console.log(`  ${tickers[i]}: error="${result.error}"`)
     } else {
-      console.log(`  ${symbol}: HTTP ${res.status}`)
+      for (const d of (result.data ?? []).slice(0, 5)) {
+        console.log(`  ${tickers[i]}: figi=${d.figi} | name="${d.name}" | exch=${d.exchCode} | ticker=${d.ticker} | securityType=${d.securityType} | marketSector=${d.marketSector}`)
+      }
     }
-    await new Promise((r) => setTimeout(r, 300))
-  }
+  })
 }
 
-await checkSplits('BYND')
-for (const t of ['REVG', 'FSST', 'BITF']) {
-  await tryVariants(t)
-}
+await checkSecRegistry(TICKERS)
+await checkOpenFigi(TICKERS)
