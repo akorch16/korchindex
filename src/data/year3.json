@@ -82,8 +82,8 @@
   {
    "name": "Scott Mitchell",
    "ticker": "REVG",
-   "openingPrice": null,
-   "openingDate": null,
+   "openingPrice": 61.29,
+   "openingDate": "2025-10-28",
    "checkpointPrices": [
     null,
     null,
@@ -359,8 +359,8 @@
   {
    "name": "Greg Arch",
    "ticker": "FSST",
-   "openingPrice": null,
-   "openingDate": null,
+   "openingPrice": 31.08,
+   "openingDate": "2025-10-28",
    "checkpointPrices": [
     null,
     null,
@@ -441,8 +441,8 @@
   {
    "name": "Adriana Withers",
    "ticker": "BITF",
-   "openingPrice": null,
-   "openingDate": null,
+   "openingPrice": 1.94,
+   "openingDate": "2025-10-28",
    "checkpointPrices": [
     null,
     null,
