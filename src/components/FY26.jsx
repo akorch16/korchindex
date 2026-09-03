@@ -198,14 +198,14 @@ export default function FY26() {
             <div className="value pos">
               {best ? fmtPct(best.since) : '—'}
             </div>
-            <div className="note">{best ? best.ticker : 'check back tomorrow'}</div>
+            <div className="note big pos">{best ? best.ticker : 'check back tomorrow'}</div>
           </div>
           <div className="tile callout">
             <div className="label">Biggest loser</div>
             <div className="value neg">
               {worst ? fmtPct(worst.since) : '—'}
             </div>
-            <div className="note">{worst ? worst.ticker : 'check back tomorrow'}</div>
+            <div className="note big neg">{worst ? worst.ticker : 'check back tomorrow'}</div>
           </div>
         </div>
       </section>

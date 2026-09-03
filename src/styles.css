@@ -129,7 +129,7 @@ body {
 .tile .label { color: var(--ink-2); font-size: 13px; font-weight: 600; }
 .tile .value { font-size: 34px; font-weight: 750; margin-top: 2px; }
 .tile .note { color: var(--muted); font-size: 12px; margin-top: 4px; }
-.tile.hero .value, .tile.callout .value { font-size: 44px; }
+.tile .note.big { font-size: 16px; font-weight: 700; margin-top: 6px; }
 .pos { color: var(--up); }
 .neg { color: var(--loss); }
 
