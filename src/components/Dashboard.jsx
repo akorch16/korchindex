@@ -194,6 +194,11 @@ const SHOWDOWNS = [
     sub: 'Marrying a Mexican: a smart life investment and a smart financial investment.',
     keys: ['Americans', 'Canadians', 'Mexicans', 'English'],
   },
+  {
+    title: 'The Wife vs. everyone',
+    sub: 'One pick, one line, one very confident showing against the entire field.',
+    keys: ['Wife'],
+  },
 ]
 
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
