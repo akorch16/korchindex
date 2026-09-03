@@ -51,6 +51,11 @@ function toRow(p) {
 const monthLabels = (dates) =>
   (dates ?? []).map((d) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }))
 
+// Bare month name, no year -- the showdown cards are too narrow for 11
+// "Oct '25"-style labels to fit without breaking.
+const monthOnlyLabels = (dates) =>
+  (dates ?? []).map((d) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short' }))
+
 // Cumulative change at each monthly checkpoint, relative to the opening price.
 function monthlySeries(prices) {
   const open = prices?.[0]
@@ -90,7 +95,7 @@ function Showdowns() {
               <p className="chart-sub">{s.sub}</p>
             </div>
             <Legend series={series} />
-            <LineChart series={series} xLabels={monthLabels(year1.monthlyDates)} height={220} />
+            <LineChart series={series} xLabels={monthOnlyLabels(year1.monthlyDates)} height={220} />
           </div>
         )
       })}
