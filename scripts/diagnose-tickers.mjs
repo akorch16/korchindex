@@ -29,3 +29,13 @@ async function fetchWindow(ticker, label, period1Str, period2Str) {
 await fetchWindow('FSST', 'season-open window', '2025-10-20', '2025-11-05')
 // Confirm the final trading window / liquidation close.
 await fetchWindow('FSST', 'final trading window', '2025-11-05', '2025-11-20')
+
+// BITF (Bitfarms) completed a US redomiciliation and 1:1 rebrand to KEEL
+// effective 2026-04-06, per external research + confirmed via matching SEC
+// CIK 1812477. Pre-rebrand checkpoints should use BITF; post-rebrand uses
+// KEEL. Yahoo's wide-range query 404'd for BITF entirely (like FSST did) --
+// try tight windows around each pre-rebrand date instead.
+await fetchWindow('BITF', 'season-open window', '2025-10-20', '2025-11-05')
+await fetchWindow('BITF', 'Jan checkpoint window', '2026-01-20', '2026-02-05')
+await fetchWindow('BITF', 'around rebrand date', '2026-03-28', '2026-04-10')
+await fetchWindow('KEEL', 'Apr checkpoint window', '2026-04-20', '2026-05-05')
