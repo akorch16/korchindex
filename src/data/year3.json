@@ -441,8 +441,8 @@
   {
    "name": "Adriana Withers",
    "ticker": "BITF",
-   "openingPrice": null,
-   "openingDate": null,
+   "openingPrice": 1.94,
+   "openingDate": "2025-10-28",
    "checkpointPrices": [
     null,
     null,
