@@ -1,6 +1,46 @@
 import { Leaderboard } from './Dashboard'
-import { RaceChart, fmtPct } from './LineChart'
+import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year1 from '../data/year1.json'
+import cohortMembership from '../data/cohort_membership.json'
+
+// Names recorded differently across seasons than in the FY25 spreadsheet
+// (the source of cohortMembership) -- resolved by cross-season corroboration
+// (see backend/scripts/derived/cohort_memberships.json history). Two are
+// lower-confidence: Michelle Fried/Sullivan (plausible maiden->married name)
+// and Suzanne Korchinski/Suzy Walker (corroborated via family role: she's
+// marked "Wife" here and shares Jim Korchinski's surname, and Jim is a
+// confirmed "Uncle" -- Aunts are specifically the Uncles' wives).
+const NAME_ALIASES = {
+  'Alex Armstrong': 'Alexander Armstrong',
+  'Brit': 'Brittany Buckley',
+  'Buckley': 'Scott Buckley',
+  'Chris Morris': 'Christopher Morris',
+  'Jamie': 'Jamie Armstrong',
+  'Karen Korchinski': 'Karin Korchinski',
+  'Leala': 'Leala Wong',
+  'Michelle Fried': 'Michelle Sullivan',
+  'Natalie Tran': 'Natalie Lee',
+  'Suzanne Korchinski': 'Suzy Walker',
+  'Theo Lee': 'Theodore Lee',
+  'Tim': 'Tim Morris',
+}
+const canonicalName = (name) => NAME_ALIASES[name] ?? name
+
+const SHOWDOWNS = [
+  { title: 'Scott’s vs. Alex’s', sub: 'Same feud, one season earlier.', keys: ['Scott', 'Alex'] },
+  {
+    title: 'Santa Barbara High vs. UCLA',
+    sub: 'Stay in school, but don’t sweat college. Also: listen to your wife.',
+    keys: ['Santa Barbara High Grad', 'Wife of SBHS', 'UCLA Grad', 'Wife of UCLA Grad'],
+    rename: { 'Santa Barbara High Grad': 'SBHS grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
+  },
+  { title: 'Birth year', sub: 'The original generational grudge match.', keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers'] },
+  { title: 'Men vs. Women', sub: 'FY24’s edition of the eternal question.', keys: ['Men', 'Women'] },
+  { title: 'Uncles vs. Aunts vs. Cousins', sub: 'The family tree, one year younger.', keys: ['Uncles', 'Aunts', 'Cousins'] },
+  { title: 'Country of birth', sub: 'Marrying a Mexican: a smart life investment, one year in.', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
+  { title: 'The Wife vs. everyone', sub: 'One pick, one line, one very confident showing — the FY24 edition.', keys: ['Wife'] },
+]
+const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
 
 function toRow(p) {
   const [open, q1, q2, q3] = p.prices
@@ -24,6 +64,38 @@ function averageMonthlySeries(people) {
     const vals = people.map((p) => monthlySeries(p.monthlyPrices)[i]).filter((v) => v != null)
     return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
   })
+}
+
+// Average monthly series for the subset of this season's roster whose
+// canonical name is in `cohortNames` -- computed from FY24's own price
+// data, not FY25's groups.json.
+function cohortSeries(cohortNames) {
+  const members = year1.people.filter((p) => cohortNames.includes(canonicalName(p.name)))
+  return averageMonthlySeries(members)
+}
+
+function Showdowns() {
+  return (
+    <div className="showdown-grid">
+      {SHOWDOWNS.map((s) => {
+        const series = s.keys
+          .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: cohortSeries(cohortMembership[k] ?? []) }))
+          .filter((line) => line.values.some((v) => v != null))
+        series.push({ name: 'Everyone', color: 'var(--baseline)', values: averageMonthlySeries(year1.people), dash: true })
+        if (series.length <= 1) return null
+        return (
+          <div key={s.title} className="card chart-card">
+            <div className="chart-head">
+              <h3 className="chart-title">{s.title}</h3>
+              <p className="chart-sub">{s.sub}</p>
+            </div>
+            <Legend series={series} />
+            <LineChart series={series} xLabels={monthLabels(year1.monthlyDates)} height={220} />
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function ArchiveY1() {
@@ -90,6 +162,15 @@ export default function ArchiveY1() {
           title="FY24 leaderboard"
           sub="Quarter columns are cumulative from the October 2023 open (Jan / Apr / Jul checkpoints)."
         />
+      </section>
+
+      <section className="section">
+        <h2 className="section-title">The showdowns</h2>
+        <p className="section-sub">
+          Same demographic cohorts as FY25, computed from FY24’s own picks and prices. Group lines
+          are the average cumulative return of each cohort; the dashed line is everyone.
+        </p>
+        <Showdowns />
       </section>
 
       <section className="section">

@@ -1,6 +1,41 @@
 import { useEffect, useMemo, useState } from 'react'
-import { RaceChart, fmtPct } from './LineChart'
+import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year3 from '../data/year3.json'
+import cohortMembership from '../data/cohort_membership.json'
+
+// Names recorded differently across seasons than in the FY25 spreadsheet
+// (the source of cohortMembership) -- resolved by cross-season corroboration
+// (see backend/scripts/derived/cohort_memberships.json history). Two are
+// lower-confidence: Michelle Fried/Sullivan (plausible maiden->married name)
+// and Suzanne Korchinski/Suzy Walker (corroborated via family role: she's
+// marked "Wife" here and shares Jim Korchinski's surname, and Jim is a
+// confirmed "Uncle" -- Aunts are specifically the Uncles' wives). Stephen
+// Hosea has no known match at all -- not in the FY25 demographic roster.
+const NAME_ALIASES = {
+  'Alex Armstrong': 'Alexander Armstrong',
+  'Chris Morris': 'Christopher Morris',
+  'Karen Korchinski': 'Karin Korchinski',
+  'Michelle Fried': 'Michelle Sullivan',
+  'Suzanne Korchinski': 'Suzy Walker',
+  'Theo Lee': 'Theodore Lee',
+}
+const canonicalName = (name) => NAME_ALIASES[name] ?? name
+
+const SHOWDOWNS = [
+  { title: 'Scott’s vs. Alex’s', sub: 'The FY26 rematch.', keys: ['Scott', 'Alex'] },
+  {
+    title: 'Santa Barbara High vs. UCLA',
+    sub: 'Stay in school, but don’t sweat college. Also: listen to your wife.',
+    keys: ['Santa Barbara High Grad', 'Wife of SBHS', 'UCLA Grad', 'Wife of UCLA Grad'],
+    rename: { 'Santa Barbara High Grad': 'SBHS grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
+  },
+  { title: 'Birth year', sub: 'The generational grudge match, live.', keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers'] },
+  { title: 'Men vs. Women', sub: 'FY26’s edition of the eternal question.', keys: ['Men', 'Women'] },
+  { title: 'Uncles vs. Aunts vs. Cousins', sub: 'The family tree, live.', keys: ['Uncles', 'Aunts', 'Cousins'] },
+  { title: 'Country of birth', sub: 'Marrying a Mexican: a smart life investment, live.', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
+  { title: 'The Wife vs. everyone', sub: 'One pick, one line, one very confident showing — live.', keys: ['Wife'] },
+]
+const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
 
 function sinceTracking(openingPrice, live) {
   return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
@@ -44,6 +79,34 @@ function averageOf(seriesList) {
     const vals = seriesList.map((s) => s[i]).filter((v) => v != null)
     return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
   })
+}
+
+function Showdowns({ rows, raceLabels }) {
+  return (
+    <div className="showdown-grid">
+      {SHOWDOWNS.map((s) => {
+        const seriesFor = (cohortNames) => {
+          const members = rows.filter((r) => cohortNames.includes(canonicalName(r.name)))
+          return averageOf(members.map((r) => series(r, r.live)))
+        }
+        const chartSeries = s.keys
+          .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: seriesFor(cohortMembership[k] ?? []) }))
+          .filter((line) => line.values.some((v) => v != null))
+        chartSeries.push({ name: 'Everyone', color: 'var(--baseline)', values: averageOf(rows.map((r) => series(r, r.live))), dash: true })
+        if (chartSeries.length <= 1) return null
+        return (
+          <div key={s.title} className="card chart-card">
+            <div className="chart-head">
+              <h3 className="chart-title">{s.title}</h3>
+              <p className="chart-sub">{s.sub}</p>
+            </div>
+            <Legend series={chartSeries} />
+            <LineChart series={chartSeries} xLabels={raceLabels} height={220} />
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function FY26() {
@@ -202,6 +265,16 @@ export default function FY26() {
             open” stays pending until we confirm their exact October 2025 opening prices.
           </p>
         )}
+      </section>
+
+      <section className="section">
+        <h2 className="section-title">The showdowns</h2>
+        <p className="section-sub">
+          Same demographic cohorts as FY25 and FY24, computed from FY26’s own picks and live
+          prices. Group lines are the average cumulative return of each cohort; the dashed line is
+          everyone.
+        </p>
+        <Showdowns rows={rows} raceLabels={raceLabels} />
       </section>
     </>
   )
