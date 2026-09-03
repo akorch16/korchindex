@@ -1,51 +1,31 @@
-// One-off diagnostic: verify claim that BITF (Bitfarms) rebranded its
-// ticker to KEEL. Check Yahoo chart, SEC registry, and OpenFIGI for KEEL,
-// and see if OpenFIGI's KEEL entry cross-references Bitfarms. Not part of
+// One-off diagnostic: FSST (Fidelity Sustainable U.S. Equity ETF) was
+// liquidated by Fidelity on 2025-11-13 (final close ~$30.88, cash payout
+// $30.8963/share on 2025-11-25) -- confirmed via external research. It
+// traded normally for years before that, including through the FY26
+// season open (2025-10-28), so a tight window right around that date
+// should surface a real opening price where our earlier wide-range query
+// (which Yahoo apparently truncates post-delisting) did not. Not part of
 // the regular pipeline -- read logs from the "Diagnose tickers" run, then
 // delete this + its workflow once resolved.
-async function checkYahoo(ticker) {
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?range=1mo&interval=1d`
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)' } })
-  console.log(`\n=== Yahoo chart: ${ticker} === HTTP ${res.status}`)
+async function fetchWindow(ticker, label, period1Str, period2Str) {
+  const period1 = Math.floor(new Date(`${period1Str}T00:00:00Z`).getTime() / 1000)
+  const period2 = Math.floor(new Date(`${period2Str}T00:00:00Z`).getTime() / 1000)
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?period1=${period1}&period2=${period2}&interval=1d`
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) korchindex-price-updater' } })
+  console.log(`\n=== ${ticker} ${label} (${period1Str}..${period2Str}) === HTTP ${res.status}`)
   if (!res.ok) { console.log('body:', (await res.text()).slice(0, 300)); return }
   const json = await res.json()
   const result = json?.chart?.result?.[0]
-  const meta = result?.meta
-  console.log('meta:', JSON.stringify({ symbol: meta?.symbol, longName: meta?.longName, shortName: meta?.shortName, exchangeName: meta?.exchangeName, regularMarketPrice: meta?.regularMarketPrice, instrumentType: meta?.instrumentType }))
+  const timestamps = result?.timestamp
+  const closes = result?.indicators?.quote?.[0]?.close
+  if (!timestamps?.length) { console.log('no timestamps. meta:', JSON.stringify(result?.meta)); return }
+  console.log(`bars: ${timestamps.length}`)
+  for (let i = 0; i < timestamps.length; i++) {
+    console.log(`  ${new Date(timestamps[i] * 1000).toISOString().slice(0, 10)}: close=${closes[i]}`)
+  }
 }
 
-async function checkSec(ticker) {
-  const res = await fetch('https://www.sec.gov/files/company_tickers.json', {
-    headers: { 'User-Agent': 'korchindex research contact@korch.co' },
-  })
-  const json = await res.json()
-  const match = Object.values(json).find((e) => e.ticker === ticker)
-  console.log(`\n=== SEC registry: ${ticker} === ${match ? `CIK=${match.cik_str}, name="${match.title}"` : 'NOT FOUND'}`)
-}
-
-async function checkOpenFigi(tickers) {
-  console.log('\n=== OpenFIGI mapping ===')
-  const jobs = tickers.map((t) => ({ idType: 'TICKER', idValue: t }))
-  const res = await fetch('https://api.openfigi.com/v3/mapping', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(jobs),
-  })
-  console.log(`HTTP ${res.status}`)
-  const text = await res.text()
-  if (!res.ok) { console.log('body:', text.slice(0, 500)); return }
-  const json = JSON.parse(text)
-  json.forEach((result, i) => {
-    if (result.error) {
-      console.log(`  ${tickers[i]}: error="${result.error}"`)
-    } else {
-      for (const d of (result.data ?? []).slice(0, 8)) {
-        console.log(`  ${tickers[i]}: figi=${d.figi} | name="${d.name}" | exch=${d.exchCode} | ticker=${d.ticker} | securityType=${d.securityType} | securityType2=${d.securityType2}`)
-      }
-    }
-  })
-}
-
-await checkYahoo('KEEL')
-await checkSec('KEEL')
-await checkOpenFigi(['KEEL', 'BITF'])
+// Tight window around the FY26 season open.
+await fetchWindow('FSST', 'season-open window', '2025-10-20', '2025-11-05')
+// Confirm the final trading window / liquidation close.
+await fetchWindow('FSST', 'final trading window', '2025-11-05', '2025-11-20')
