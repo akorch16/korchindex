@@ -29,7 +29,7 @@ function Tile({ label, value, note, cls, hero, callout }) {
     <div className={`tile${hero ? ' hero' : ''}${callout ? ' callout' : ''}`}>
       <div className="label">{label}</div>
       <div className={`value ${cls || ''}`}>{value}</div>
-      {note && <div className="note">{note}</div>}
+      {note && <div className={`note${callout ? ` big ${cls || ''}` : ''}`}>{note}</div>}
     </div>
   )
 }

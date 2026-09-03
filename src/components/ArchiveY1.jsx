@@ -138,12 +138,12 @@ export default function ArchiveY1() {
           <div className="tile callout">
             <div className="label">Best pick</div>
             <div className="value pos">{fmtPct(best.return, 0)}</div>
-            <div className="note">{best.ticker}</div>
+            <div className="note big pos">{best.ticker}</div>
           </div>
           <div className="tile callout">
             <div className="label">Biggest loser</div>
             <div className="value neg">{fmtPct(worst.return, 0)}</div>
-            <div className="note">{worst.ticker}</div>
+            <div className="note big neg">{worst.ticker}</div>
           </div>
         </div>
       </section>
