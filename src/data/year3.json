@@ -359,8 +359,8 @@
   {
    "name": "Greg Arch",
    "ticker": "FSST",
-   "openingPrice": null,
-   "openingDate": null,
+   "openingPrice": 31.08,
+   "openingDate": "2025-10-28",
    "checkpointPrices": [
     null,
     null,
