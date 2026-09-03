@@ -81,6 +81,52 @@ function averageOf(seriesList) {
   })
 }
 
+// Quarter-over-quarter winner/loser: biggest rise and fall within each
+// quarter window specifically (not cumulative since the FY26 open), using
+// the checkpointPrices indices for Oct 28 / Jan 28 / Apr 28 / Jul 28 --
+// Q4 (Jul 28 -> now) uses the live price for its still-open end point.
+const QUARTER_WINDOWS = [
+  { label: 'Q1', sub: 'Oct 28 → Jan 28', startIdx: 0, endIdx: 3 },
+  { label: 'Q2', sub: 'Jan 28 → Apr 28', startIdx: 3, endIdx: 6 },
+  { label: 'Q3', sub: 'Apr 28 → Jul 28', startIdx: 6, endIdx: 9 },
+  { label: 'Q4', sub: 'Jul 28 → now', startIdx: 9, endIdx: null },
+]
+
+function quarterExtremes(rows) {
+  return QUARTER_WINDOWS.map(({ label, sub, startIdx, endIdx }) => {
+    let best = null
+    let worst = null
+    for (const r of rows) {
+      const start = r.checkpointPrices?.[startIdx]
+      const end = endIdx != null ? r.checkpointPrices?.[endIdx] : r.live
+      if (start == null || end == null) continue
+      const qoq = (end - start) / start
+      if (!best || qoq > best.qoq) best = { ticker: r.ticker, qoq }
+      if (!worst || qoq < worst.qoq) worst = { ticker: r.ticker, qoq }
+    }
+    return { label, sub, best, worst }
+  })
+}
+
+function QuarterChips({ rows }) {
+  const qs = useMemo(() => quarterExtremes(rows), [rows])
+  return (
+    <div className="chips">
+      {qs.map(({ label, sub, best, worst }) => (
+        <div key={label} className="chip">
+          <div className="q">{label} · {sub}</div>
+          <div className="win">
+            <span className="who">{best ? `▲ ${best.ticker} ${fmtPct(best.qoq, 0)}` : '—'}</span>
+          </div>
+          <div className="lose">
+            <span className="who">{worst ? `▼ ${worst.ticker} ${fmtPct(worst.qoq, 0)}` : '—'}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function Showdowns({ rows, showdownLabels }) {
   return (
     <div className="showdown-grid">
@@ -277,6 +323,15 @@ export default function FY26() {
             their actual October 28, 2025 opening prices like every other pick.
           </p>
         )}
+      </section>
+
+      <section className="section">
+        <h2 className="section-title">Quarterly winners and losers</h2>
+        <p className="section-sub">
+          Biggest rise and fall within each quarter window itself, not cumulative since the FY26
+          open — the same math the newsletter uses.
+        </p>
+        <QuarterChips rows={rows} />
       </section>
 
       <section className="section">
