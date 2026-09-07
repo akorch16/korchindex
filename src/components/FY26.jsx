@@ -307,20 +307,11 @@ export default function FY26() {
 
       <section className="section">
         <h2 className="section-title">Quarterly winners and losers</h2>
-        <p className="section-sub">
-          Biggest rise and fall within each quarter window itself, not cumulative since the FY26
-          open — the same math the newsletter uses.
-        </p>
         <QuarterChips rows={rows} />
       </section>
 
       <section className="section">
         <h2 className="section-title">The showdowns</h2>
-        <p className="section-sub">
-          Same demographic cohorts as FY25 and FY24, computed from FY26’s own picks and live
-          prices. Group lines are the average cumulative return of each cohort; the dashed line is
-          everyone.
-        </p>
         <Showdowns rows={rows} showdownLabels={showdownLabels} />
       </section>
     </>
