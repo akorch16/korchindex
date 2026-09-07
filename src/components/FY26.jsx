@@ -367,18 +367,26 @@ export default function FY26() {
                   const isOpen = expanded.has(r.ticker)
                   return (
                     <Fragment key={r.name}>
-                      <tr>
+                      <tr
+                        className={note ? 'pick-row' : ''}
+                        onClick={note ? () => toggleExpanded(r.ticker) : undefined}
+                        role={note ? 'button' : undefined}
+                        tabIndex={note ? 0 : undefined}
+                        aria-expanded={note ? isOpen : undefined}
+                        onKeyDown={
+                          note
+                            ? (e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  e.preventDefault()
+                                  toggleExpanded(r.ticker)
+                                }
+                              }
+                            : undefined
+                        }
+                      >
                         <td>
-                          <button
-                            type="button"
-                            className={`ticker-toggle ${isOpen ? 'open' : ''}`}
-                            onClick={() => toggleExpanded(r.ticker)}
-                            aria-expanded={isOpen}
-                            disabled={!note}
-                          >
-                            <span className="ticker">{displayTicker(r)}</span>
-                            {note && <span className="arrow">▸</span>}
-                          </button>
+                          <span className="ticker">{displayTicker(r)}</span>
+                          {note && <span className={`arrow ${isOpen ? 'open' : ''}`}>▸</span>}
                         </td>
                         <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
                           {r.since == null ? 'pending' : fmtPct(r.since)}
