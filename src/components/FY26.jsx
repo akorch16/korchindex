@@ -217,7 +217,7 @@ export default function FY26() {
   return (
     <>
       <section className="section">
-        <h2 className="section-title">FY26 — the picks are in</h2>
+        <h2 className="section-title">FY26: Topline stats</h2>
         <div className="kpi-row">
           <div className="tile hero">
             <div className="label">KORCH · FY26</div>
