@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year3 from '../data/year3.json'
+import year2 from '../data/year2.json'
 import cohortMembership from '../data/cohort_membership.json'
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
@@ -123,6 +124,69 @@ function QuarterChips({ rows }) {
           </div>
         </div>
       ))}
+    </div>
+  )
+}
+
+// For every FY25 pick, what it would be worth today if never sold (since
+// FY25's own Oct 2024 open, using today's live quote) versus what that same
+// person actually did instead this season -- their real FY26 pick's return
+// since the FY26 open. Two different time windows by nature (holding one
+// pick two seasons vs. a fresh pick this season), shown side by side.
+function diamondHandsRows(rows, quotes) {
+  return year2.people.map((p) => {
+    const opening = p.prices?.[0]
+    const live = quotes?.[p.ticker]?.price
+    const held = opening != null && live != null ? (live - opening) / opening : null
+    const fy26 = rows.find((r) => canonicalName(r.name) === canonicalName(p.name))
+    return { name: p.name, ticker: p.ticker, held, newTicker: fy26?.ticker, switched: fy26?.since ?? null }
+  })
+}
+
+function DiamondHands({ rows, quotes }) {
+  const dhRows = useMemo(() => diamondHandsRows(rows, quotes), [rows, quotes])
+  const sorted = [...dhRows].sort((a, b) => (b.held ?? -Infinity) - (a.held ?? -Infinity))
+  return (
+    <div className="card">
+      <div className="table-wrap">
+        <table className="data">
+          <thead>
+            <tr>
+              <th className="num">#</th>
+              <th>FY25 pick</th>
+              <th className="num">Held since FY25 open</th>
+              <th>FY26 pick</th>
+              <th className="num">Since FY26 open</th>
+              <th>Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((r, i) => {
+              const diff = r.held != null && r.switched != null ? r.held - r.switched : null
+              return (
+                <tr key={r.name}>
+                  <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
+                  <td><span className="ticker">{r.ticker}</span></td>
+                  <td className={`num ${r.held == null ? '' : r.held >= 0 ? 'pos' : 'neg'}`}>
+                    {r.held == null ? '—' : fmtPct(r.held)}
+                  </td>
+                  <td>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
+                  <td className={`num ${r.switched == null ? '' : r.switched >= 0 ? 'pos' : 'neg'}`}>
+                    {r.switched == null ? '—' : fmtPct(r.switched)}
+                  </td>
+                  <td className={diff == null ? '' : diff >= 0 ? 'pos' : 'neg'}>
+                    {diff == null
+                      ? (r.newTicker ? '—' : 'no FY26 pick')
+                      : diff >= 0
+                        ? `Held would’ve won by ${fmtPct(Math.abs(diff), 0)}`
+                        : `Switching won by ${fmtPct(Math.abs(diff), 0)}`}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
@@ -314,6 +378,11 @@ export default function FY26() {
       <section className="section">
         <h2 className="section-title">The showdowns</h2>
         <Showdowns rows={rows} showdownLabels={showdownLabels} />
+      </section>
+
+      <section className="section">
+        <h2 className="section-title">Diamond hands</h2>
+        <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
     </>
   )
