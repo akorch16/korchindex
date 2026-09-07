@@ -256,8 +256,7 @@ export default function FY26() {
 
       <section className="section">
         <RaceChart
-          title="The race: KORCH vs. the professionals"
-          sub="Cumulative return since the FY26 open — updated live, one quarter at a time."
+          title="KORCH vs. The Market"
           series={[
             {
               name: 'KORCH',
