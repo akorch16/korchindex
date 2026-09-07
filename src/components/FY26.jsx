@@ -376,8 +376,8 @@ export default function FY26() {
                             aria-expanded={isOpen}
                             disabled={!note}
                           >
-                            {note && <span className="arrow">▸</span>}
                             <span className="ticker">{displayTicker(r)}</span>
+                            {note && <span className="arrow">▸</span>}
                           </button>
                         </td>
                         <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
