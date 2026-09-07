@@ -272,6 +272,7 @@ export default function FY26() {
       </section>
 
       <section className="section">
+        <h2 className="section-title">KORCH: The Stock Picks</h2>
         <div className="card">
           <div className="table-wrap">
             <table className="data">
