@@ -203,7 +203,7 @@ export function RaceChart({ title, sub, series, xLabels, height = 320 }) {
     <div className="card chart-card">
       <div className="chart-head">
         <h3 className="chart-title">{title}</h3>
-        <p className="chart-sub">{sub}</p>
+        {sub && <p className="chart-sub">{sub}</p>}
       </div>
       <Legend series={series} />
       <LineChart series={series} xLabels={xLabels} height={height} />
