@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year3 from '../data/year3.json'
 import year2 from '../data/year2.json'
 import cohortMembership from '../data/cohort_membership.json'
+import stockNotes from '../data/stock-notes.json'
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
@@ -128,14 +129,16 @@ function QuarterChips({ rows }) {
   )
 }
 
-// For every FY25 pick, what it would be worth today if never sold (since
-// FY25's own Oct 2024 open, using today's live quote) versus what that same
-// person actually did instead this season -- their real FY26 pick's return
-// since the FY26 open. Two different time windows by nature (holding one
-// pick two seasons vs. a fresh pick this season), shown side by side.
+// For every FY25 pick, what it would be worth today if never sold -- starting
+// from the FY26 open (not FY25's own Oct 2024 open), so it's the same window
+// as the switched comparison. year2 has no exact Oct 28 2025 price, so we use
+// each pick's final FY25 close (Oct 10, 2025 -- 18 days earlier, the closest
+// data available) as the stand-in FY26-open baseline. Compared against what
+// that same person actually did instead this season -- their real FY26 pick's
+// return since the FY26 open.
 function diamondHandsRows(rows, quotes) {
   return year2.people.map((p) => {
-    const opening = p.prices?.[0]
+    const opening = p.prices?.[p.prices.length - 1]
     const live = quotes?.[p.ticker]?.price
     const held = opening != null && live != null ? (live - opening) / opening : null
     const fy26 = rows.find((r) => canonicalName(r.name) === canonicalName(p.name))
@@ -156,7 +159,7 @@ function DiamondHands({ rows, quotes }) {
               <th>FY26 pick</th>
               <th className="num">Since FY26 open</th>
               <th>FY25 pick</th>
-              <th className="num">Held since FY25 open</th>
+              <th className="num">Held since FY26 open</th>
               <th>Verdict</th>
             </tr>
           </thead>
@@ -222,6 +225,16 @@ function Showdowns({ rows, showdownLabels }) {
 export default function FY26() {
   const [data, setData] = useState(null)
   const [err, setErr] = useState(false)
+  const [expanded, setExpanded] = useState(() => new Set())
+
+  const toggleExpanded = (ticker) => {
+    setExpanded((prev) => {
+      const next = new Set(prev)
+      if (next.has(ticker)) next.delete(ticker)
+      else next.add(ticker)
+      return next
+    })
+  }
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}live/prices.json`, { cache: 'no-store' })
@@ -349,16 +362,44 @@ export default function FY26() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((r) => (
-                  <tr key={r.name}>
-                    <td><span className="ticker">{displayTicker(r)}</span></td>
-                    <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
-                      {r.since == null ? 'pending' : fmtPct(r.since)}
-                    </td>
-                    <td className="num">{r.openingPrice != null ? `$${r.openingPrice.toFixed(2)}` : '—'}</td>
-                    <td className="num">{r.live != null ? `$${r.live.toFixed(2)}` : '—'}</td>
-                  </tr>
-                ))}
+                {rows.map((r) => {
+                  const note = stockNotes[r.ticker]
+                  const isOpen = expanded.has(r.ticker)
+                  return (
+                    <Fragment key={r.name}>
+                      <tr>
+                        <td>
+                          <button
+                            type="button"
+                            className={`ticker-toggle ${isOpen ? 'open' : ''}`}
+                            onClick={() => toggleExpanded(r.ticker)}
+                            aria-expanded={isOpen}
+                            disabled={!note}
+                          >
+                            {note && <span className="arrow">▸</span>}
+                            <span className="ticker">{displayTicker(r)}</span>
+                          </button>
+                        </td>
+                        <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
+                          {r.since == null ? 'pending' : fmtPct(r.since)}
+                        </td>
+                        <td className="num">{r.openingPrice != null ? `$${r.openingPrice.toFixed(2)}` : '—'}</td>
+                        <td className="num">{r.live != null ? `$${r.live.toFixed(2)}` : '—'}</td>
+                      </tr>
+                      {isOpen && note && (
+                        <tr className="detail-row">
+                          <td colSpan={4}>
+                            <div className="pick-detail">
+                              <div className="pick-detail-company">{note.company}</div>
+                              <p className="pick-detail-about">{note.about}</p>
+                              <p className="pick-detail-performance">{note.performance}</p>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  )
+                })}
               </tbody>
             </table>
           </div>

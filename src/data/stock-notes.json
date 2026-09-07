@@ -1,0 +1,218 @@
+{
+ "MRNA": {
+  "company": "Moderna, Inc.",
+  "about": "A biotechnology company that pioneered mRNA-based vaccines and therapeutics, best known for its COVID-19 vaccine.",
+  "performance": "Moderna has been the runaway standout of the FY26 roster, up more than 400% since the season open. A recovering biotech sector and renewed enthusiasm for the company's broader mRNA pipeline beyond COVID vaccines have driven the move.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "AMD": {
+  "company": "Advanced Micro Devices, Inc.",
+  "about": "A semiconductor company that designs CPUs and GPUs, competing directly with Nvidia and Intel in both consumer and AI data-center chips.",
+  "performance": "AMD has ridden the same AI-infrastructure buildout as the rest of the chip sector, climbing over 80% since FY26 opened. Data-center GPU demand has been the main driver of the gain.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "ASML": {
+  "company": "ASML Holding N.V.",
+  "about": "A Dutch company that makes the extreme ultraviolet (EUV) lithography machines every advanced chipmaker depends on — effectively a monopoly on the equipment needed to print the smallest chips.",
+  "performance": "As the single supplier of leading-edge chipmaking equipment, ASML has benefited directly from the industry-wide AI chip buildout, up over 60% since the FY26 open.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "CAT": {
+  "company": "Caterpillar Inc.",
+  "about": "The world's largest manufacturer of construction and mining equipment, along with diesel and natural gas engines.",
+  "performance": "Caterpillar is up more than 50% since the FY26 open, helped by strong infrastructure and data-center construction spending that has kept demand for heavy equipment elevated.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "GOOGL": {
+  "company": "Alphabet Inc.",
+  "about": "Google's parent company — search, advertising, YouTube, and Google Cloud, with a growing push into AI products like Gemini.",
+  "performance": "Alphabet is up roughly 26% since the FY26 open, with continued strength in advertising and cloud revenue alongside investor enthusiasm for its AI investments.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "EQIX": {
+  "company": "Equinix, Inc.",
+  "about": "A real estate investment trust (REIT) that owns and operates data centers around the world, leasing space and connectivity to enterprises and cloud providers.",
+  "performance": "Equinix is up about 23% since the FY26 open. Demand for data-center capacity to support AI workloads has kept occupancy and pricing strong across its facilities.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "NVDA": {
+  "company": "NVIDIA Corporation",
+  "about": "The dominant maker of GPUs used for AI training and inference, along with data-center networking hardware and software.",
+  "performance": "Nvidia is up about 20% since the FY26 open. Continued heavy capital spending on AI infrastructure by its largest customers has kept demand for its chips strong.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "TDY": {
+  "company": "Teledyne Technologies Incorporated",
+  "about": "A maker of specialized instrumentation, digital imaging, and sensor systems used in aerospace, defense, and industrial applications.",
+  "performance": "Teledyne is up roughly 16% since the FY26 open, tracking steady demand for its instrumentation and imaging products across defense and industrial end markets.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "AMZN": {
+  "company": "Amazon.com, Inc.",
+  "about": "The e-commerce giant, and through Amazon Web Services (AWS), one of the largest cloud computing providers in the world.",
+  "performance": "Amazon is up about 14% since the FY26 open, supported by steady retail margins and continued growth in AWS's cloud and AI services.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "V": {
+  "company": "Visa Inc.",
+  "about": "One of the world's largest payment networks, processing card transactions between banks, merchants, and consumers globally.",
+  "performance": "Visa is up modestly, about 8%, since the FY26 open — a steady, low-volatility gain consistent with its role as a payments-volume bellwether rather than a high-growth swing stock.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "BEP": {
+  "company": "Brookfield Renewable Partners L.P.",
+  "about": "A global renewable power operator with hydroelectric, wind, solar, and storage assets across multiple continents.",
+  "performance": "Brookfield Renewable is up about 5% since the FY26 open, a modest gain reflecting steady demand for renewable power generation.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "MMM": {
+  "company": "3M Company",
+  "about": "A diversified industrial conglomerate making everything from adhesives and abrasives to safety equipment and consumer products.",
+  "performance": "3M is roughly flat since the FY26 open, consistent with a mature industrial business without a clear single catalyst pushing it strongly in either direction this season.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "FSST": {
+  "company": "Fidelity Sustainable U.S. Equity ETF",
+  "about": "An actively managed ESG-focused ETF from Fidelity that held a portfolio of large-cap U.S. growth stocks.",
+  "performance": "Fidelity liquidated this fund on November 13, 2025, cashing shareholders out at $30.8963/share. The position is now closed — its return is essentially flat since the FY26 open, reflecting the payout value rather than ongoing price action.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "COST": {
+  "company": "Costco Wholesale Corporation",
+  "about": "A membership-based warehouse retailer known for bulk goods, high member retention, and thin but consistent margins.",
+  "performance": "Costco is roughly flat, down about 1.5%, since the FY26 open — a small pullback for a stock generally viewed as a steady, defensive retail holding.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "NEE": {
+  "company": "NextEra Energy, Inc.",
+  "about": "The largest electric utility holding company in the U.S. by market cap, and the world's largest generator of wind and solar energy.",
+  "performance": "NextEra is down about 3% since the FY26 open, a modest decline typical of a large regulated utility whose stock tends to move less than the broader market.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "PG": {
+  "company": "The Procter & Gamble Company",
+  "about": "A consumer packaged goods giant behind brands like Tide, Gillette, Pampers, and Crest.",
+  "performance": "P&G is down about 3.5% since the FY26 open, a modest slide consistent with a slow-growth consumer staples business rather than any single sharp setback.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "SG": {
+  "company": "Sweetgreen, Inc.",
+  "about": "A fast-casual restaurant chain focused on salads and healthy bowls, with a tech-forward ordering and loyalty platform.",
+  "performance": "Sweetgreen is down about 5.5% since the FY26 open, reflecting the ongoing pressure fast-casual restaurant chains have faced from cautious consumer spending.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "MSFT": {
+  "company": "Microsoft Corporation",
+  "about": "A software and cloud computing giant — Windows, Office, and Azure — with a major investment stake in OpenAI and a broad AI product push.",
+  "performance": "Microsoft is down about 6% since the FY26 open, a modest pullback even as the company continues investing heavily in AI infrastructure and Copilot products.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "PLTR": {
+  "company": "Palantir Technologies Inc.",
+  "about": "A data analytics and AI software company that builds platforms for government intelligence, defense, and large enterprise customers.",
+  "performance": "Palantir is down about 8% since the FY26 open — a pullback after an extended run-up in the stock, with valuation concerns weighing on sentiment despite continued government and commercial contract wins.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "CMG": {
+  "company": "Chipotle Mexican Grill, Inc.",
+  "about": "A fast-casual restaurant chain known for build-your-own burritos and bowls, and for its emphasis on \"food with integrity\" sourcing.",
+  "performance": "Chipotle is down about 10% since the FY26 open, reflecting slower same-store sales growth as the fast-casual dining category has cooled.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "MP": {
+  "company": "MP Materials Corp.",
+  "about": "The owner and operator of the only active rare earth mining and processing facility in the United States, at Mountain Pass, California.",
+  "performance": "MP Materials is down about 17% since the FY26 open. Rare earth prices and the pace of the company's domestic supply-chain buildout have been volatile, weighing on the stock.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "SHOP": {
+  "company": "Shopify Inc.",
+  "about": "An e-commerce platform that lets businesses of any size build and run online stores, handling payments, shipping, and marketing.",
+  "performance": "Shopify is down about 17% since the FY26 open, as slowing merchant growth and a more cautious e-commerce spending environment have pressured the stock.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "META": {
+  "company": "Meta Platforms, Inc.",
+  "about": "The parent company of Facebook, Instagram, and WhatsApp, with heavy ongoing investment in AI and the metaverse/Reality Labs division.",
+  "performance": "Meta is down about 18% since the FY26 open. Heavy capital spending on AI infrastructure and Reality Labs, without a clear near-term payoff, has weighed on investor sentiment.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "TSLA": {
+  "company": "Tesla, Inc.",
+  "about": "An electric vehicle and clean energy company, also developing autonomous driving software and robotics.",
+  "performance": "Tesla is down about 22% since the FY26 open. Slowing EV delivery growth and intensifying competition have offset optimism around its autonomy and robotics ambitions.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "SMCI": {
+  "company": "Super Micro Computer, Inc.",
+  "about": "A maker of high-performance servers and storage systems built for data centers, particularly AI and cloud computing workloads.",
+  "performance": "Super Micro is down about 23% since the FY26 open. The stock has remained volatile as investors weigh strong AI server demand against margin pressure and past accounting concerns.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "NOW": {
+  "company": "ServiceNow, Inc.",
+  "about": "An enterprise software company whose platform automates IT, HR, and customer service workflows for large organizations.",
+  "performance": "ServiceNow is down about 25% since the FY26 open, as slower enterprise software spending growth has weighed on high-multiple SaaS names broadly.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "RDDT": {
+  "company": "Reddit, Inc.",
+  "about": "A social media and discussion platform organized around topic-based communities, monetized through advertising and data-licensing deals.",
+  "performance": "Reddit is down about 30% since the FY26 open. Slowing user growth and increased competition for advertising dollars have pressured the stock after a strong post-IPO run.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "FBTC": {
+  "company": "Fidelity Wise Origin Bitcoin Fund",
+  "about": "A spot Bitcoin exchange-traded fund from Fidelity that holds actual bitcoin, tracking the cryptocurrency's price directly.",
+  "performance": "FBTC is down about 31% since the FY26 open, tracking a sharp pullback in the price of bitcoin itself over the period.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "NKE": {
+  "company": "Nike, Inc.",
+  "about": "The world's largest athletic footwear and apparel company, selling through both its own stores/DTC channel and wholesale retail partners.",
+  "performance": "Nike is down about 44% since the FY26 open. A prolonged turnaround effort, weaker wholesale demand, and market-share losses to newer athletic brands have all weighed heavily on the stock.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "KTOS": {
+  "company": "Kratos Defense & Security Solutions, Inc.",
+  "about": "A defense technology company specializing in unmanned aerial systems (drones), satellite communications, and missile defense systems.",
+  "performance": "Kratos is down about 47% since the FY26 open, a sharp pullback after a period of elevated valuations tied to defense-spending optimism that has since cooled.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "ZS": {
+  "company": "Zscaler, Inc.",
+  "about": "A cloud security company providing \"zero trust\" network security services that route enterprise internet traffic through its cloud platform.",
+  "performance": "Zscaler is down about 48% since the FY26 open, as slowing growth and heightened competition in the cloud security space have hit richly-valued cybersecurity names broadly.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "MSTR": {
+  "company": "Strategy (formerly MicroStrategy Incorporated)",
+  "about": "A business intelligence software company that has become best known for holding one of the largest corporate bitcoin treasuries in the world, making its stock trade heavily on bitcoin's price.",
+  "performance": "Strategy is down about 52% since the FY26 open, closely tracking the decline in bitcoin's price given how much of the company's balance sheet is held in the cryptocurrency.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "FIG": {
+  "company": "Figma, Inc.",
+  "about": "A collaborative design and prototyping software company whose browser-based tools are widely used by product design teams.",
+  "performance": "Figma is down about 55% since the FY26 open. As a recent IPO, the stock has seen a sharp valuation reset as post-listing enthusiasm faded and growth expectations normalized.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "BYND": {
+  "company": "Beyond Meat, Inc.",
+  "about": "A maker of plant-based meat substitutes sold under its own brand through grocery and food-service channels.",
+  "performance": "Beyond Meat is down about 78% since the FY26 open — the fund's worst performer by a wide margin. The company completed a 1-for-30 reverse stock split on August 14, 2026 as sales continued to decline and the plant-based meat category struggled broadly.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "REVG": {
+  "company": "REV Group, Inc.",
+  "about": "A specialty vehicle manufacturer building fire trucks, ambulances, RVs, and other emergency and specialty vehicles.",
+  "performance": "REV Group merged into Terex Corporation on February 2, 2026 ($8.71 cash + 0.9809 Terex shares per REVG share). Valued at the current price of the combined company, the position is up about 15% since the FY26 open.",
+  "performanceUpdated": "2026-09-03"
+ },
+ "BITF": {
+  "company": "Bitfarms Ltd. (now Keel Infrastructure Corp.)",
+  "about": "Originally a bitcoin mining company, Bitfarms completed a U.S. redomiciliation and rebranded to Keel Infrastructure Corp. in April 2026, pivoting toward high-performance computing and AI data-center hosting alongside its existing mining operations.",
+  "performance": "Now trading as KEEL after a 1:1 rebrand, the position is up about 79% since the FY26 open — bitcoin-mining infrastructure stocks have rallied as the sector's AI/HPC pivot has drawn renewed investor interest.",
+  "performanceUpdated": "2026-09-03"
+ }
+}
