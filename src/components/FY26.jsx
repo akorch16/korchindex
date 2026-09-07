@@ -138,7 +138,7 @@ function Showdowns({ rows, showdownLabels }) {
         const chartSeries = s.keys
           .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: seriesFor(cohortMembership[k] ?? []) }))
           .filter((line) => line.values.some((v) => v != null))
-        chartSeries.push({ name: 'Everyone', color: 'var(--baseline)', values: averageOf(rows.map((r) => series(r, r.live))), dash: true })
+        chartSeries.push({ name: 'KORCH', color: 'var(--baseline)', values: averageOf(rows.map((r) => series(r, r.live))), dash: true })
         if (chartSeries.length <= 1) return null
         return (
           <div key={s.title} className="card chart-card">

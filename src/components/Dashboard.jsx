@@ -214,7 +214,7 @@ function Showdowns() {
             color: SLOT_COLORS[i],
             values: groups[k],
           }))
-        series.push({ name: 'Everyone', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
+        series.push({ name: 'KORCH', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
         return (
           <div key={s.title} className="card chart-card">
             <div className="chart-head">

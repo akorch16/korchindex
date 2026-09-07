@@ -86,7 +86,7 @@ function Showdowns() {
         const series = s.keys
           .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: cohortSeries(cohortMembership[k] ?? []) }))
           .filter((line) => line.values.some((v) => v != null))
-        series.push({ name: 'Everyone', color: 'var(--baseline)', values: averageMonthlySeries(year1.people), dash: true })
+        series.push({ name: 'KORCH', color: 'var(--baseline)', values: averageMonthlySeries(year1.people), dash: true })
         if (series.length <= 1) return null
         return (
           <div key={s.title} className="card chart-card">
