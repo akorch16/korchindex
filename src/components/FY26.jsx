@@ -186,8 +186,6 @@ export default function FY26() {
   }, [data])
 
   const tracked = rows.filter((r) => r.since != null)
-  const pending = rows.filter((r) => r.openingPrice == null && !r.corporateAction)
-  const corporateActions = rows.filter((r) => r.corporateAction)
   const korch = tracked.length ? tracked.reduce((sum, r) => sum + r.since, 0) / tracked.length : null
   const sp = benchmarks.find((b) => b.ticker === 'VOO')
   const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
@@ -304,23 +302,6 @@ export default function FY26() {
         {err && (
           <p className="footnote">
             Live prices haven’t published yet today — showing each pick’s opening price.
-          </p>
-        )}
-        <p className="footnote">
-          “Since FY26 open” compares each price (including the S&P 500 and Warren Buffett benchmarks
-          above) against that ticker’s actual close on the season’s October 28, 2025 start —
-          backfilled from historical data, the same way FY24 and FY25 are tracked.
-          {pending.length > 0 &&
-            ` ${pending.map((p) => p.ticker).join(', ')} ${pending.length === 1 ? 'has' : 'have'} no reliable opening price yet (thin trading or a delisting around that date) and show as pending until that resolves.`}
-        </p>
-        {corporateActions.length > 0 && (
-          <p className="footnote">
-            Three picks were caught up in corporate actions mid-season: REVG merged into Terex
-            (TEX) on Feb 2, 2026 ($8.71 cash + 0.9809 TEX shares per share); FSST was liquidated
-            by Fidelity on Nov 13, 2025 (cash payout $30.8963/share); BITF completed a US
-            redomiciliation and rebranded 1:1 to Keel Infrastructure Corp (KEEL) on Apr 6, 2026.
-            Each “Latest” value above reflects the real successor price or payout, tracked against
-            their actual October 28, 2025 opening prices like every other pick.
           </p>
         )}
       </section>
