@@ -153,10 +153,10 @@ function DiamondHands({ rows, quotes }) {
           <thead>
             <tr>
               <th className="num">#</th>
-              <th>FY25 pick</th>
-              <th className="num">Held since FY25 open</th>
               <th>FY26 pick</th>
               <th className="num">Since FY26 open</th>
+              <th>FY25 pick</th>
+              <th className="num">Held since FY25 open</th>
               <th>Verdict</th>
             </tr>
           </thead>
@@ -166,13 +166,13 @@ function DiamondHands({ rows, quotes }) {
               return (
                 <tr key={r.name}>
                   <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                  <td><span className="ticker">{r.ticker}</span></td>
-                  <td className={`num ${r.held == null ? '' : r.held >= 0 ? 'pos' : 'neg'}`}>
-                    {r.held == null ? '—' : fmtPct(r.held)}
-                  </td>
                   <td>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
                   <td className={`num ${r.switched == null ? '' : r.switched >= 0 ? 'pos' : 'neg'}`}>
                     {r.switched == null ? '—' : fmtPct(r.switched)}
+                  </td>
+                  <td><span className="ticker">{r.ticker}</span></td>
+                  <td className={`num ${r.held == null ? '' : r.held >= 0 ? 'pos' : 'neg'}`}>
+                    {r.held == null ? '—' : fmtPct(r.held)}
                   </td>
                   <td className={diff == null ? '' : diff >= 0 ? 'pos' : 'neg'}>
                     {diff == null
