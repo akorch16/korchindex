@@ -2,11 +2,13 @@ import { useState } from 'react'
 import FY26 from './components/FY26'
 import Dashboard from './components/Dashboard'
 import ArchiveY1 from './components/ArchiveY1'
+import AllTime from './components/AllTime'
 
 const TABS = [
   { id: 'fy26', label: 'FY26', el: <FY26 /> },
   { id: 'dashboard', label: 'FY25', el: <Dashboard /> },
   { id: 'year1', label: 'FY24', el: <ArchiveY1 /> },
+  { id: 'alltime', label: 'All-Time', el: <AllTime /> },
 ]
 
 function OurStory() {
