@@ -66,19 +66,50 @@ body {
 
 .shell { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
 
-/* ---------- header ---------- */
-.masthead { padding: 40px 0 8px; }
-.wordmark {
+/* ---------- hero ---------- */
+.hero { padding: 28px 0 56px; }
+.hero-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  margin-bottom: 44px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-wordmark {
   font-family: 'Anton', system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 56px;
+  font-size: 26px;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1;
-  margin: 0;
 }
-.wordmark .tick { color: var(--accent); }
-.tagline { color: var(--ink-2); margin: 4px 0 0; font-size: 15px; }
+.hero-wordmark .tick { color: var(--accent); }
+.hero-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.hero-links a {
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.hero-links a:hover { color: var(--ink); }
+
+.hero-headline {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 400;
+  font-size: clamp(32px, 5.4vw, 62px);
+  line-height: 1.18;
+  max-width: 900px;
+  margin: 0;
+  color: var(--ink);
+}
+.circle-wrap { position: relative; display: inline-block; padding: 0 8px; }
+.circle-svg { position: absolute; inset: -0.22em -0.1em; overflow: visible; pointer-events: none; }
+.circle-svg path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
 
 .tabs {
   display: flex;
