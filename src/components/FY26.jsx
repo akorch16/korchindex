@@ -39,7 +39,7 @@ const SHOWDOWNS = [
 ]
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
 
-function sinceTracking(openingPrice, live) {
+export function sinceTracking(openingPrice, live) {
   return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
 }
 
@@ -47,7 +47,7 @@ function sinceTracking(openingPrice, live) {
 // under its original ticker -- derive an equivalent per-original-share value
 // instead: a liquidation's frozen cash payout, or a merger/rebrand's cash-plus-
 // successor-shares conversion (ratio 1 with no cash covers a plain rebrand).
-function corporateActionValue(ca, quotes) {
+export function corporateActionValue(ca, quotes) {
   if (!ca) return null
   if (ca.payout != null) return ca.payout
   if (ca.successorTicker) {
@@ -58,7 +58,7 @@ function corporateActionValue(ca, quotes) {
   return null
 }
 
-function displayTicker(p) {
+export function displayTicker(p) {
   const ca = p.corporateAction
   if (!ca) return p.ticker
   return ca.successorTicker ? `${p.ticker} (${ca.successorTicker})` : `${p.ticker} (liquidated)`
