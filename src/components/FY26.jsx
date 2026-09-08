@@ -133,12 +133,18 @@ function QuarterChips({ rows }) {
 // from the FY26 open (not FY25's own Oct 2024 open), so it's the same window
 // as the switched comparison. year2 has no exact Oct 28 2025 price, so we use
 // each pick's final FY25 close (Oct 10, 2025 -- 18 days earlier, the closest
-// data available) as the stand-in FY26-open baseline. Compared against what
-// that same person actually did instead this season -- their real FY26 pick's
-// return since the FY26 open.
+// data available) as the stand-in FY26-open baseline. Use monthlyPrices for
+// that baseline, not the older quarterly `prices` array: monthlyPrices was
+// re-fetched fresh (see backfill-monthly-checkpoints.mjs), so it reflects any
+// stock split that happened since `prices` was originally captured -- same
+// current share basis as today's live quote. `prices` doesn't get this
+// refresh and can go stale (e.g. CRWD, NOW both split after FY25 closed;
+// comparing live against `prices`' pre-split close produced a wildly wrong
+// "held" return). Compared against what that same person actually did
+// instead this season -- their real FY26 pick's return since the FY26 open.
 function diamondHandsRows(rows, quotes) {
   return year2.people.map((p) => {
-    const opening = p.prices?.[p.prices.length - 1]
+    const opening = p.monthlyPrices?.[p.monthlyPrices.length - 1] ?? p.prices?.[p.prices.length - 1]
     const live = quotes?.[p.ticker]?.price
     const held = opening != null && live != null ? (live - opening) / opening : null
     const fy26 = rows.find((r) => canonicalName(r.name) === canonicalName(p.name))
