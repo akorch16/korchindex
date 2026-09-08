@@ -98,7 +98,14 @@ export default function App() {
       <header className="hero">
         <nav className="hero-nav">
           <button type="button" className="hero-wordmark" onClick={() => setPage('home')}>
-            KORCH<span className="tick">↗</span>
+            <svg className="mark" width="30" height="30" viewBox="0 0 100 100" aria-hidden="true">
+              <rect x="8" y="8" width="84" height="84" rx="18" fill="var(--accent)" />
+              <line x1="34" y1="26" x2="34" y2="74" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" />
+              <line x1="34" y1="52" x2="60" y2="74" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" />
+              <line x1="34" y1="52" x2="66" y2="26" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" />
+              <polyline points="52,26 66,26 66,40" fill="none" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            KORCH
           </button>
           <div className="hero-links">
             {Object.entries(PAGES).map(([id, p]) => (
