@@ -148,13 +148,16 @@ function diamondHandsRows(rows, quotes) {
     const live = quotes?.[p.ticker]?.price
     const held = opening != null && live != null ? (live - opening) / opening : null
     const fy26 = rows.find((r) => canonicalName(r.name) === canonicalName(p.name))
-    return { name: p.name, ticker: p.ticker, held, newTicker: fy26?.ticker, switched: fy26?.since ?? null }
+    const switched = fy26?.since ?? null
+    const diff = held != null && switched != null ? held - switched : null
+    return { name: p.name, ticker: p.ticker, held, newTicker: fy26?.ticker, switched, diff }
   })
 }
 
 function DiamondHands({ rows, quotes }) {
   const dhRows = useMemo(() => diamondHandsRows(rows, quotes), [rows, quotes])
-  const sorted = [...dhRows].sort((a, b) => (b.held ?? -Infinity) - (a.held ?? -Infinity))
+  const magnitude = (r) => (r.diff != null ? Math.abs(r.diff) : -Infinity)
+  const sorted = [...dhRows].sort((a, b) => magnitude(b) - magnitude(a))
   return (
     <div className="card">
       <div className="table-wrap">
@@ -168,29 +171,22 @@ function DiamondHands({ rows, quotes }) {
             </tr>
           </thead>
           <tbody>
-            {sorted.map((r, i) => {
-              const diff = r.held != null && r.switched != null ? r.held - r.switched : null
-              return (
-                <tr key={r.name}>
-                  <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                  <td>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
-                  <td><span className="ticker">{r.ticker}</span></td>
-                  <td>
-                    {diff == null ? (
-                      r.newTicker ? '—' : 'no FY26 pick'
-                    ) : diff >= 0 ? (
-                      <>
-                        <strong>{r.ticker}</strong> beat {r.newTicker} by {fmtPct(Math.abs(diff), 0)}
-                      </>
-                    ) : (
-                      <>
-                        <strong>{r.newTicker}</strong> beat {r.ticker} by {fmtPct(Math.abs(diff), 0)}
-                      </>
-                    )}
-                  </td>
-                </tr>
-              )
-            })}
+            {sorted.map((r, i) => (
+              <tr key={r.name}>
+                <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
+                <td style={{ paddingRight: 4 }}>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
+                <td style={{ paddingLeft: 4 }}><span className="ticker">{r.ticker}</span></td>
+                <td className={r.diff == null ? '' : r.diff < 0 ? 'pos' : 'neg'}>
+                  {r.diff == null
+                    ? r.newTicker
+                      ? '—'
+                      : 'no FY26 pick'
+                    : r.diff < 0
+                      ? 'Change is good.'
+                      : 'Should’ve held!'}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
