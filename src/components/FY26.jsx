@@ -156,8 +156,11 @@ function diamondHandsRows(rows, quotes) {
 
 function DiamondHands({ rows, quotes }) {
   const dhRows = useMemo(() => diamondHandsRows(rows, quotes), [rows, quotes])
-  const magnitude = (r) => (r.diff != null ? Math.abs(r.diff) : -Infinity)
-  const sorted = [...dhRows].sort((a, b) => magnitude(b) - magnitude(a))
+  // Swing = switched - held (positive when the FY26 switch was the right call).
+  // Sorting by this descending groups every "Change is good." row first (best
+  // switch first), then every "Should've held!" row, ending on the worst one.
+  const swing = (r) => (r.diff != null ? -r.diff : -Infinity)
+  const sorted = [...dhRows].sort((a, b) => swing(b) - swing(a))
   return (
     <div className="card">
       <div className="table-wrap">
