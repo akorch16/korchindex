@@ -138,18 +138,28 @@ function QuarterChips({ rows }) {
 // 10, 2025) -- 17 days earlier than the real FY26 open -- so even someone
 // who picked the same ticker both seasons showed a small non-zero "swing"
 // that was really just ordinary price drift between two different dates,
-// not a switching decision. Falls back to monthlyPrices/prices (stock-split-
-// safe -- see below) only when fy26OpenPrice is missing (FSST, delisted by
-// FY26 -- no live quote for it either, so the fallback never actually
-// matters there). Compared against what that same person actually did
-// instead this season -- their real FY26 pick's return since the FY26 open.
+// not a switching decision. For a same-ticker pick specifically, "held" and
+// "switched" are the exact same continuous position, so skip the separate
+// baseline entirely and reuse FY26's own since/openingPrice basis -- this
+// guarantees an exact 0% swing regardless of data availability (FSST is
+// fully delisted from Yahoo, no historical data at any date, so its
+// fy26OpenPrice fetch failed; falling back to a differently-dated baseline
+// there previously produced a bogus non-zero "swing" for a position that
+// never actually changed). Compared against what that same person actually
+// did instead this season -- their real FY26 pick's return since the FY26 open.
 function diamondHandsRows(rows, quotes) {
   return year2.people.map((p) => {
-    const opening = p.fy26OpenPrice ?? p.monthlyPrices?.[p.monthlyPrices.length - 1] ?? p.prices?.[p.prices.length - 1]
-    const live = quotes?.[p.ticker]?.price
-    const held = opening != null && live != null ? (live - opening) / opening : null
     const fy26 = rows.find((r) => canonicalName(r.name) === canonicalName(p.name))
     const switched = fy26?.since ?? null
+    const sameTicker = fy26 != null && p.ticker === fy26.ticker
+    let held
+    if (sameTicker) {
+      held = switched
+    } else {
+      const opening = p.fy26OpenPrice ?? p.monthlyPrices?.[p.monthlyPrices.length - 1] ?? p.prices?.[p.prices.length - 1]
+      const live = quotes?.[p.ticker]?.price
+      held = opening != null && live != null ? (live - opening) / opening : null
+    }
     const diff = held != null && switched != null ? held - switched : null
     return { name: p.name, ticker: p.ticker, held, newTicker: fy26?.ticker, switched, diff }
   })
@@ -158,7 +168,7 @@ function diamondHandsRows(rows, quotes) {
 function DiamondHands({ rows, quotes }) {
   const dhRows = useMemo(() => diamondHandsRows(rows, quotes), [rows, quotes])
   // Swing = switched - held (positive when the FY26 switch was the right call).
-  // Sorting by this descending groups every "Change is good." row first (best
+  // Sorting by this descending groups every "Change is good!" row first (best
   // switch first), then every "Should've held!" row, ending on the worst one.
   const swing = (r) => (r.diff != null ? -r.diff : -Infinity)
   const sorted = [...dhRows].sort((a, b) => swing(b) - swing(a))
@@ -191,7 +201,7 @@ function DiamondHands({ rows, quotes }) {
                       : sameTicker
                         ? 'Held the pick.'
                         : r.diff < 0
-                          ? 'Change is good.'
+                          ? 'Change is good!'
                           : 'Should’ve held!'}
                   </td>
                   <td className="details">
