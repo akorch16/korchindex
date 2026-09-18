@@ -176,29 +176,36 @@ function DiamondHands({ rows, quotes }) {
             </tr>
           </thead>
           <tbody>
-            {sorted.map((r, i) => (
-              <tr key={r.name}>
-                <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                <td style={{ paddingRight: 4 }}>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
-                <td style={{ paddingLeft: 4 }}><span className="ticker">{r.ticker}</span></td>
-                <td className={r.diff == null ? '' : r.diff < 0 ? 'pos' : 'neg'}>
-                  {r.diff == null
-                    ? r.newTicker
-                      ? '—'
-                      : 'no FY26 pick'
-                    : r.diff < 0
-                      ? 'Change is good.'
-                      : 'Should’ve held!'}
-                </td>
-                <td className="details">
-                  {r.diff == null
-                    ? r.newTicker
-                      ? '—'
-                      : 'no FY26 pick'
-                    : `Changing from ${r.ticker} (FY25) to ${r.newTicker} (FY26) was a net swing of ${fmtPct(-r.diff, 0)}`}
-                </td>
-              </tr>
-            ))}
+            {sorted.map((r, i) => {
+              const sameTicker = r.diff != null && r.newTicker === r.ticker
+              return (
+                <tr key={r.name}>
+                  <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
+                  <td style={{ paddingRight: 4 }}>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
+                  <td style={{ paddingLeft: 4 }}><span className="ticker">{r.ticker}</span></td>
+                  <td className={r.diff == null ? '' : sameTicker ? 'warn' : r.diff < 0 ? 'pos' : 'neg'}>
+                    {r.diff == null
+                      ? r.newTicker
+                        ? '—'
+                        : 'no FY26 pick'
+                      : sameTicker
+                        ? 'Held the pick.'
+                        : r.diff < 0
+                          ? 'Change is good.'
+                          : 'Should’ve held!'}
+                  </td>
+                  <td className="details">
+                    {r.diff == null
+                      ? r.newTicker
+                        ? '—'
+                        : 'no FY26 pick'
+                      : sameTicker
+                        ? `Kept ${r.ticker} for FY26, net swing of ${fmtPct(-r.diff, 0)}.`
+                        : `Changing from ${r.ticker} (FY25) to ${r.newTicker} (FY26) was a net swing of ${fmtPct(-r.diff, 0)}`}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

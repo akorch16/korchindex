@@ -178,6 +178,7 @@ body {
 .tile .note.big { font-size: 16px; font-weight: 700; margin-top: 6px; }
 .pos { color: var(--up); }
 .neg { color: var(--loss); }
+.warn { color: var(--s3); }
 
 @media (max-width: 600px) {
   .kpi-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
