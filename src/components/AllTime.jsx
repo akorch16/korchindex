@@ -4,6 +4,7 @@ import year1 from '../data/year1.json'
 import year2 from '../data/year2.json'
 import year3 from '../data/year3.json'
 import { corporateActionValue, sinceTracking, displayTicker } from './FY26'
+import PredictivePower from './PredictivePower'
 
 // Names recorded differently across the three seasons' rosters -- this is
 // FY24's alias table (the superset; FY26's own copy is a subset of it),
@@ -70,49 +71,53 @@ export default function AllTime() {
   }, [data])
 
   return (
-    <section className="section">
-      <h2 className="section-title">All-Time Leaderboard</h2>
-      <p className="section-sub">
-        Every KORCH pick across all three seasons, ranked by the sum of each person's FY24, FY25,
-        and FY26 returns. Not everyone has played all three seasons — the total is just the sum of
-        whichever ones they have.
-      </p>
-      <div className="card">
-        <div className="table-wrap">
-          <table className="data">
-            <thead>
-              <tr>
-                <th className="num">#</th>
-                <th>Player</th>
-                <th className="num">All-time total</th>
-                <th>FY24 pick</th>
-                <th className="num">FY24 return</th>
-                <th>FY25 pick</th>
-                <th className="num">FY25 return</th>
-                <th>FY26 pick</th>
-                <th className="num">FY26 return</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r, i) => (
-                <tr key={r.name}>
-                  <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                  <td className="person">{r.name}</td>
-                  <td className={`num ${posNeg(r.total)}`} style={{ fontWeight: 700 }}>
-                    {fmtOrDash(r.total)}
-                  </td>
-                  <td>{r.fy24 ? <span className="ticker">{r.fy24.ticker}</span> : '—'}</td>
-                  <td className={`num ${posNeg(r.fy24?.ret)}`}>{fmtOrDash(r.fy24?.ret)}</td>
-                  <td>{r.fy25 ? <span className="ticker">{r.fy25.ticker}</span> : '—'}</td>
-                  <td className={`num ${posNeg(r.fy25?.ret)}`}>{fmtOrDash(r.fy25?.ret)}</td>
-                  <td>{r.fy26 ? <span className="ticker">{r.fy26.ticker}</span> : '—'}</td>
-                  <td className={`num ${posNeg(r.fy26?.ret)}`}>{fmtOrDash(r.fy26?.ret)}</td>
+    <>
+      <section className="section">
+        <h2 className="section-title">All-Time Leaderboard</h2>
+        <p className="section-sub">
+          Every KORCH pick across all three seasons, ranked by the sum of each person's FY24, FY25,
+          and FY26 returns. Not everyone has played all three seasons — the total is just the sum of
+          whichever ones they have.
+        </p>
+        <div className="card">
+          <div className="table-wrap">
+            <table className="data">
+              <thead>
+                <tr>
+                  <th className="num">#</th>
+                  <th>Player</th>
+                  <th className="num">All-time total</th>
+                  <th>FY24 pick</th>
+                  <th className="num">FY24 return</th>
+                  <th>FY25 pick</th>
+                  <th className="num">FY25 return</th>
+                  <th>FY26 pick</th>
+                  <th className="num">FY26 return</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.map((r, i) => (
+                  <tr key={r.name}>
+                    <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
+                    <td className="person">{r.name}</td>
+                    <td className={`num ${posNeg(r.total)}`} style={{ fontWeight: 700 }}>
+                      {fmtOrDash(r.total)}
+                    </td>
+                    <td>{r.fy24 ? <span className="ticker">{r.fy24.ticker}</span> : '—'}</td>
+                    <td className={`num ${posNeg(r.fy24?.ret)}`}>{fmtOrDash(r.fy24?.ret)}</td>
+                    <td>{r.fy25 ? <span className="ticker">{r.fy25.ticker}</span> : '—'}</td>
+                    <td className={`num ${posNeg(r.fy25?.ret)}`}>{fmtOrDash(r.fy25?.ret)}</td>
+                    <td>{r.fy26 ? <span className="ticker">{r.fy26.ticker}</span> : '—'}</td>
+                    <td className={`num ${posNeg(r.fy26?.ret)}`}>{fmtOrDash(r.fy26?.ret)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <PredictivePower rows={rows} />
+    </>
   )
 }
