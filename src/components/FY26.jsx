@@ -168,6 +168,7 @@ function DiamondHands({ rows, quotes }) {
               <th>FY26 pick</th>
               <th>FY25 pick</th>
               <th>Verdict</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
@@ -184,6 +185,13 @@ function DiamondHands({ rows, quotes }) {
                     : r.diff < 0
                       ? 'Change is good.'
                       : 'Should’ve held!'}
+                </td>
+                <td className="details">
+                  {r.diff == null
+                    ? r.newTicker
+                      ? '—'
+                      : 'no FY26 pick'
+                    : `Changing from ${r.newTicker} (FY26) to ${r.ticker} (FY25) was a net swing of ${fmtPct(r.diff, 0)}`}
                 </td>
               </tr>
             ))}
