@@ -191,7 +191,7 @@ function DiamondHands({ rows, quotes }) {
                     ? r.newTicker
                       ? '—'
                       : 'no FY26 pick'
-                    : `Changing from ${r.newTicker} (FY26) to ${r.ticker} (FY25) was a net swing of ${fmtPct(r.diff, 0)}`}
+                    : `Changing from ${r.ticker} (FY25) to ${r.newTicker} (FY26) was a net swing of ${fmtPct(-r.diff, 0)}`}
                 </td>
               </tr>
             ))}
