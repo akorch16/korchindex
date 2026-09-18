@@ -163,9 +163,7 @@ function DiamondHands({ rows, quotes }) {
             <tr>
               <th className="num">#</th>
               <th>FY26 pick</th>
-              <th className="num">Since FY26 open</th>
               <th>FY25 pick</th>
-              <th className="num">Held since FY26 open</th>
               <th>Verdict</th>
             </tr>
           </thead>
@@ -176,19 +174,19 @@ function DiamondHands({ rows, quotes }) {
                 <tr key={r.name}>
                   <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
                   <td>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
-                  <td className={`num ${r.switched == null ? '' : r.switched >= 0 ? 'pos' : 'neg'}`}>
-                    {r.switched == null ? '—' : fmtPct(r.switched)}
-                  </td>
                   <td><span className="ticker">{r.ticker}</span></td>
-                  <td className={`num ${r.held == null ? '' : r.held >= 0 ? 'pos' : 'neg'}`}>
-                    {r.held == null ? '—' : fmtPct(r.held)}
-                  </td>
-                  <td className={diff == null ? '' : diff >= 0 ? 'pos' : 'neg'}>
-                    {diff == null
-                      ? (r.newTicker ? '—' : 'no FY26 pick')
-                      : diff >= 0
-                        ? `Held would’ve won by ${fmtPct(Math.abs(diff), 0)}`
-                        : `Switching won by ${fmtPct(Math.abs(diff), 0)}`}
+                  <td>
+                    {diff == null ? (
+                      r.newTicker ? '—' : 'no FY26 pick'
+                    ) : diff >= 0 ? (
+                      <>
+                        <strong>{r.ticker}</strong> beat {r.newTicker} by {fmtPct(Math.abs(diff), 0)}
+                      </>
+                    ) : (
+                      <>
+                        <strong>{r.newTicker}</strong> beat {r.ticker} by {fmtPct(Math.abs(diff), 0)}
+                      </>
+                    )}
                   </td>
                 </tr>
               )
