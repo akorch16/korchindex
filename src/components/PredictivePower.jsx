@@ -98,9 +98,9 @@ function pValue(r, n) {
   return betai(df / (df + t * t), df / 2, 0.5)
 }
 
-function pairsFor(rows, key) {
+function pairsFor(rows, xKey, yKey) {
   return rows
-    .map((r) => ({ name: r.name, x: r[key]?.ret, y: r.fy26?.ret }))
+    .map((r) => ({ name: r.name, x: r[xKey]?.ret, y: r[yKey]?.ret }))
     .filter((d) => d.x != null && d.y != null)
 }
 
@@ -130,7 +130,7 @@ function Stat({ label, r, n, p }) {
 // nearest-point hover tooltip -- the same visual language as LineChart's
 // charts (hairline grid, tooltip card) but for x/y pairs instead of a time
 // series.
-function Scatter({ title, sub, points }) {
+function Scatter({ title, sub, points, xLabel, yLabel }) {
   const [hover, setHover] = useState(null)
   const W = 420
   const H = 260
@@ -230,10 +230,10 @@ function Scatter({ title, sub, points }) {
           >
             <div className="t-label">{points[hover].name}</div>
             <div className="t-row">
-              prior <span className="val">{fmtPct(points[hover].x)}</span>
+              {xLabel} <span className="val">{fmtPct(points[hover].x)}</span>
             </div>
             <div className="t-row">
-              FY26 <span className="val">{fmtPct(points[hover].y)}</span>
+              {yLabel} <span className="val">{fmtPct(points[hover].y)}</span>
             </div>
           </div>
         )}
@@ -242,7 +242,7 @@ function Scatter({ title, sub, points }) {
   )
 }
 
-function interpretation(fy24stats, fy25stats) {
+function interpretation(entries) {
   const describe = (s, label) => {
     if (s.n < 8) return `${label}: not enough people who played both seasons yet to say anything (n=${s.n}).`
     if (s.p >= 0.05) {
@@ -254,33 +254,48 @@ function interpretation(fy24stats, fy25stats) {
         : 'real (if modest) persistence — people who did well tended to keep doing well'
     return `${label} shows a statistically significant relationship (r = ${s.r.toFixed(2)}, p = ${s.p.toFixed(3)}): ${verdict}.`
   }
-  return `${describe(fy24stats, 'Skipping a year (FY24 → FY26)')} ${describe(fy25stats, 'Back-to-back seasons (FY25 → FY26)')} Sample sizes here are small (under 45 people either way), so treat this as suggestive, not proof.`
+  return `${entries.map(({ stats, label }) => describe(stats, label)).join(' ')} Sample sizes here are small (under 45 people either way), so treat this as suggestive, not proof.`
 }
 
 export default function PredictivePower({ rows }) {
-  const fy24Pairs = useMemo(() => pairsFor(rows, 'fy24'), [rows])
-  const fy25Pairs = useMemo(() => pairsFor(rows, 'fy25'), [rows])
-  const fy24Stats = useMemo(() => statsFor(fy24Pairs), [fy24Pairs])
-  const fy25Stats = useMemo(() => statsFor(fy25Pairs), [fy25Pairs])
+  const fy24to26Pairs = useMemo(() => pairsFor(rows, 'fy24', 'fy26'), [rows])
+  const fy25to26Pairs = useMemo(() => pairsFor(rows, 'fy25', 'fy26'), [rows])
+  const fy24to25Pairs = useMemo(() => pairsFor(rows, 'fy24', 'fy25'), [rows])
+  const fy24to26Stats = useMemo(() => statsFor(fy24to26Pairs), [fy24to26Pairs])
+  const fy25to26Stats = useMemo(() => statsFor(fy25to26Pairs), [fy25to26Pairs])
+  const fy24to25Stats = useMemo(() => statsFor(fy24to25Pairs), [fy24to25Pairs])
 
   return (
     <section className="section">
       <h2 className="section-title">Does past performance predict future picks?</h2>
       <p className="section-sub">
-        Every player who's picked in more than one season is a natural test: did a big win early
-        on predict a big win later? Each dot is one person — their return in an earlier season
-        (x-axis) against their FY26 return so far (y-axis) — with a best-fit line through them.
+        Every player who's picked in more than one season is a natural test: did a big win in one
+        season predict a big win in the next? Each dot is one person — their return in the earlier
+        season (x-axis) against their return in the later one (y-axis) — with a best-fit line
+        through them.
       </p>
       <div className="kpi-row">
-        <Stat label="FY24 → FY26 correlation" r={fy24Stats.r} n={fy24Stats.n} p={fy24Stats.p} />
-        <Stat label="FY25 → FY26 correlation" r={fy25Stats.r} n={fy25Stats.n} p={fy25Stats.p} />
+        <Stat label="FY24 → FY26 correlation" r={fy24to26Stats.r} n={fy24to26Stats.n} p={fy24to26Stats.p} />
+        <Stat label="FY25 → FY26 correlation" r={fy25to26Stats.r} n={fy25to26Stats.n} p={fy25to26Stats.p} />
+        <Stat label="FY24 → FY25 correlation" r={fy24to25Stats.r} n={fy24to25Stats.n} p={fy24to25Stats.p} />
       </div>
       <div className="showdown-grid">
-        <Scatter title="FY24 return vs. FY26 return" sub="Skipping a year." points={fy24Pairs} />
-        <Scatter title="FY25 return vs. FY26 return" sub="Back-to-back seasons." points={fy25Pairs} />
+        <Scatter title="FY24 return vs. FY26 return" sub="Skipping a year." points={fy24to26Pairs} xLabel="FY24" yLabel="FY26" />
+        <Scatter title="FY25 return vs. FY26 return" sub="Back-to-back seasons." points={fy25to26Pairs} xLabel="FY25" yLabel="FY26" />
+        <Scatter
+          title="FY24 return vs. FY25 return"
+          sub="Consecutive seasons, before FY26."
+          points={fy24to25Pairs}
+          xLabel="FY24"
+          yLabel="FY25"
+        />
       </div>
       <p className="section-sub" style={{ marginTop: 16, marginBottom: 0 }}>
-        {interpretation(fy24Stats, fy25Stats)}
+        {interpretation([
+          { stats: fy24to26Stats, label: 'Skipping a year (FY24 → FY26)' },
+          { stats: fy25to26Stats, label: 'Back-to-back seasons (FY25 → FY26)' },
+          { stats: fy24to25Stats, label: 'The prior pair of seasons (FY24 → FY25)' },
+        ])}
       </p>
     </section>
   )
