@@ -130,21 +130,22 @@ function QuarterChips({ rows }) {
 }
 
 // For every FY25 pick, what it would be worth today if never sold -- starting
-// from the FY26 open (not FY25's own Oct 2024 open), so it's the same window
-// as the switched comparison. year2 has no exact Oct 28 2025 price, so we use
-// each pick's final FY25 close (Oct 10, 2025 -- 18 days earlier, the closest
-// data available) as the stand-in FY26-open baseline. Use monthlyPrices for
-// that baseline, not the older quarterly `prices` array: monthlyPrices was
-// re-fetched fresh (see backfill-monthly-checkpoints.mjs), so it reflects any
-// stock split that happened since `prices` was originally captured -- same
-// current share basis as today's live quote. `prices` doesn't get this
-// refresh and can go stale (e.g. CRWD, NOW both split after FY25 closed;
-// comparing live against `prices`' pre-split close produced a wildly wrong
-// "held" return). Compared against what that same person actually did
+// from the exact same date the real FY26 pick was priced from (2025-10-27),
+// not FY25's own Oct 2024 open, so it's a true apples-to-apples window with
+// the switched comparison (see backfill-fy25-fy26open.mjs: a one-off fetch
+// of each FY25 pick's actual close on that date, stored as fy26OpenPrice).
+// Before this field existed, the baseline was FY25's own final close (Oct
+// 10, 2025) -- 17 days earlier than the real FY26 open -- so even someone
+// who picked the same ticker both seasons showed a small non-zero "swing"
+// that was really just ordinary price drift between two different dates,
+// not a switching decision. Falls back to monthlyPrices/prices (stock-split-
+// safe -- see below) only when fy26OpenPrice is missing (FSST, delisted by
+// FY26 -- no live quote for it either, so the fallback never actually
+// matters there). Compared against what that same person actually did
 // instead this season -- their real FY26 pick's return since the FY26 open.
 function diamondHandsRows(rows, quotes) {
   return year2.people.map((p) => {
-    const opening = p.monthlyPrices?.[p.monthlyPrices.length - 1] ?? p.prices?.[p.prices.length - 1]
+    const opening = p.fy26OpenPrice ?? p.monthlyPrices?.[p.monthlyPrices.length - 1] ?? p.prices?.[p.prices.length - 1]
     const live = quotes?.[p.ticker]?.price
     const held = opening != null && live != null ? (live - opening) / opening : null
     const fy26 = rows.find((r) => canonicalName(r.name) === canonicalName(p.name))
