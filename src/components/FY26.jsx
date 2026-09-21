@@ -367,6 +367,12 @@ export default function FY26() {
             <div className="label">KORCH · Total value</div>
             <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
           </div>
+          <div className="tile hero">
+            <div className="label">KORCH · FY26</div>
+            <div className={`value ${korchSeries.at(-1) >= 0 ? 'pos' : 'neg'}`}>
+              {korchSeries.at(-1) != null ? fmtPct(korchSeries.at(-1)) : '—'}
+            </div>
+          </div>
           <div className="tile">
             <div className="label">24-hour change</div>
             <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
