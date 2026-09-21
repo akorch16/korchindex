@@ -97,6 +97,12 @@ body {
   margin: 0;
   color: var(--ink);
 }
+
+.hero-subline {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
 .circle-wrap { position: relative; display: inline-block; padding: 0 8px; }
 .circle-svg { position: absolute; inset: -0.22em -0.1em; overflow: visible; pointer-events: none; }
 .circle-svg path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
