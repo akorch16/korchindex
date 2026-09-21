@@ -207,7 +207,9 @@ function Showdowns() {
             color: SLOT_COLORS[i],
             values: groups[k],
           }))
-        series.push({ name: 'KORCH', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
+        if (s.title === 'The Wife vs. everyone') {
+          series.push({ name: 'Everyone (minus Alejandra)', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
+        }
         return (
           <div key={s.title} className="card chart-card">
             <div className="chart-head">
@@ -294,10 +296,10 @@ export default function Dashboard() {
       </section>
 
       <section className="section">
-        <h2 className="section-title">The showdowns</h2>
+        <h2 className="section-title">The Showdowns</h2>
         <p className="section-sub">
           Sweeping conclusions drawn very loosely from facts and data. Group lines are the average
-          cumulative return of each cohort; the dashed line is everyone.
+          cumulative return of each cohort.
         </p>
         <Showdowns />
       </section>

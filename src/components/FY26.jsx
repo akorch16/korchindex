@@ -257,7 +257,14 @@ function Showdowns({ rows, showdownLabels }) {
         const chartSeries = s.keys
           .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: seriesFor(cohortMembership[k] ?? []) }))
           .filter((line) => line.values.some((v) => v != null))
-        chartSeries.push({ name: 'KORCH', color: 'var(--baseline)', values: averageOf(rows.map((r) => series(r, r.live))), dash: true })
+        if (s.title === 'The Wife vs. everyone') {
+          chartSeries.push({
+            name: 'Everyone (minus Alejandra)',
+            color: 'var(--baseline)',
+            values: averageOf(rows.map((r) => series(r, r.live))),
+            dash: true,
+          })
+        }
         if (chartSeries.length <= 1) return null
         return (
           <div key={s.title} className="card chart-card">
@@ -483,7 +490,7 @@ export default function FY26() {
       </section>
 
       <section className="section">
-        <h2 className="section-title">The showdowns</h2>
+        <h2 className="section-title">The Showdowns</h2>
         <Showdowns rows={rows} showdownLabels={showdownLabels} />
       </section>
 
