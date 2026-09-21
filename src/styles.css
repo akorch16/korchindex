@@ -42,14 +42,14 @@ body {
 .shell { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
 
 /* ---------- hero ---------- */
-.hero { padding: 28px 0 24px; }
+.hero { padding: 14px 0 24px; }
 .hero-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   flex-wrap: wrap;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   margin-bottom: 44px;
   border-bottom: 1px solid var(--border);
 }
