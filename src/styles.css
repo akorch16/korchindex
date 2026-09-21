@@ -295,4 +295,6 @@ blockquote.rationale footer { color: var(--muted); font-size: 12.5px; margin-top
 
 .updated { color: var(--muted); font-size: 12.5px; }
 .footnote { color: var(--muted); font-size: 12.5px; margin-top: 24px; }
+.footnote-guy { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.footnote-guy img { height: 48px; width: auto; flex-shrink: 0; }
 a { color: var(--accent); }

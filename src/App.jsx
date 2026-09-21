@@ -159,6 +159,10 @@ export default function App() {
       <footer className="footnote">
         KORCH is not a registered investment vehicle. Past performance beating Warren Buffett is no
         guarantee of future performance beating Warren Buffett.
+        <div className="footnote-guy">
+          <img src={`${import.meta.env.BASE_URL}korch_guy.png`} alt="" />
+          <span>We invest like nobody knows anything. Especially not this guy.</span>
+        </div>
       </footer>
     </div>
   )
