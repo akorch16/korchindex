@@ -132,6 +132,7 @@ export default function App() {
             knows anything.
           </h1>
         )}
+        {page === 'home' && <p className="hero-subline">Especially not this guy.</p>}
       </header>
 
       {page === 'home' ? (

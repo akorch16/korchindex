@@ -364,9 +364,6 @@ export default function FY26() {
           <div className="tile hero">
             <div className="label">KORCH · Total value</div>
             <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
-            <div className="note">
-              {fmtMoney(pv.start)} starting point, implies {fmtPct(pv.totalReturn)}
-            </div>
           </div>
           <div className="tile">
             <div className="label">24-hour change</div>
@@ -374,7 +371,6 @@ export default function FY26() {
               {pv.dailyChange >= 0 ? '+' : '-'}
               {fmtMoney(Math.abs(pv.dailyChange))}
             </div>
-            <div className="note">Across all {year3.people.length} FY26 picks</div>
           </div>
           <div className="tile callout">
             <div className="label">Best pick</div>
