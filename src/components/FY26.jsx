@@ -502,7 +502,7 @@ export default function FY26() {
       </section>
 
       <section className="section">
-        <h2 className="section-title">Diamond hands</h2>
+        <h2 className="section-title">Hold or Switch</h2>
         <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
     </>
