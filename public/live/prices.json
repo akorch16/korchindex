@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-21T20:16:31.747Z",
+ "updated": "2026-09-21T23:49:48.243Z",
  "source": "finance.yahoo.com",
  "quotes": {
   "PLTR": {
@@ -117,7 +117,7 @@
    "prevClose": 310.87
   },
   "LLY": {
-   "price": 1164.41,
+   "price": 1164.89,
    "date": "2026-09-21",
    "prevClose": 1138.28
   },
@@ -127,22 +127,22 @@
    "prevClose": 115.03
   },
   "LMT": {
-   "price": 535.07,
+   "price": 535.4,
    "date": "2026-09-21",
    "prevClose": 529.38
   },
   "MRK": {
-   "price": 149.52,
+   "price": 149.5,
    "date": "2026-09-21",
    "prevClose": 144.85
   },
   "FIS": {
-   "price": 35.195,
+   "price": 35.19,
    "date": "2026-09-21",
    "prevClose": 38.18
   },
   "CMG": {
-   "price": 33.12,
+   "price": 33.14,
    "date": "2026-09-21",
    "prevClose": 37.03
   },
@@ -167,7 +167,7 @@
    "prevClose": 699.3
   },
   "BRK.B": {
-   "price": 502.1,
+   "price": 502.01,
    "date": "2026-09-21",
    "prevClose": 514.95
   },
@@ -197,7 +197,7 @@
    "prevClose": 29.43
   },
   "RDDT": {
-   "price": 158.71,
+   "price": 158.73,
    "date": "2026-09-21",
    "prevClose": 162.38
   },
@@ -207,7 +207,7 @@
    "prevClose": 10.31
   },
   "MMM": {
-   "price": 164.96,
+   "price": 164.97,
    "date": "2026-09-21",
    "prevClose": 162.02
   },
@@ -277,7 +277,7 @@
    "prevClose": 597.11
   },
   "PG": {
-   "price": 146.11,
+   "price": 146.08,
    "date": "2026-09-21",
    "prevClose": 146.13
   },
