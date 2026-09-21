@@ -364,7 +364,7 @@ export default function FY26() {
         <h2 className="section-title">FY26: Topline stats</h2>
         <div className="kpi-row">
           <div className="tile hero">
-            <div className="label">KORCH · Total value</div>
+            <div className="label">KORCH · Total</div>
             <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
           </div>
           <div className="tile hero">
