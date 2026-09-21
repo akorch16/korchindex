@@ -190,7 +190,7 @@ body {
   .hero-row { align-items: flex-start; gap: 10px; }
   .guy-line { flex-wrap: wrap; }
   .guy-arrow { flex: 0 0 auto; width: 40px; height: 1.1em; min-width: 0; }
-  .guy-photo { height: 3.4em; width: auto; align-self: flex-start; margin: 0; }
+  .guy-photo { height: 5.1em; width: auto; align-self: flex-start; margin: 0; }
 }
 
 /* ---------- chart chrome ---------- */
