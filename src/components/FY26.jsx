@@ -24,18 +24,17 @@ const NAME_ALIASES = {
 const canonicalName = (name) => NAME_ALIASES[name] ?? name
 
 const SHOWDOWNS = [
-  { title: 'Scott’s vs. Alex’s', sub: 'The FY26 rematch.', keys: ['Scott', 'Alex'] },
+  { title: 'Scott’s vs. Alex’s', keys: ['Scott', 'Alex'] },
   {
     title: 'Santa Barbara High vs. UCLA',
-    sub: 'Stay in school, but don’t sweat college. Also: listen to your wife.',
     keys: ['Santa Barbara High Grad', 'Wife of SBHS', 'UCLA Grad', 'Wife of UCLA Grad'],
     rename: { 'Santa Barbara High Grad': 'SBHS grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
   },
-  { title: 'Birth year', sub: 'The generational grudge match, live.', keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers'] },
-  { title: 'Men vs. Women', sub: 'FY26’s edition of the eternal question.', keys: ['Men', 'Women'] },
-  { title: 'Uncles vs. Aunts vs. Cousins', sub: 'The family tree, live.', keys: ['Uncles', 'Aunts', 'Cousins'] },
-  { title: 'Country of birth', sub: 'Marrying a Mexican: a smart life investment, live.', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
-  { title: 'The Wife vs. everyone', sub: 'One pick, one line, one very confident showing — live.', keys: ['Wife'] },
+  { title: 'Birth year', keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers'] },
+  { title: 'Men vs. Women', keys: ['Men', 'Women'] },
+  { title: 'Uncles vs. Aunts vs. Cousins', keys: ['Uncles', 'Aunts', 'Cousins'] },
+  { title: 'Country of birth', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
+  { title: 'The Wife vs. everyone', keys: ['Wife'] },
 ]
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
 
@@ -240,7 +239,6 @@ function Showdowns({ rows, showdownLabels }) {
           <div key={s.title} className="card chart-card">
             <div className="chart-head">
               <h3 className="chart-title">{s.title}</h3>
-              <p className="chart-sub">{s.sub}</p>
             </div>
             <Legend series={chartSeries} />
             <LineChart series={chartSeries} xLabels={showdownLabels} height={220} />
