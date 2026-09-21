@@ -333,6 +333,7 @@ export default function FY26() {
   const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
   const best = tracked[0]
   const worst = tracked[tracked.length - 1]
+  const korchSeries = averageOf(rows.map((r) => series(r, r.live)))
 
   const raceLabels = useMemo(() => {
     const n = (year3.checkpointDates?.length ?? 1) + 1 // +1 for the live "now" point
@@ -390,16 +391,19 @@ export default function FY26() {
       </section>
 
       <section className="section">
+        <h2 className="section-title">KORCH vs. The Market</h2>
         <RaceChart
-          title="KORCH vs. The Market"
           series={[
-            {
-              name: 'KORCH',
-              color: 'var(--s1)',
-              values: averageOf(rows.map((r) => series(r, r.live))),
-              emphasis: true,
-            },
+            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
             { name: 'S&P 500', color: 'var(--muted)', values: sp ? series(sp, sp.live) : [] },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: brk ? series(brk, brk.live) : [] },
+          ]}
+          xLabels={raceLabels}
+        />
+        <RaceChart
+          title="Head to Head: KORCH vs. Warren Buffett"
+          series={[
+            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
             { name: 'W. Buffett', color: 'var(--baseline)', values: brk ? series(brk, brk.live) : [] },
           ]}
           xLabels={raceLabels}
