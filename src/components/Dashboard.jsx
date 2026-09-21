@@ -259,6 +259,8 @@ export default function Dashboard() {
   const endValue = START_VALUE * (1 + korch)
   const best = [...year2.people].sort((a, b) => (b.return ?? -9) - (a.return ?? -9))[0]
   const worst = [...year2.people].sort((a, b) => (a.return ?? 9) - (b.return ?? 9))[0]
+  const korchSeries = averageMonthlySeries(year2.people)
+  const brkSeries = monthlySeries(year2.benchmarks.find((b) => b.ticker === 'BRK.B')?.monthlyPrices)
 
   return (
     <>
@@ -277,9 +279,17 @@ export default function Dashboard() {
           title="The race: KORCH vs. the professionals"
           sub="Cumulative return, Oct 10 2024 → Oct 10 2025. Read ’em and weep, Warren B."
           series={[
-            { name: 'KORCH', color: 'var(--s1)', values: averageMonthlySeries(year2.people), emphasis: true },
+            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
             { name: 'S&P 500', color: 'var(--muted)', values: monthlySeries(year2.benchmarks.find((b) => b.ticker === 'VOO')?.monthlyPrices) },
-            { name: 'W. Buffett', color: 'var(--baseline)', values: monthlySeries(year2.benchmarks.find((b) => b.ticker === 'BRK.B')?.monthlyPrices) },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: brkSeries },
+          ]}
+          xLabels={monthLabels(year2.monthlyDates)}
+        />
+        <RaceChart
+          title="Head to Head: KORCH vs. Warren Buffett"
+          series={[
+            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: brkSeries },
           ]}
           xLabels={monthLabels(year2.monthlyDates)}
         />

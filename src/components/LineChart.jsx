@@ -202,10 +202,12 @@ export function Legend({ series }) {
 export function RaceChart({ title, sub, series, xLabels, height = 320 }) {
   return (
     <div className="card chart-card">
-      <div className="chart-head">
-        <h3 className="chart-title">{title}</h3>
-        {sub && <p className="chart-sub">{sub}</p>}
-      </div>
+      {(title || sub) && (
+        <div className="chart-head">
+          {title && <h3 className="chart-title">{title}</h3>}
+          {sub && <p className="chart-sub">{sub}</p>}
+        </div>
+      )}
       <Legend series={series} />
       <LineChart series={series} xLabels={xLabels} height={height} />
     </div>
