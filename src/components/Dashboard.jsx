@@ -165,38 +165,31 @@ export function Leaderboard({ people, title, sub }) {
 const SHOWDOWNS = [
   {
     title: 'Scott’s vs. Alex’s',
-    sub: 'Alexes start strong but can’t keep the pace. Scotts accelerate to the finish. Statistically inconclusive.',
     keys: ['Scott', 'Alex'],
   },
   {
     title: 'Santa Barbara High vs. UCLA',
-    sub: 'Stay in school, but don’t sweat college. Also: listen to your wife.',
     keys: ['Santa Barbara High Grad', 'Wife of SBHS', 'UCLA Grad', 'Wife of UCLA Grad'],
     rename: { 'Santa Barbara High Grad': 'SBHS grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
   },
   {
     title: 'Birth year',
-    sub: 'Boomers hold the majority of U.S. wealth, and the same bears true in KORCH. OK Boomers. We see you.',
     keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers'],
   },
   {
     title: 'Men vs. Women',
-    sub: 'There are conclusions one could draw from this graph. We won’t be the ones to put them in writing.',
     keys: ['Men', 'Women'],
   },
   {
     title: 'Uncles vs. Aunts vs. Cousins',
-    sub: 'Surely this won’t provoke any inter-family rivalries.',
     keys: ['Uncles', 'Aunts', 'Cousins'],
   },
   {
     title: 'Country of birth',
-    sub: 'Marrying a Mexican: a smart life investment and a smart financial investment.',
     keys: ['Americans', 'Canadians', 'Mexicans', 'English'],
   },
   {
     title: 'The Wife vs. everyone',
-    sub: 'One pick, one line, one very confident showing against the entire field.',
     keys: ['Wife'],
   },
 ]
@@ -219,7 +212,6 @@ function Showdowns() {
           <div key={s.title} className="card chart-card">
             <div className="chart-head">
               <h3 className="chart-title">{s.title}</h3>
-              <p className="chart-sub">{s.sub}</p>
             </div>
             <Legend series={series} />
             <LineChart series={series} xLabels={['Oct', 'Jan', 'Apr', 'Jul', 'Oct']} height={220} />

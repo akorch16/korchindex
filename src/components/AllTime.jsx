@@ -55,6 +55,7 @@ function allTimeRows(quotes) {
 
 const posNeg = (v) => (v == null ? '' : v >= 0 ? 'pos' : 'neg')
 const fmtOrDash = (v) => (v == null ? '—' : fmtPct(v))
+const initials = (name) => name.split(' ').filter(Boolean).map((w) => w[0]).join('').toUpperCase()
 
 export default function AllTime() {
   const [data, setData] = useState(null)
@@ -99,7 +100,7 @@ export default function AllTime() {
                 {rows.map((r, i) => (
                   <tr key={r.name}>
                     <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                    <td className="person">{r.name}</td>
+                    <td className="person" title={r.name}>{initials(r.name)}</td>
                     <td className={`num ${posNeg(r.total)}`} style={{ fontWeight: 700 }}>
                       {fmtOrDash(r.total)}
                     </td>
