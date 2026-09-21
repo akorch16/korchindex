@@ -2,7 +2,13 @@ name: Update live prices
 
 on:
   schedule:
-    # Weekdays at 21:30 UTC — after the US market close
+    # Hourly during/around US market hours, weekdays. 13-21 UTC covers
+    # 9:30am-4pm ET in both EDT (UTC-4) and EST (UTC-5) with an hour of
+    # padding on each side, so it doesn't need to change with DST.
+    - cron: "0 13-21 * * 1-5"
+    # Kept as a distinct final run shortly after the official close, so
+    # the last snapshot of the day is the real closing price, not
+    # whatever the 21:00 UTC intraday hourly run happened to catch.
     - cron: "30 21 * * 1-5"
   workflow_dispatch:
 
