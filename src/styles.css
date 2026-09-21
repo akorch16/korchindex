@@ -208,12 +208,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 28px;
-  padding: 24px 20px 32px;
+  padding: 8px 20px 12px;
 }
 .matchup-side { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; text-align: center; }
 .matchup-avatar {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
   border-radius: 50%;
   object-fit: cover;
   background: var(--page);
@@ -224,8 +224,8 @@ body {
 .matchup-vs { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; }
 
 @media (max-width: 600px) {
-  .matchup { gap: 14px; padding: 16px 8px 24px; }
-  .matchup-avatar { width: 48px; height: 48px; }
+  .matchup { gap: 14px; padding: 6px 8px 10px; }
+  .matchup-avatar { width: 96px; height: 96px; }
   .matchup-value { font-size: 22px; }
 }
 
