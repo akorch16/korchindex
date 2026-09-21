@@ -44,7 +44,11 @@ async function fetchQuote(ticker) {
   const price = Number(meta?.regularMarketPrice)
   if (!Number.isFinite(price)) throw new Error('no data')
   const date = new Date((meta.regularMarketTime ?? 0) * 1000).toISOString().slice(0, 10)
-  return { price, date }
+  // Yahoo's own reference point for "today's change" -- yesterday's close,
+  // held constant through the trading day regardless of how often this
+  // runs (now hourly). Used for the 24-hour dollar-change tile.
+  const prevClose = Number(meta?.chartPreviousClose)
+  return { price, date, ...(Number.isFinite(prevClose) ? { prevClose } : {}) }
 }
 
 let existing = { quotes: {} }

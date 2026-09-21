@@ -4,6 +4,7 @@ import year3 from '../data/year3.json'
 import year2 from '../data/year2.json'
 import cohortMembership from '../data/cohort_membership.json'
 import stockNotes from '../data/stock-notes.json'
+import PortfolioValue from './PortfolioValue'
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
@@ -46,11 +47,15 @@ export function sinceTracking(openingPrice, live) {
 // under its original ticker -- derive an equivalent per-original-share value
 // instead: a liquidation's frozen cash payout, or a merger/rebrand's cash-plus-
 // successor-shares conversion (ratio 1 with no cash covers a plain rebrand).
-export function corporateActionValue(ca, quotes) {
+// `field` picks which quote field to read off the successor (default 'price';
+// pass 'prevClose' to get the equivalent value as of yesterday's close, for a
+// 24-hour dollar-change calc). A frozen payout is the same either way -- it
+// doesn't move day to day.
+export function corporateActionValue(ca, quotes, field = 'price') {
   if (!ca) return null
   if (ca.payout != null) return ca.payout
   if (ca.successorTicker) {
-    const successorPrice = quotes?.[ca.successorTicker]?.price
+    const successorPrice = quotes?.[ca.successorTicker]?.[field]
     if (successorPrice == null) return null
     return (ca.cashPerShare ?? 0) + (ca.shareRatio ?? 1) * successorPrice
   }
@@ -320,6 +325,8 @@ export default function FY26() {
 
   return (
     <>
+      <PortfolioValue />
+
       <section className="section">
         <h2 className="section-title">FY26: Topline stats</h2>
         <div className="kpi-row">
