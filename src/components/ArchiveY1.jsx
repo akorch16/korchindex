@@ -87,7 +87,7 @@ function Showdowns() {
           .filter((line) => line.values.some((v) => v != null))
         if (s.title === 'The Wife vs. everyone') {
           series.push({
-            name: 'Everyone (minus Alejandra)',
+            name: 'Everyone else',
             color: 'var(--baseline)',
             values: averageMonthlySeries(year1.people),
             dash: true,

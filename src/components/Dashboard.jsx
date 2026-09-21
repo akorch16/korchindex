@@ -208,7 +208,7 @@ function Showdowns() {
             values: groups[k],
           }))
         if (s.title === 'The Wife vs. everyone') {
-          series.push({ name: 'Everyone (minus Alejandra)', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
+          series.push({ name: 'Everyone else', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
         }
         return (
           <div key={s.title} className="card chart-card">
