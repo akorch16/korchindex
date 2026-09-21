@@ -399,12 +399,12 @@ export default function FY26() {
 
       <section className="section">
         <h2 className="section-title">How KORCH works</h2>
-        <p className="section-sub">
-          Each person picks one stock for the season — anything tradeable on Robinhood, long
-          only — and $1,000 rides on it from open to close, no changing your mind mid-season.
-          We track every pick's live return against the S&P 500 and Warren Buffett, and the
-          numbers on this page update automatically throughout the trading day.
-        </p>
+        <ul className="philosophy-list">
+          <li>Forty-two people pick one stock each</li>
+          <li>I invest $1,000 in each for a full year</li>
+          <li>I treat the winner to a dinner of their choosing</li>
+          <li>Loser takes me out to a dinner of my choosing</li>
+        </ul>
       </section>
 
       <section className="section">
