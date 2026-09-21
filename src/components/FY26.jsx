@@ -1,10 +1,29 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
+import LineChart, { RaceChart, Legend, fmtPct, fmtMoney } from './LineChart'
 import year3 from '../data/year3.json'
 import year2 from '../data/year2.json'
 import cohortMembership from '../data/cohort_membership.json'
 import stockNotes from '../data/stock-notes.json'
-import PortfolioValue from './PortfolioValue'
+
+const STAKE = 1000
+
+// Current dollar value of one person's $1,000 FY26 stake, and its 24-hour
+// dollar swing -- both measured off the same $1,000 basis scaled by price
+// ratios, so a corporate-action pick (frozen payout, or a merger/rebrand's
+// successor-share value) falls out of the same math with no special case:
+// a frozen payout has today's price equal to yesterday's, so its swing is
+// naturally $0.
+function positionStats(p, quotes) {
+  const caLive = corporateActionValue(p.corporateAction, quotes, 'price')
+  const live = caLive ?? quotes?.[p.ticker]?.price ?? null
+  const caPrev = corporateActionValue(p.corporateAction, quotes, 'prevClose')
+  const prev = p.corporateAction ? caPrev : (quotes?.[p.ticker]?.prevClose ?? null)
+
+  const value = live != null && p.openingPrice != null ? STAKE * (live / p.openingPrice) : STAKE
+  const dailyReturn = live != null && prev != null && prev !== 0 ? (live - prev) / prev : null
+  const dollarChange = dailyReturn != null ? value * dailyReturn : 0
+  return { value, dollarChange }
+}
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
@@ -294,6 +313,14 @@ export default function FY26() {
     })
   }, [data])
 
+  const pv = useMemo(() => {
+    const positions = year3.people.map((p) => positionStats(p, data?.quotes))
+    const start = year3.people.length * STAKE
+    const total = positions.reduce((sum, p) => sum + p.value, 0)
+    const dailyChange = positions.reduce((sum, p) => sum + p.dollarChange, 0)
+    return { start, total, dailyChange, totalReturn: (total - start) / start }
+  }, [data])
+
   const tracked = rows.filter((r) => r.since != null)
   const korch = tracked.length ? tracked.reduce((sum, r) => sum + r.since, 0) / tracked.length : null
   const sp = benchmarks.find((b) => b.ticker === 'VOO')
@@ -325,8 +352,6 @@ export default function FY26() {
 
   return (
     <>
-      <PortfolioValue />
-
       <section className="section">
         <h2 className="section-title">FY26: Topline stats</h2>
         <div className="kpi-row">
@@ -336,17 +361,20 @@ export default function FY26() {
               {korch != null ? fmtPct(korch) : '—'}
             </div>
           </div>
-          <div className="tile">
-            <div className="label">S&P 500</div>
-            <div className={`value ${sp?.since != null && sp.since >= 0 ? 'pos' : sp?.since != null ? 'neg' : ''}`}>
-              {sp?.since != null ? fmtPct(sp.since) : '—'}
+          <div className="tile hero">
+            <div className="label">KORCH · Total value</div>
+            <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
+            <div className="note">
+              {fmtMoney(pv.start)} starting point, implies {fmtPct(pv.totalReturn)}
             </div>
           </div>
           <div className="tile">
-            <div className="label">Warren Buffett</div>
-            <div className={`value ${brk?.since != null && brk.since >= 0 ? 'pos' : brk?.since != null ? 'neg' : ''}`}>
-              {brk?.since != null ? fmtPct(brk.since) : '—'}
+            <div className="label">24-hour change</div>
+            <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
+              {pv.dailyChange >= 0 ? '+' : '-'}
+              {fmtMoney(Math.abs(pv.dailyChange))}
             </div>
+            <div className="note">Across all {year3.people.length} FY26 picks</div>
           </div>
           <div className="tile callout">
             <div className="label">Best pick</div>
