@@ -100,6 +100,16 @@ body {
 .circle-svg { position: absolute; inset: -0.22em -0.1em; overflow: visible; pointer-events: none; }
 .circle-svg path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
 
+.guy-line {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  margin-top: 0.5em;
+}
+.guy-line img { height: 1.5em; width: auto; }
+.guy-arrow { height: 1em; width: auto; flex-shrink: 0; }
+.guy-arrow path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
 .tabs {
   display: flex;
   gap: 4px;
