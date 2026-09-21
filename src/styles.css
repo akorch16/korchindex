@@ -117,7 +117,7 @@ body {
 .guy-arrow path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 
 .guy-photo {
-  height: 1.5em;
+  height: 3em;
   width: auto;
   flex-shrink: 0;
   align-self: center;
