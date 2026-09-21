@@ -143,7 +143,7 @@ export default function ArchiveY1() {
             <div className="note">BRK.B, same window</div>
           </div>
           <div className="tile callout">
-            <div className="label">Best pick</div>
+            <div className="label">Biggest winner</div>
             <div className="value pos">{fmtPct(best.return, 0)}</div>
             <div className="note big pos">{best.ticker}</div>
           </div>

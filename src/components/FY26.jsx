@@ -374,7 +374,7 @@ export default function FY26() {
             </div>
           </div>
           <div className="tile callout">
-            <div className="label">Best pick</div>
+            <div className="label">Biggest winner</div>
             <div className="value pos">
               {best ? fmtPct(best.since) : '—'}
             </div>

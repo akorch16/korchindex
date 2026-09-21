@@ -269,7 +269,7 @@ export default function Dashboard() {
           <Tile hero label="KORCH · FY25" value={fmtPct(korch)} cls="pos" note={`$${START_VALUE.toLocaleString()} → $${Math.round(endValue).toLocaleString()}`} />
           <Tile label="S&P 500" value={fmtPct(sp)} note="VOO, same window" />
           <Tile label="Warren Buffett" value={fmtPct(brk)} note="BRK.B, same window" />
-          <Tile label="Best pick" value={fmtPct(best.return, 0)} cls="pos" callout note={best.ticker} />
+          <Tile label="Biggest winner" value={fmtPct(best.return, 0)} cls="pos" callout note={best.ticker} />
           <Tile label="Biggest loser" value={fmtPct(worst.return, 0)} cls="neg" callout note={worst.ticker} />
         </div>
       </section>
