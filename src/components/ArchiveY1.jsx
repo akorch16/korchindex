@@ -157,6 +157,16 @@ export default function ArchiveY1() {
       </section>
 
       <section className="section">
+        <h2 className="section-title">How KORCH works</h2>
+        <p className="section-sub">
+          Each person picks one stock for the season — anything tradeable on Robinhood, long
+          only — and $1,000 rides on it from open to close, no changing your mind mid-season.
+          We track every pick's return against the S&P 500 and Warren Buffett for the full
+          season window.
+        </p>
+      </section>
+
+      <section className="section">
         <RaceChart
           title="The race: KORCH vs. the professionals"
           sub="Cumulative return, Oct 5 2023 → Oct 7 2024 — the season that started it all."
