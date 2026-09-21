@@ -259,7 +259,7 @@ function Showdowns({ rows, showdownLabels }) {
           .filter((line) => line.values.some((v) => v != null))
         if (s.title === 'The Wife vs. everyone') {
           chartSeries.push({
-            name: 'Everyone (minus Alejandra)',
+            name: 'Everyone else',
             color: 'var(--baseline)',
             values: averageOf(rows.map((r) => series(r, r.live))),
             dash: true,
