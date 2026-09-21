@@ -90,8 +90,8 @@ body {
 
 .hero-row {
   display: flex;
-  align-items: stretch;
-  gap: 20px;
+  align-items: center;
+  gap: 10px;
 }
 .hero-headline {
   flex: 1 1 auto;
@@ -117,11 +117,12 @@ body {
 .guy-arrow path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 
 .guy-photo {
-  height: 3em;
+  height: 6em;
   width: auto;
   flex-shrink: 0;
   align-self: center;
   font-size: clamp(23px, 3.4vw, 44px);
+  margin: -32px 0 -22px;
 }
 
 .tabs {
@@ -187,7 +188,7 @@ body {
   .tile .note, .tile .note.big { font-size: 11px; }
 
   .hero-row { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .guy-photo { height: 140px; align-self: flex-end; }
+  .guy-photo { height: 140px; align-self: flex-end; margin: 0; }
 }
 
 /* ---------- chart chrome ---------- */
