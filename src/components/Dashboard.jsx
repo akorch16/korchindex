@@ -319,7 +319,7 @@ export default function Dashboard() {
       </section>
 
       <section className="section">
-        <h2 className="section-title">Diamond hands</h2>
+        <h2 className="section-title">Hold or Switch</h2>
         <p className="section-sub">
           What if nobody ever sold? Top Year 1 picks if held from October 2023 all the way through
           October 2025.
