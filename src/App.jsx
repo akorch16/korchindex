@@ -130,8 +130,13 @@ export default function App() {
               </svg>
             </span>{' '}
             knows anything.
-            <br />
-            Especially not this guy.
+            <span className="guy-line">
+              Especially not this guy.
+              <svg className="guy-arrow" viewBox="0 0 60 30" aria-hidden="true">
+                <path d="M4,15 H50 M50,15 L36,4 M50,15 L36,26" />
+              </svg>
+              <img src={`${import.meta.env.BASE_URL}korch_guy.png`} alt="" />
+            </span>
           </h1>
         )}
       </header>
@@ -159,10 +164,6 @@ export default function App() {
       <footer className="footnote">
         KORCH is not a registered investment vehicle. Past performance beating Warren Buffett is no
         guarantee of future performance beating Warren Buffett.
-        <div className="footnote-guy">
-          <img src={`${import.meta.env.BASE_URL}korch_guy.png`} alt="" />
-          <span>We invest like nobody knows anything. Especially not this guy.</span>
-        </div>
       </footer>
     </div>
   )
