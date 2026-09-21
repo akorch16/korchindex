@@ -4,6 +4,7 @@ import year3 from '../data/year3.json'
 import year2 from '../data/year2.json'
 import cohortMembership from '../data/cohort_membership.json'
 import stockNotes from '../data/stock-notes.json'
+import HeadToHead from './HeadToHead'
 
 const STAKE = 1000
 
@@ -400,14 +401,7 @@ export default function FY26() {
           ]}
           xLabels={raceLabels}
         />
-        <RaceChart
-          title="Head to Head: KORCH vs. Warren Buffett"
-          series={[
-            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
-            { name: 'W. Buffett', color: 'var(--baseline)', values: brk ? series(brk, brk.live) : [] },
-          ]}
-          xLabels={raceLabels}
-        />
+        <HeadToHead korchReturn={korchSeries.at(-1) ?? null} buffettReturn={brk?.since ?? null} />
       </section>
 
       <section className="section">

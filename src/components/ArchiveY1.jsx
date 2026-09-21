@@ -2,6 +2,7 @@ import { Leaderboard } from './Dashboard'
 import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year1 from '../data/year1.json'
 import cohortMembership from '../data/cohort_membership.json'
+import HeadToHead from './HeadToHead'
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
@@ -166,14 +167,7 @@ export default function ArchiveY1() {
           ]}
           xLabels={monthLabels(year1.monthlyDates)}
         />
-        <RaceChart
-          title="Head to Head: KORCH vs. Warren Buffett"
-          series={[
-            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
-            { name: 'W. Buffett', color: 'var(--baseline)', values: brkSeries },
-          ]}
-          xLabels={monthLabels(year1.monthlyDates)}
-        />
+        <HeadToHead korchReturn={year1.korchReturn} buffettReturn={brk.return} />
       </section>
 
       <section className="section">

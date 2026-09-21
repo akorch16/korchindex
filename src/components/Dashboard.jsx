@@ -3,6 +3,7 @@ import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year2 from '../data/year2.json'
 import groups from '../data/groups.json'
 import hold from '../data/hold.json'
+import HeadToHead from './HeadToHead'
 
 const START_VALUE = 41000
 
@@ -285,14 +286,7 @@ export default function Dashboard() {
           ]}
           xLabels={monthLabels(year2.monthlyDates)}
         />
-        <RaceChart
-          title="Head to Head: KORCH vs. Warren Buffett"
-          series={[
-            { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
-            { name: 'W. Buffett', color: 'var(--baseline)', values: brkSeries },
-          ]}
-          xLabels={monthLabels(year2.monthlyDates)}
-        />
+        <HeadToHead korchReturn={korch} buffettReturn={brk} />
       </section>
 
       <section className="section">
