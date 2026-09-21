@@ -96,6 +96,7 @@ export default function LineChart({ series, xLabels, height = 300, yFmt = (v) =>
         height={H}
         viewBox={`0 0 ${W} ${H}`}
         role="img"
+        style={{ overflow: 'visible' }}
         onMouseMove={onMove}
         onMouseLeave={() => setHover(null)}
       >

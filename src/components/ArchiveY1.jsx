@@ -85,7 +85,14 @@ function Showdowns() {
         const series = s.keys
           .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: cohortSeries(cohortMembership[k] ?? []) }))
           .filter((line) => line.values.some((v) => v != null))
-        series.push({ name: 'KORCH', color: 'var(--baseline)', values: averageMonthlySeries(year1.people), dash: true })
+        if (s.title === 'The Wife vs. everyone') {
+          series.push({
+            name: 'Everyone (minus Alejandra)',
+            color: 'var(--baseline)',
+            values: averageMonthlySeries(year1.people),
+            dash: true,
+          })
+        }
         if (series.length <= 1) return null
         return (
           <div key={s.title} className="card chart-card">
@@ -168,10 +175,10 @@ export default function ArchiveY1() {
       </section>
 
       <section className="section">
-        <h2 className="section-title">The showdowns</h2>
+        <h2 className="section-title">The Showdowns</h2>
         <p className="section-sub">
           Same demographic cohorts as FY25, computed from FY24’s own picks and prices. Group lines
-          are the average cumulative return of each cohort; the dashed line is everyone.
+          are the average cumulative return of each cohort.
         </p>
         <Showdowns />
       </section>
