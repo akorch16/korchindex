@@ -215,15 +215,9 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 20px;
-  color: #fff;
+  object-fit: cover;
+  background: var(--page);
 }
-.matchup-avatar.korch { background: var(--accent); }
-.matchup-avatar.buffett { background: var(--muted); }
 .matchup-side.winner .matchup-avatar { box-shadow: 0 0 0 3px var(--up); }
 .matchup-name { font-weight: 600; font-size: 13px; color: var(--ink-2); }
 .matchup-value { font-size: 30px; font-weight: 750; }
@@ -231,7 +225,7 @@ body {
 
 @media (max-width: 600px) {
   .matchup { gap: 14px; padding: 16px 8px 24px; }
-  .matchup-avatar { width: 48px; height: 48px; font-size: 15px; }
+  .matchup-avatar { width: 48px; height: 48px; }
   .matchup-value { font-size: 22px; }
 }
 
