@@ -91,17 +91,10 @@ body {
 .hero-headline {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: 400;
-  font-size: clamp(16px, 4.6vw, 62px);
-  line-height: 1.18;
-  white-space: nowrap;
+  font-size: clamp(14px, 3.4vw, 44px);
+  line-height: 1.25;
   margin: 0;
   color: var(--ink);
-}
-
-.hero-subline {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 6px 0 0;
 }
 .circle-wrap { position: relative; display: inline-block; padding: 0 8px; }
 .circle-svg { position: absolute; inset: -0.22em -0.1em; overflow: visible; pointer-events: none; }
