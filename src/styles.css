@@ -187,10 +187,10 @@ body {
   .tile .value { font-size: 20px; margin-top: 4px; }
   .tile .note, .tile .note.big { font-size: 11px; }
 
-  .hero-row { flex-direction: column; align-items: flex-start; gap: 0; }
+  .hero-row { align-items: flex-start; gap: 10px; }
   .guy-line { flex-wrap: wrap; }
-  .guy-arrow { flex: 0 0 auto; width: 56px; height: 1.3em; min-width: 0; }
-  .guy-photo { height: 140px; align-self: flex-end; margin: -16px 0 0; }
+  .guy-arrow { flex: 0 0 auto; width: 40px; height: 1.1em; min-width: 0; }
+  .guy-photo { height: 3.4em; width: auto; align-self: flex-start; margin: 0; }
 }
 
 /* ---------- chart chrome ---------- */
