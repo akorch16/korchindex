@@ -121,23 +121,26 @@ export default function App() {
           </div>
         </nav>
         {page === 'home' && (
-          <h1 className="hero-headline">
-            We invest like{' '}
-            <span className="circle-wrap">
-              nobody
-              <svg className="circle-svg" viewBox="0 0 220 110" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M14,58 C10,30 40,10 90,8 C150,6 205,18 208,50 C210,78 175,98 110,100 C55,101 12,88 10,64" />
-              </svg>
-            </span>{' '}
-            knows anything.
-            <span className="guy-line">
-              Especially not this guy.
-              <svg className="guy-arrow" viewBox="0 0 60 30" aria-hidden="true">
-                <path d="M4,15 H50 M50,15 L36,4 M50,15 L36,26" />
-              </svg>
-              <img src={`${import.meta.env.BASE_URL}korch_guy.png`} alt="" />
-            </span>
-          </h1>
+          <div className="hero-row">
+            <h1 className="hero-headline">
+              We invest like{' '}
+              <span className="circle-wrap">
+                nobody
+                <svg className="circle-svg" viewBox="0 0 220 110" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M14,58 C10,30 40,10 90,8 C150,6 205,18 208,50 C210,78 175,98 110,100 C55,101 12,88 10,64" />
+                </svg>
+              </span>{' '}
+              knows anything.
+              <span className="guy-line">
+                Especially not this guy.
+                <svg className="guy-arrow" viewBox="0 0 160 60" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M4,50 C50,62 80,10 130,18 C140,20 148,16 154,8" />
+                  <path d="M154,8 L142,10 M154,8 L148,20" />
+                </svg>
+              </span>
+            </h1>
+            <img className="guy-photo" src={`${import.meta.env.BASE_URL}korch_guy.png`} alt="" />
+          </div>
         )}
       </header>
 

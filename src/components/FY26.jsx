@@ -329,7 +329,6 @@ export default function FY26() {
   }, [data])
 
   const tracked = rows.filter((r) => r.since != null)
-  const korch = tracked.length ? tracked.reduce((sum, r) => sum + r.since, 0) / tracked.length : null
   const sp = benchmarks.find((b) => b.ticker === 'VOO')
   const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
   const best = tracked[0]
@@ -365,12 +364,6 @@ export default function FY26() {
           <div className="tile hero">
             <div className="label">KORCH · Total value</div>
             <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
-          </div>
-          <div className="tile hero">
-            <div className="label">KORCH · FY26</div>
-            <div className={`value ${korch != null && korch >= 0 ? 'pos' : korch != null ? 'neg' : ''}`}>
-              {korch != null ? fmtPct(korch) : '—'}
-            </div>
           </div>
           <div className="tile">
             <div className="label">24-hour change</div>

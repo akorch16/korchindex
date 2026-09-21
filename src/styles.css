@@ -42,7 +42,7 @@ body {
 .shell { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
 
 /* ---------- hero ---------- */
-.hero { padding: 14px 0 24px; }
+.hero { padding: 14px 0 10px; }
 .hero-nav {
   display: flex;
   align-items: center;
@@ -88,10 +88,17 @@ body {
 .hero-links button:hover { color: var(--ink); }
 .hero-links button.active { color: var(--ink); }
 
+.hero-row {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+}
 .hero-headline {
+  flex: 1 1 auto;
+  min-width: 0;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: 400;
-  font-size: clamp(14px, 3.4vw, 44px);
+  font-size: clamp(23px, 3.4vw, 44px);
   line-height: 1.25;
   margin: 0;
   color: var(--ink);
@@ -103,17 +110,18 @@ body {
 .guy-line {
   display: flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.4em;
   margin-top: 0.5em;
 }
-.guy-line img { height: 1.5em; width: auto; }
-.guy-arrow { height: 1em; width: auto; flex-shrink: 0; }
+.guy-arrow { flex: 1 1 auto; min-width: 40px; height: 2em; }
 .guy-arrow path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+.guy-photo { height: 100%; width: auto; flex-shrink: 0; align-self: stretch; }
 
 .tabs {
   display: flex;
   gap: 4px;
-  margin: 8px 0 32px;
+  margin: 4px 0 16px;
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
 }
@@ -134,6 +142,7 @@ body {
 
 /* ---------- sections & cards ---------- */
 .section { margin: 40px 0; }
+.tabs + main > .section:first-child { margin-top: 16px; }
 .section-title { font-size: 22px; font-weight: 700; margin: 0 0 4px; }
 .section-sub { color: var(--ink-2); font-size: 14px; margin: 0 0 20px; max-width: 64ch; }
 
@@ -170,6 +179,9 @@ body {
   .tile .label { font-size: 11px; }
   .tile .value { font-size: 20px; margin-top: 4px; }
   .tile .note, .tile .note.big { font-size: 11px; }
+
+  .hero-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .guy-photo { height: 140px; align-self: flex-end; }
 }
 
 /* ---------- chart chrome ---------- */
