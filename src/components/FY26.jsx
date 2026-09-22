@@ -397,8 +397,6 @@ export default function FY26() {
         </div>
       </section>
 
-      <StockSpotlight />
-
       <section className="section">
         <h2 className="section-title">How KORCH works</h2>
         <HowKorchWorks count={year3.people.length} />
@@ -426,6 +424,8 @@ export default function FY26() {
           errNote={err ? 'Live prices haven’t published yet today — showing each pick’s opening price.' : null}
         />
       </section>
+
+      <StockSpotlight />
 
       <section className="section">
         <h2 className="section-title">Quarterly winners and losers</h2>
