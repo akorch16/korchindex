@@ -218,6 +218,7 @@ body {
   object-fit: cover;
   background: var(--page);
 }
+.matchup-avatar.contain { object-fit: contain; padding: 6px; box-sizing: border-box; }
 .matchup-side.winner .matchup-avatar { box-shadow: 0 0 0 3px var(--up); }
 .matchup-name { font-weight: 600; font-size: 13px; color: var(--ink-2); }
 .matchup-value { font-size: 30px; font-weight: 750; }
@@ -354,22 +355,22 @@ blockquote.rationale footer { color: var(--muted); font-size: 12.5px; margin-top
 .rules-card {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
 }
 .rules-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 18px;
-  background: var(--gain-wash);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
-.rules-icon svg { width: 42px; height: 42px; color: var(--accent); }
+.rules-icon svg { width: 84px; height: 84px; color: var(--accent); }
 .rules-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-2); text-transform: uppercase; margin-bottom: 6px; }
 .rules-value {
   font-size: 34px;
