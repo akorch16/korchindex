@@ -413,7 +413,7 @@ export default function FY26() {
           ]}
           xLabels={raceLabels}
         />
-        <HeadToHead korchReturn={korchSeries.at(-1) ?? null} buffettReturn={brk?.since ?? null} />
+        <HeadToHead korchReturn={korchSeries.at(-1) ?? null} spReturn={sp?.since ?? null} buffettReturn={brk?.since ?? null} />
       </section>
 
       <section className="section">
