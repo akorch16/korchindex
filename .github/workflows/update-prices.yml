@@ -2,14 +2,18 @@ name: Update live prices
 
 on:
   schedule:
-    # Hourly during/around US market hours, weekdays. 13-21 UTC covers
-    # 9:30am-4pm ET in both EDT (UTC-4) and EST (UTC-5) with an hour of
-    # padding on each side, so it doesn't need to change with DST.
-    - cron: "0 13-21 * * 1-5"
-    # Kept as a distinct final run shortly after the official close, so
-    # the last snapshot of the day is the real closing price, not
-    # whatever the 21:00 UTC intraday hourly run happened to catch.
-    - cron: "30 21 * * 1-5"
+    # Twice an hour, not once, during/around US market hours, weekdays.
+    # GitHub's scheduled-workflow queue is most congested right at the
+    # top of the hour and can delay or silently drop triggers during
+    # busy periods -- confirmed here: a single top-of-hour "0 13-21"
+    # cron was only actually firing ~3x/day instead of the intended ~9,
+    # with deliveries landing 15min-3hr late. Two offset slots per hour
+    # gives redundancy so one dropped trigger doesn't leave an hours-
+    # long gap, and the 21:xx pair doubles as the "shortly after close"
+    # snapshot. 13-21 UTC covers 9:30am-4pm ET in both EDT and EST with
+    # an hour of padding on each side, so it doesn't need to change
+    # with DST.
+    - cron: "7,37 13-21 * * 1-5"
   workflow_dispatch:
 
 permissions:
