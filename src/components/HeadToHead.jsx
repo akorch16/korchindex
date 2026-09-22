@@ -1,11 +1,16 @@
+import { Fragment } from 'react'
 import { fmtPct } from './LineChart'
 
-// A single-matchup "vs" card -- KORCH's overall return for the season
-// against Warren Buffett's, no chart.
-export default function HeadToHead({ title = 'Head to Head: KORCH vs. Warren Buffett', korchReturn, buffettReturn }) {
-  const korchWins = korchReturn != null && buffettReturn != null && korchReturn > buffettReturn
-  const buffettWins = korchReturn != null && buffettReturn != null && buffettReturn > korchReturn
+// A 3-way matchup card -- KORCH vs. the S&P 500 vs. Warren Buffett, no chart.
+export default function HeadToHead({ title = 'Head to Head: KORCH vs. The Market', korchReturn, spReturn, buffettReturn }) {
   const base = import.meta.env.BASE_URL
+  const entries = [
+    { key: 'korch', name: 'KORCH', avatar: `${base}korch_guy_copy.png`, value: korchReturn },
+    { key: 'sp', name: 'S&P 500', avatar: `${base}salt-and-pepper.webp`, value: spReturn },
+    { key: 'buffett', name: 'Warren Buffett', avatar: `${base}warren_buffett.png`, value: buffettReturn },
+  ]
+  const known = entries.filter((e) => e.value != null)
+  const maxValue = known.length ? Math.max(...known.map((e) => e.value)) : null
 
   return (
     <div className="card chart-card">
@@ -13,21 +18,18 @@ export default function HeadToHead({ title = 'Head to Head: KORCH vs. Warren Buf
         <h3 className="chart-title">{title}</h3>
       </div>
       <div className="matchup">
-        <div className={`matchup-side${korchWins ? ' winner' : ''}`}>
-          <img className="matchup-avatar" src={`${base}korch_guy_copy.png`} alt="KORCH" />
-          <div className="matchup-name">KORCH</div>
-          <div className={`matchup-value ${korchReturn >= 0 ? 'pos' : 'neg'}`}>
-            {korchReturn != null ? fmtPct(korchReturn) : '—'}
-          </div>
-        </div>
-        <div className="matchup-vs">VS</div>
-        <div className={`matchup-side${buffettWins ? ' winner' : ''}`}>
-          <img className="matchup-avatar" src={`${base}warren_buffett.png`} alt="Warren Buffett" />
-          <div className="matchup-name">Warren Buffett</div>
-          <div className={`matchup-value ${buffettReturn >= 0 ? 'pos' : 'neg'}`}>
-            {buffettReturn != null ? fmtPct(buffettReturn) : '—'}
-          </div>
-        </div>
+        {entries.map((e, i) => (
+          <Fragment key={e.key}>
+            <div className={`matchup-side${e.value != null && e.value === maxValue ? ' winner' : ''}`}>
+              <img className="matchup-avatar" src={e.avatar} alt={e.name} />
+              <div className="matchup-name">{e.name}</div>
+              <div className={`matchup-value ${e.value >= 0 ? 'pos' : 'neg'}`}>
+                {e.value != null ? fmtPct(e.value) : '—'}
+              </div>
+            </div>
+            {i < entries.length - 1 && <div className="matchup-vs">VS</div>}
+          </Fragment>
+        ))}
       </div>
     </div>
   )

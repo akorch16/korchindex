@@ -173,7 +173,7 @@ export default function ArchiveY1() {
           ]}
           xLabels={monthLabels(year1.monthlyDates)}
         />
-        <HeadToHead korchReturn={year1.korchReturn} buffettReturn={brk.return} />
+        <HeadToHead korchReturn={year1.korchReturn} spReturn={voo.return} buffettReturn={brk.return} />
       </section>
 
       <section className="section">

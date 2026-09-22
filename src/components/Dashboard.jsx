@@ -292,7 +292,7 @@ export default function Dashboard() {
           ]}
           xLabels={monthLabels(year2.monthlyDates)}
         />
-        <HeadToHead korchReturn={korch} buffettReturn={brk} />
+        <HeadToHead korchReturn={korch} spReturn={sp} buffettReturn={brk} />
       </section>
 
       <section className="section">
