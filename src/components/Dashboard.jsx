@@ -4,6 +4,7 @@ import year2 from '../data/year2.json'
 import groups from '../data/groups.json'
 import hold from '../data/hold.json'
 import HeadToHead from './HeadToHead'
+import HowKorchWorks from './HowKorchWorks'
 
 const START_VALUE = 41000
 
@@ -277,12 +278,7 @@ export default function Dashboard() {
 
       <section className="section">
         <h2 className="section-title">How KORCH works</h2>
-        <ul className="philosophy-list">
-          <li>Forty-one people picked one stock each</li>
-          <li>I invested $1,000 in each for a full year</li>
-          <li>I treated the winner to a dinner of their choosing</li>
-          <li>Loser took me out to a dinner of my choosing</li>
-        </ul>
+        <HowKorchWorks count={year2.people.length} />
       </section>
 
       <section className="section">

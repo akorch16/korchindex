@@ -3,6 +3,7 @@ import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
 import year1 from '../data/year1.json'
 import cohortMembership from '../data/cohort_membership.json'
 import HeadToHead from './HeadToHead'
+import HowKorchWorks from './HowKorchWorks'
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
@@ -158,12 +159,7 @@ export default function ArchiveY1() {
 
       <section className="section">
         <h2 className="section-title">How KORCH works</h2>
-        <ul className="philosophy-list">
-          <li>Thirty-five people picked one stock each</li>
-          <li>I invested $1,000 in each for a full year</li>
-          <li>I treated the winner to a dinner of their choosing</li>
-          <li>Loser took me out to a dinner of my choosing</li>
-        </ul>
+        <HowKorchWorks count={year1.people.length} />
       </section>
 
       <section className="section">
