@@ -1,9 +1,9 @@
-import { Leaderboard } from './Dashboard'
-import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
+import LineChart, { RaceChart, Legend, fmtPct, fmtMoney } from './LineChart'
 import year1 from '../data/year1.json'
 import cohortMembership from '../data/cohort_membership.json'
 import HeadToHead from './HeadToHead'
 import HowKorchWorks from './HowKorchWorks'
+import RosterTable from './RosterTable'
 
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
@@ -42,12 +42,6 @@ const SHOWDOWNS = [
   { title: 'The Wife vs. everyone', keys: ['Wife'] },
 ]
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
-
-function toRow(p) {
-  const [open, q1, q2, q3] = p.prices
-  const c = (v) => (open != null && v != null ? (v - open) / open : null)
-  return { name: p.name, ticker: p.ticker, changes: [c(q1), c(q2), c(q3)], return: p.return }
-}
 
 const monthLabels = (dates) =>
   (dates ?? []).map((d) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }))
@@ -111,7 +105,6 @@ function Showdowns() {
 }
 
 export default function ArchiveY1() {
-  const people = year1.people.map(toRow)
   const voo = year1.benchmarks.find((b) => b.ticker === 'VOO')
   const brk = year1.benchmarks.find((b) => b.ticker === 'BRK.B')
   const quotes = year1.people.filter((p) => p.rationale)
@@ -119,6 +112,8 @@ export default function ArchiveY1() {
   const worst = [...year1.people].sort((a, b) => (a.return ?? 9) - (b.return ?? 9))[0]
   const korchSeries = averageMonthlySeries(year1.people)
   const brkSeries = monthlySeries(brk.monthlyPrices)
+  const startValue = year1.people.length * 1000
+  const endValue = startValue * (1 + year1.korchReturn)
 
   return (
     <>
@@ -130,19 +125,12 @@ export default function ArchiveY1() {
         </p>
         <div className="kpi-row">
           <div className="tile hero">
-            <div className="label">Average pick · FY24</div>
+            <div className="label">KORCH · Total</div>
+            <div className={`value ${endValue >= startValue ? 'pos' : 'neg'}`}>{fmtMoney(endValue)}</div>
+          </div>
+          <div className="tile hero">
+            <div className="label">KORCH · FY24</div>
             <div className="value pos">{fmtPct(year1.korchReturn)}</div>
-            <div className="note">Equal-weight average of all 35 picks</div>
-          </div>
-          <div className="tile">
-            <div className="label">S&P 500</div>
-            <div className="value">{fmtPct(voo.return)}</div>
-            <div className="note">VOO, same window</div>
-          </div>
-          <div className="tile">
-            <div className="label">Warren Buffett</div>
-            <div className="value">{fmtPct(brk.return)}</div>
-            <div className="note">BRK.B, same window</div>
           </div>
           <div className="tile callout">
             <div className="label">Biggest winner</div>
@@ -177,19 +165,15 @@ export default function ArchiveY1() {
       </section>
 
       <section className="section">
-        <Leaderboard
-          people={people}
-          title="FY24 leaderboard"
-          sub="Quarter columns are cumulative from the October 2023 open (Jan / Apr / Jul checkpoints)."
+        <h2 className="section-title">The leaderboard</h2>
+        <RosterTable
+          rows={year1.people.map((p) => ({ name: p.name, ticker: p.ticker, since: p.return, openingPrice: p.prices?.[0], latest: p.prices?.at(-1) }))}
+          sinceLabel="FY24"
         />
       </section>
 
       <section className="section">
         <h2 className="section-title">The Showdowns</h2>
-        <p className="section-sub">
-          Same demographic cohorts as FY25, computed from FY24’s own picks and prices. Group lines
-          are the average cumulative return of each cohort.
-        </p>
         <Showdowns />
       </section>
 

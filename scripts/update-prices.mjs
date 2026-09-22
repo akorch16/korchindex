@@ -9,13 +9,19 @@
 import { readFile, writeFile } from 'node:fs/promises'
 
 const PRICES_PATH = new URL('../public/live/prices.json', import.meta.url)
+const YEAR1_PATH = new URL('../src/data/year1.json', import.meta.url)
 const YEAR2_PATH = new URL('../src/data/year2.json', import.meta.url)
 const YEAR3_PATH = new URL('../src/data/year3.json', import.meta.url)
 
+const year1 = JSON.parse(await readFile(YEAR1_PATH, 'utf8'))
 const year2 = JSON.parse(await readFile(YEAR2_PATH, 'utf8'))
 const year3 = JSON.parse(await readFile(YEAR3_PATH, 'utf8'))
 const tickers = [
   ...new Set([
+    // FY24 (year1) picks are tracked too -- FY25's "Hold or Switch" needs a
+    // live price for each FY24 pick to compare against what was actually
+    // switched to.
+    ...year1.people.map((p) => p.ticker.trim()),
     ...year2.people.map((p) => p.ticker.trim()),
     ...year3.people.map((p) => p.ticker.trim()),
     'VOO',

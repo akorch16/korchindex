@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import LineChart, { RaceChart, Legend, fmtPct, fmtMoney } from './LineChart'
 import year3 from '../data/year3.json'
 import year2 from '../data/year2.json'
@@ -6,6 +6,7 @@ import cohortMembership from '../data/cohort_membership.json'
 import stockNotes from '../data/stock-notes.json'
 import HeadToHead from './HeadToHead'
 import HowKorchWorks from './HowKorchWorks'
+import RosterTable from './RosterTable'
 
 const STAKE = 1000
 
@@ -285,16 +286,6 @@ function Showdowns({ rows, showdownLabels }) {
 export default function FY26() {
   const [data, setData] = useState(null)
   const [err, setErr] = useState(false)
-  const [expanded, setExpanded] = useState(() => new Set())
-
-  const toggleExpanded = (ticker) => {
-    setExpanded((prev) => {
-      const next = new Set(prev)
-      if (next.has(ticker)) next.delete(ticker)
-      else next.add(ticker)
-      return next
-    })
-  }
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}live/prices.json`, { cache: 'no-store' })
@@ -418,73 +409,12 @@ export default function FY26() {
 
       <section className="section">
         <h2 className="section-title">KORCH: The Stock Picks</h2>
-        <div className="card">
-          <div className="table-wrap">
-            <table className="data">
-              <thead>
-                <tr>
-                  <th>Pick</th>
-                  <th className="num">Since FY26 open</th>
-                  <th className="num">Opening price</th>
-                  <th className="num">Latest</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => {
-                  const note = stockNotes[r.ticker]
-                  const isOpen = expanded.has(r.ticker)
-                  return (
-                    <Fragment key={r.name}>
-                      <tr
-                        className={note ? 'pick-row' : ''}
-                        onClick={note ? () => toggleExpanded(r.ticker) : undefined}
-                        role={note ? 'button' : undefined}
-                        tabIndex={note ? 0 : undefined}
-                        aria-expanded={note ? isOpen : undefined}
-                        onKeyDown={
-                          note
-                            ? (e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                  e.preventDefault()
-                                  toggleExpanded(r.ticker)
-                                }
-                              }
-                            : undefined
-                        }
-                      >
-                        <td>
-                          <span className="ticker">{displayTicker(r)}</span>
-                          {note && <span className={`arrow ${isOpen ? 'open' : ''}`}>▸</span>}
-                        </td>
-                        <td className={`num ${r.since == null ? '' : r.since >= 0 ? 'pos' : 'neg'}`}>
-                          {r.since == null ? 'pending' : fmtPct(r.since)}
-                        </td>
-                        <td className="num">{r.openingPrice != null ? `$${r.openingPrice.toFixed(2)}` : '—'}</td>
-                        <td className="num">{r.live != null ? `$${r.live.toFixed(2)}` : '—'}</td>
-                      </tr>
-                      {isOpen && note && (
-                        <tr className="detail-row">
-                          <td colSpan={4}>
-                            <div className="pick-detail">
-                              <div className="pick-detail-company">{note.company}</div>
-                              <p className="pick-detail-about">{note.about}</p>
-                              <p className="pick-detail-performance">{note.performance}</p>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </Fragment>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        {err && (
-          <p className="footnote">
-            Live prices haven’t published yet today — showing each pick’s opening price.
-          </p>
-        )}
+        <RosterTable
+          rows={rows.map((r) => ({ ...r, displayTicker: displayTicker(r), latest: r.live }))}
+          sinceLabel="FY26"
+          notes={stockNotes}
+          errNote={err ? 'Live prices haven’t published yet today — showing each pick’s opening price.' : null}
+        />
       </section>
 
       <section className="section">
