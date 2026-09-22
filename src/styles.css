@@ -350,6 +350,45 @@ blockquote.rationale footer { color: var(--muted); font-size: 12.5px; margin-top
 }
 .philosophy-list li { margin-bottom: 8px; }
 
+.rules-grid { display: flex; align-items: stretch; gap: 4px; }
+.rules-card {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+}
+.rules-number { position: absolute; top: 20px; right: 20px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.rules-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--gain-wash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.rules-icon svg { width: 32px; height: 32px; color: var(--accent); }
+.rules-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-2); text-transform: uppercase; margin-bottom: 6px; }
+.rules-value {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.rules-value.accent { color: var(--accent); }
+.rules-desc { color: var(--ink-2); font-size: 15px; line-height: 1.5; margin: 0; }
+.rules-arrow { display: flex; align-items: center; justify-content: center; width: 32px; flex-shrink: 0; color: var(--muted); font-size: 20px; }
+
+@media (max-width: 700px) {
+  .rules-grid { flex-direction: column; gap: 12px; }
+  .rules-arrow { display: none; }
+}
+
 .updated { color: var(--muted); font-size: 12.5px; }
 .footnote { color: var(--muted); font-size: 12.5px; margin-top: 24px; }
 .footnote-guy { display: flex; align-items: center; gap: 8px; margin-top: 10px; }

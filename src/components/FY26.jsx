@@ -5,6 +5,7 @@ import year2 from '../data/year2.json'
 import cohortMembership from '../data/cohort_membership.json'
 import stockNotes from '../data/stock-notes.json'
 import HeadToHead from './HeadToHead'
+import HowKorchWorks from './HowKorchWorks'
 
 const STAKE = 1000
 
@@ -399,12 +400,7 @@ export default function FY26() {
 
       <section className="section">
         <h2 className="section-title">How KORCH works</h2>
-        <ul className="philosophy-list">
-          <li>Forty-two people pick one stock each</li>
-          <li>I invest $1,000 in each for a full year</li>
-          <li>I treat the winner to a dinner of their choosing</li>
-          <li>Loser takes me out to a dinner of my choosing</li>
-        </ul>
+        <HowKorchWorks count={year3.people.length} />
       </section>
 
       <section className="section">
