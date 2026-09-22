@@ -193,6 +193,22 @@ body {
   .guy-photo { height: 5.1em; width: auto; align-self: flex-start; margin: 0; }
 }
 
+/* ---------- stock spotlight ---------- */
+.spotlight-card { display: flex; flex-direction: column; gap: 10px; }
+.spotlight-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.spotlight-body { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; }
+.spotlight-who { display: flex; align-items: center; gap: 10px; }
+.spotlight-company { font-size: 17px; font-weight: 700; }
+.spotlight-change { font-size: 15px; font-weight: 700; white-space: nowrap; }
+.spotlight-news { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+.spotlight-news a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--border); }
+.spotlight-news a:hover { border-color: var(--ink); }
+.spotlight-publisher { color: var(--muted); }
+
+@media (max-width: 600px) {
+  .spotlight-company { font-size: 15px; }
+}
+
 /* ---------- chart chrome ---------- */
 .chart-card { padding: 20px 12px 8px 4px; }
 .chart-card + .chart-card { margin-top: 20px; }

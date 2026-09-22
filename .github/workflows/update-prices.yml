@@ -32,6 +32,7 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/update-prices.mjs
+      - run: node scripts/update-spotlight.mjs
       - id: commit
         run: |
           if git diff --quiet; then
@@ -40,6 +41,7 @@ jobs:
             git config user.name "korch-bot"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add public/live/prices.json
+            [ -f public/live/spotlight.json ] && git add public/live/spotlight.json
             git commit -m "chore: update live prices"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"

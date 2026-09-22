@@ -7,6 +7,7 @@ import stockNotes from '../data/stock-notes.json'
 import HeadToHead from './HeadToHead'
 import HowKorchWorks from './HowKorchWorks'
 import RosterTable from './RosterTable'
+import StockSpotlight from './StockSpotlight'
 
 const STAKE = 1000
 
@@ -395,6 +396,8 @@ export default function FY26() {
           </div>
         </div>
       </section>
+
+      <StockSpotlight />
 
       <section className="section">
         <h2 className="section-title">How KORCH works</h2>

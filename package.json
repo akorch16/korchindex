@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "update-prices": "node scripts/update-prices.mjs"
+    "update-prices": "node scripts/update-prices.mjs",
+    "update-spotlight": "node scripts/update-spotlight.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
