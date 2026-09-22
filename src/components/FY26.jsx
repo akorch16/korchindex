@@ -377,7 +377,7 @@ export default function FY26() {
             <div className="label">{dailyChangeLabel()}</div>
             <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
               {pv.dailyChange >= 0 ? '+' : '-'}
-              {fmtMoney(Math.abs(pv.dailyChange))}
+              {`$${Math.round(Math.abs(pv.dailyChange)).toLocaleString('en-US')}`}
             </div>
           </div>
           <div className="tile callout">
