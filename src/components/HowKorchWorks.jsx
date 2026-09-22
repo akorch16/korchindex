@@ -37,21 +37,13 @@ const CARDS = [
     icon: RosterIcon,
     label: 'The roster',
     accent: true,
-    desc: () => (
-      <>
-        Friends &amp; family, each on the clock for exactly <b>one stock pick</b>.
-      </>
-    ),
+    desc: () => <>Friends &amp; family each pick a stock.</>,
   },
   {
     icon: StakeIcon,
     label: 'The stake',
     accent: false,
-    desc: () => (
-      <>
-        Real money, in every single pick — held for <b>a full year</b>.
-      </>
-    ),
+    desc: () => <>Real money invested in each pick. Held for one year.</>,
   },
   {
     icon: WagerIcon,
@@ -59,7 +51,7 @@ const CARDS = [
     accent: true,
     desc: () => (
       <>
-        <b>Winner</b> picks the restaurant. <b>Loser</b> picks up the tab.
+        I buy the <b>winner</b> dinner. <b>Loser</b> buys me dinner.
       </>
     ),
   },
