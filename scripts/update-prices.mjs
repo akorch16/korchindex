@@ -1,7 +1,7 @@
 // Fetches the latest price for every tracked ticker from Yahoo Finance's public
 // chart endpoint (free, no API key) and merges them into public/live/prices.json.
-// Run by .github/workflows/update-prices.yml each weekday after US market close,
-// or locally with `npm run update-prices`.
+// Run by .github/workflows/update-prices.yml twice an hour during US market
+// hours on weekdays, or locally with `npm run update-prices`.
 //
 // Symbols are fetched one at a time so a delisted or unknown ticker fails alone
 // and keeps its previous value. (Stooq was tried first but 404s all requests
@@ -46,15 +46,20 @@ async function fetchQuote(ticker) {
     headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) korchindex-price-updater' },
   })
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  const meta = (await res.json())?.chart?.result?.[0]?.meta
+  const result = (await res.json())?.chart?.result?.[0]
+  const meta = result?.meta
   const price = Number(meta?.regularMarketPrice)
   if (!Number.isFinite(price)) throw new Error('no data')
   const date = new Date((meta.regularMarketTime ?? 0) * 1000).toISOString().slice(0, 10)
-  // Yahoo's own reference point for "today's change" -- yesterday's close,
-  // held constant through the trading day regardless of how often this
-  // runs (now hourly). Used for the 24-hour dollar-change tile.
-  const prevClose = Number(meta?.chartPreviousClose)
-  return { price, date, ...(Number.isFinite(prevClose) ? { prevClose } : {}) }
+  // Today's regular-session open -- the last candle in the 1d-interval
+  // series is today's in-progress day, so its own `open` is today's actual
+  // open print (not yesterday's close). Held constant through the trading
+  // day regardless of how often this runs. Used for the "since open" tile,
+  // which is a steadier reference point than a rolling 24 hours (that
+  // stays flat all weekend, then jumps on Monday to cover 2.5 days at once).
+  const opens = result?.indicators?.quote?.[0]?.open
+  const todayOpen = Number(opens?.[opens.length - 1])
+  return { price, date, ...(Number.isFinite(todayOpen) ? { open: todayOpen } : {}) }
 }
 
 let existing = { quotes: {} }

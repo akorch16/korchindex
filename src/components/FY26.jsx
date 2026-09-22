@@ -10,21 +10,21 @@ import RosterTable from './RosterTable'
 
 const STAKE = 1000
 
-// Current dollar value of one person's $1,000 FY26 stake, and its 24-hour
-// dollar swing -- both measured off the same $1,000 basis scaled by price
-// ratios, so a corporate-action pick (frozen payout, or a merger/rebrand's
-// successor-share value) falls out of the same math with no special case:
-// a frozen payout has today's price equal to yesterday's, so its swing is
-// naturally $0.
+// Current dollar value of one person's $1,000 FY26 stake, and its dollar
+// swing since today's market open -- both measured off the same $1,000
+// basis scaled by price ratios, so a corporate-action pick (frozen payout,
+// or a merger/rebrand's successor-share value) falls out of the same math
+// with no special case: a frozen payout has today's price equal to today's
+// open, so its swing is naturally $0.
 function positionStats(p, quotes) {
   const caLive = corporateActionValue(p.corporateAction, quotes, 'price')
   const live = caLive ?? quotes?.[p.ticker]?.price ?? null
-  const caPrev = corporateActionValue(p.corporateAction, quotes, 'prevClose')
-  const prev = p.corporateAction ? caPrev : (quotes?.[p.ticker]?.prevClose ?? null)
+  const caOpen = corporateActionValue(p.corporateAction, quotes, 'open')
+  const open = p.corporateAction ? caOpen : (quotes?.[p.ticker]?.open ?? null)
 
   const value = live != null && p.openingPrice != null ? STAKE * (live / p.openingPrice) : STAKE
-  const dailyReturn = live != null && prev != null && prev !== 0 ? (live - prev) / prev : null
-  const dollarChange = dailyReturn != null ? value * dailyReturn : 0
+  const sinceOpenReturn = live != null && open != null && open !== 0 ? (live - open) / open : null
+  const dollarChange = sinceOpenReturn != null ? value * sinceOpenReturn : 0
   return { value, dollarChange }
 }
 
@@ -70,9 +70,9 @@ export function sinceTracking(openingPrice, live) {
 // instead: a liquidation's frozen cash payout, or a merger/rebrand's cash-plus-
 // successor-shares conversion (ratio 1 with no cash covers a plain rebrand).
 // `field` picks which quote field to read off the successor (default 'price';
-// pass 'prevClose' to get the equivalent value as of yesterday's close, for a
-// 24-hour dollar-change calc). A frozen payout is the same either way -- it
-// doesn't move day to day.
+// pass 'open' to get the equivalent value as of today's market open, for the
+// since-open dollar-change calc). A frozen payout is the same either way --
+// it doesn't move day to day.
 export function corporateActionValue(ca, quotes, field = 'price') {
   if (!ca) return null
   if (ca.payout != null) return ca.payout
@@ -366,7 +366,7 @@ export default function FY26() {
             </div>
           </div>
           <div className="tile">
-            <div className="label">24-hour change</div>
+            <div className="label">Since open</div>
             <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
               {pv.dailyChange >= 0 ? '+' : '-'}
               {fmtMoney(Math.abs(pv.dailyChange))}
