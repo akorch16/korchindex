@@ -79,12 +79,15 @@ export default function LineChart({ series, xLabels, height = 300, yFmt = (v) =>
   const ends = series
     .map((s, si) => {
       const lastIdx = s.values.map((v, i) => (v != null ? i : -1)).reduce((a, b) => Math.max(a, b), -1)
-      return lastIdx < 0 ? null : { si, name: s.name, color: s.color, yPos: y(s.values[lastIdx]), v: s.values[lastIdx] }
+      return lastIdx < 0
+        ? null
+        : { si, name: s.name, color: s.color, xPos: x(lastIdx), yPos: y(s.values[lastIdx]), v: s.values[lastIdx] }
     })
     .filter(Boolean)
     .sort((a, b) => a.yPos - b.yPos)
+  const nudgeGap = mobile ? 13 : 15
   for (let i = 1; i < ends.length; i++)
-    if (ends[i].yPos - ends[i - 1].yPos < 15) ends[i].yPos = ends[i - 1].yPos + 15
+    if (ends[i].yPos - ends[i - 1].yPos < nudgeGap) ends[i].yPos = ends[i - 1].yPos + nudgeGap
 
   const onMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -150,18 +153,36 @@ export default function LineChart({ series, xLabels, height = 300, yFmt = (v) =>
               />
             )
           )}
-        {ends.map((e) => (
-          <g key={e.si}>
-            <line
-              x1={W - PAD.right + 4} x2={W - PAD.right + 14}
-              y1={e.yPos} y2={e.yPos}
-              stroke={e.color} strokeWidth={3} strokeLinecap="round"
-            />
-            <text x={W - PAD.right + 19} y={e.yPos + 4} fontSize="12" fontWeight="600" fill="var(--ink-2)">
-              {e.name}
-            </text>
-          </g>
-        ))}
+        {mobile
+          ? ends.map((e) => {
+              const clampedY = Math.min(Math.max(e.yPos, PAD.top + 8), PAD.top + ih - 2)
+              return (
+                <text
+                  key={e.si}
+                  x={Math.min(e.xPos, W - 3)}
+                  y={clampedY}
+                  textAnchor="end"
+                  fontSize="10.5"
+                  fontWeight="700"
+                  fill={e.color}
+                  style={{ paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}
+                >
+                  {e.name}
+                </text>
+              )
+            })
+          : ends.map((e) => (
+              <g key={e.si}>
+                <line
+                  x1={W - PAD.right + 4} x2={W - PAD.right + 14}
+                  y1={e.yPos} y2={e.yPos}
+                  stroke={e.color} strokeWidth={3} strokeLinecap="round"
+                />
+                <text x={W - PAD.right + 19} y={e.yPos + 4} fontSize="12" fontWeight="600" fill="var(--ink-2)">
+                  {e.name}
+                </text>
+              </g>
+            ))}
       </svg>
       {hover != null && (
         <div
