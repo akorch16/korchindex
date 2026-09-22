@@ -192,8 +192,8 @@ function diamondHandsRows(rows, quotes) {
 function DiamondHands({ rows, quotes }) {
   const dhRows = useMemo(() => diamondHandsRows(rows, quotes), [rows, quotes])
   // Swing = switched - held (positive when the FY26 switch was the right call).
-  // Sorting by this descending groups every "Change is good!" row first (best
-  // switch first), then every "Should've held!" row, ending on the worst one.
+  // Sorting by this descending groups every "Switching worked!" row first
+  // (best switch first), then every "Should've held!" row, ending on the worst.
   const swing = (r) => (r.diff != null ? -r.diff : -Infinity)
   const sorted = [...dhRows].sort((a, b) => swing(b) - swing(a))
   return (
@@ -225,7 +225,7 @@ function DiamondHands({ rows, quotes }) {
                       : sameTicker
                         ? 'Held the pick.'
                         : r.diff < 0
-                          ? 'Change is good!'
+                          ? 'Switching worked!'
                           : 'Should’ve held!'}
                   </td>
                   <td className="details">
@@ -235,7 +235,7 @@ function DiamondHands({ rows, quotes }) {
                         : 'no FY26 pick'
                       : sameTicker
                         ? `Kept ${r.ticker} for FY26, net swing of ${fmtPct(-r.diff, 0)}.`
-                        : `Changing from ${r.ticker} (FY25) to ${r.newTicker} (FY26) was a net swing of ${fmtPct(-r.diff, 0)}`}
+                        : `Switching from ${r.ticker} (FY25) to ${r.newTicker} (FY26) was a net swing of ${fmtPct(-r.diff, 0)}`}
                   </td>
                 </tr>
               )
@@ -502,7 +502,7 @@ export default function FY26() {
       </section>
 
       <section className="section">
-        <h2 className="section-title">Hold or Switch</h2>
+        <h2 className="section-title">Hold or Switch?</h2>
         <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
     </>
