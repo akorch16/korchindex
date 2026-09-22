@@ -42,7 +42,7 @@ const CARDS = [
   {
     icon: StakeIcon,
     label: 'The stake',
-    accent: false,
+    accent: true,
     desc: () => <>Real money invested in each pick. Held for one year.</>,
   },
   {
