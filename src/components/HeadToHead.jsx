@@ -6,8 +6,8 @@ export default function HeadToHead({ title = 'Head to Head: KORCH vs. The Market
   const base = import.meta.env.BASE_URL
   const entries = [
     { key: 'korch', name: 'KORCH', avatar: `${base}korch_guy_copy.png`, value: korchReturn },
-    { key: 'sp', name: 'S&P 500', avatar: `${base}salt-and-pepper.webp`, value: spReturn },
     { key: 'buffett', name: 'Warren Buffett', avatar: `${base}warren_buffett.png`, value: buffettReturn },
+    { key: 'sp', name: 'S&P 500', avatar: `${base}salt-and-pepper.webp`, value: spReturn, contain: true },
   ]
   const known = entries.filter((e) => e.value != null)
   const maxValue = known.length ? Math.max(...known.map((e) => e.value)) : null
@@ -21,7 +21,7 @@ export default function HeadToHead({ title = 'Head to Head: KORCH vs. The Market
         {entries.map((e, i) => (
           <Fragment key={e.key}>
             <div className={`matchup-side${e.value != null && e.value === maxValue ? ' winner' : ''}`}>
-              <img className="matchup-avatar" src={e.avatar} alt={e.name} />
+              <img className={`matchup-avatar${e.contain ? ' contain' : ''}`} src={e.avatar} alt={e.name} />
               <div className="matchup-name">{e.name}</div>
               <div className={`matchup-value ${e.value >= 0 ? 'pos' : 'neg'}`}>
                 {e.value != null ? fmtPct(e.value) : '—'}
