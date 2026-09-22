@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react'
-import LineChart, { RaceChart, Legend, fmtPct } from './LineChart'
+import { useEffect, useMemo, useState } from 'react'
+import LineChart, { RaceChart, Legend, fmtPct, fmtMoney } from './LineChart'
 import year2 from '../data/year2.json'
+import year1 from '../data/year1.json'
 import groups from '../data/groups.json'
-import hold from '../data/hold.json'
 import HeadToHead from './HeadToHead'
 import HowKorchWorks from './HowKorchWorks'
+import RosterTable from './RosterTable'
 
 const START_VALUE = 41000
 
@@ -36,127 +37,98 @@ function Tile({ label, value, note, cls, hero, callout }) {
   )
 }
 
-function quarterExtremes() {
-  // Quarter-over-quarter change per pick, matching the newsletter's Q winners/losers
-  const out = []
-  for (let q = 1; q <= 4; q++) {
-    let best = null
-    let worst = null
-    for (const p of year2.people) {
-      const prev = q === 1 ? 0 : p.changes[q - 2]
-      const cur = p.changes[q - 1]
-      if (prev == null || cur == null) continue
-      const qoq = (1 + cur) / (1 + prev) - 1
-      if (!best || qoq > best.qoq) best = { ...p, qoq }
-      if (!worst || qoq < worst.qoq) worst = { ...p, qoq }
+// FY24 names recorded differently than the canonical spelling FY25's own
+// roster uses (same alias table ArchiveY1.jsx uses for cohort matching --
+// year2.people already use these canonical spellings directly).
+const NAME_ALIASES = {
+  'Alex Armstrong': 'Alexander Armstrong',
+  'Brit': 'Brittany Buckley',
+  'Buckley': 'Scott Buckley',
+  'Chris Morris': 'Christopher Morris',
+  'Jamie': 'Jamie Armstrong',
+  'Karen Korchinski': 'Karin Korchinski',
+  'Leala': 'Leala Wong',
+  'Michelle Fried': 'Michelle Sullivan',
+  'Natalie Tran': 'Natalie Lee',
+  'Suzanne Korchinski': 'Suzy Walker',
+  'Theo Lee': 'Theodore Lee',
+  'Tim': 'Tim Morris',
+}
+const canonicalName = (name) => NAME_ALIASES[name] ?? name
+
+const since = (open, live) => (open != null && live != null ? (live - open) / open : null)
+
+// Same "held vs. switched" comparison FY26 does for FY25->FY26, one season
+// earlier: for each FY24 pick, what it'd be worth today if never sold
+// (baseline: FY24's own last known price, since FY24 has no dedicated
+// FY25-open backfill) against that same person's real FY25 pick, both
+// live-tracked to today via /live/prices.json.
+function diamondHandsRowsFY25(quotes) {
+  return year1.people.map((p) => {
+    const fy25 = year2.people.find((r) => canonicalName(r.name) === canonicalName(p.name))
+    const switched = fy25 ? since(fy25.prices?.[0], quotes?.[fy25.ticker]?.price) : null
+    const sameTicker = fy25 != null && p.ticker === fy25.ticker
+    let held
+    if (sameTicker) {
+      held = switched
+    } else {
+      const opening = p.monthlyPrices?.at(-1) ?? p.prices?.at(-1)
+      const live = quotes?.[p.ticker]?.price
+      held = since(opening, live)
     }
-    out.push({ q, best, worst })
-  }
-  return out
+    const diff = held != null && switched != null ? held - switched : null
+    return { name: p.name, ticker: p.ticker, held, newTicker: fy25?.ticker, switched, diff }
+  })
 }
 
-function Chips() {
-  const qs = useMemo(quarterExtremes, [])
-  return (
-    <div className="chips">
-      {qs.map(({ q, best, worst }) => (
-        <div key={q} className="chip">
-          <div className="q">Q{q}</div>
-          <div className="win">
-            <span className="who">▲ {best.ticker} {fmtPct(best.qoq, 0)}</span>
-          </div>
-          <div className="lose">
-            <span className="who">▼ {worst.ticker} {fmtPct(worst.qoq, 0)}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function ReturnBar({ value, min, max }) {
-  const span = max - min
-  const zero = ((0 - min) / span) * 100
-  const end = ((value - min) / span) * 100
-  const left = Math.min(zero, end)
-  const width = Math.max(Math.abs(end - zero), 0.7)
-  return (
-    <div className="retbar">
-      <div className="track">
-        <div className="axis" style={{ left: `${zero}%` }} />
-        <div className={`bar ${value >= 0 ? 'gain' : 'loss'}`} style={{ left: `${left}%`, width: `${width}%` }} />
-      </div>
-      <span className={`pct ${value >= 0 ? 'pos' : 'neg'}`}>{fmtPct(value)}</span>
-    </div>
-  )
-}
-
-const COLS = [
-  { key: 'ticker', label: 'Pick' },
-  { key: 'q1', label: 'Q1', num: true },
-  { key: 'q2', label: 'Q2', num: true },
-  { key: 'q3', label: 'Q3', num: true },
-  { key: 'return', label: 'Year', num: true },
-]
-
-export function Leaderboard({ people, title, sub }) {
-  const [sort, setSort] = useState({ key: 'return', dir: -1 })
-  const rows = useMemo(() => {
-    const get = (p) =>
-      sort.key === 'q1' ? p.changes?.[0]
-      : sort.key === 'q2' ? p.changes?.[1]
-      : sort.key === 'q3' ? p.changes?.[2]
-      : p[sort.key]
-    return [...people].sort((a, b) => {
-      const va = get(a), vb = get(b)
-      if (typeof va === 'string') return sort.dir * va.localeCompare(vb)
-      return sort.dir * ((va ?? -Infinity) - (vb ?? -Infinity))
-    })
-  }, [people, sort])
-
-  const returns = people.map((p) => p.return).filter((v) => v != null)
-  const min = Math.min(0, ...returns)
-  const max = Math.max(0, ...returns)
-
-  const clickSort = (key) =>
-    setSort((s) => ({ key, dir: s.key === key ? -s.dir : key === 'ticker' ? 1 : -1 }))
-
+function HoldOrSwitch({ quotes }) {
+  const dhRows = useMemo(() => diamondHandsRowsFY25(quotes), [quotes])
+  const swing = (r) => (r.diff != null ? -r.diff : -Infinity)
+  const sorted = [...dhRows].sort((a, b) => swing(b) - swing(a))
   return (
     <div className="card">
-      {title && <h3 className="chart-title" style={{ marginBottom: 12 }}>{title}</h3>}
-      {sub && <p className="chart-sub" style={{ margin: '-8px 0 12px' }}>{sub}</p>}
       <div className="table-wrap">
         <table className="data">
           <thead>
             <tr>
               <th className="num">#</th>
-              {COLS.map((c) => (
-                <th
-                  key={c.key}
-                  className={`sortable${c.num ? ' num' : ''}`}
-                  onClick={() => clickSort(c.key)}
-                >
-                  {c.label}{sort.key === c.key ? (sort.dir < 0 ? ' ↓' : ' ↑') : ''}
-                </th>
-              ))}
+              <th>FY25 pick</th>
+              <th>FY24 pick</th>
+              <th>Verdict</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((p, i) => (
-              <tr key={p.name ?? p.ticker + i}>
-                <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                <td><span className="ticker">{p.ticker}</span></td>
-                {[0, 1, 2].map((qi) => {
-                  const v = p.changes?.[qi]
-                  return (
-                    <td key={qi} className={`num ${v == null ? '' : v >= 0 ? 'pos' : 'neg'}`}>
-                      {v == null ? '—' : fmtPct(v, 0)}
-                    </td>
-                  )
-                })}
-                <td>{p.return == null ? '—' : <ReturnBar value={p.return} min={min} max={max} />}</td>
-              </tr>
-            ))}
+            {sorted.map((r, i) => {
+              const sameTicker = r.diff != null && r.newTicker === r.ticker
+              return (
+                <tr key={r.name}>
+                  <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
+                  <td style={{ paddingRight: 4 }}>{r.newTicker ? <span className="ticker">{r.newTicker}</span> : '—'}</td>
+                  <td style={{ paddingLeft: 4 }}><span className="ticker">{r.ticker}</span></td>
+                  <td className={r.diff == null ? '' : sameTicker ? 'warn' : r.diff < 0 ? 'pos' : 'neg'}>
+                    {r.diff == null
+                      ? r.newTicker
+                        ? '—'
+                        : 'no FY25 pick'
+                      : sameTicker
+                        ? 'Held the pick.'
+                        : r.diff < 0
+                          ? 'Switching worked!'
+                          : 'Should’ve held!'}
+                  </td>
+                  <td className="details">
+                    {r.diff == null
+                      ? r.newTicker
+                        ? '—'
+                        : 'no FY25 pick'
+                      : sameTicker
+                        ? `Kept ${r.ticker} for FY25, net swing of ${fmtPct(-r.diff, 0)}.`
+                        : `Switching from ${r.ticker} (FY24) to ${r.newTicker} (FY25) was a net swing of ${fmtPct(-r.diff, 0)}`}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
@@ -226,35 +198,16 @@ function Showdowns() {
   )
 }
 
-function DiamondHands() {
-  const rows = [...hold].sort((a, b) => b.change - a.change).slice(0, 10)
-  const max = Math.max(...rows.map((r) => r.change))
-  const min = Math.min(0, ...rows.map((r) => r.change))
-  return (
-    <div className="card">
-      <div className="table-wrap">
-        <table className="data">
-          <thead>
-            <tr><th className="num">#</th><th>Pick</th><th className="num">Then</th><th className="num">Now</th><th>Since Oct ’23</th></tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={(r.name ?? '') + r.ticker}>
-                <td className="num" style={{ color: 'var(--muted)' }}>{i + 1}</td>
-                <td><span className="ticker">{r.ticker}</span></td>
-                <td className="num">${r.start.toFixed(2)}</td>
-                <td className="num">${r.end.toFixed(2)}</td>
-                <td><ReturnBar value={r.change} min={min} max={max} /></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
 export default function Dashboard() {
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}live/prices.json`, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then(setData)
+      .catch(() => {})
+  }, [])
+
   const korch = year2.korchReturn
   const sp = year2.benchmarks.find((b) => b.ticker === 'VOO')?.return
   const brk = year2.benchmarks.find((b) => b.ticker === 'BRK.B')?.return
@@ -267,10 +220,10 @@ export default function Dashboard() {
   return (
     <>
       <section className="section">
+        <h2 className="section-title">FY25: Topline stats</h2>
         <div className="kpi-row">
-          <Tile hero label="KORCH · FY25" value={fmtPct(korch)} cls="pos" note={`$${START_VALUE.toLocaleString()} → $${Math.round(endValue).toLocaleString()}`} />
-          <Tile label="S&P 500" value={fmtPct(sp)} note="VOO, same window" />
-          <Tile label="Warren Buffett" value={fmtPct(brk)} note="BRK.B, same window" />
+          <Tile hero label="KORCH · Total" value={fmtMoney(endValue)} cls="pos" />
+          <Tile hero label="KORCH · FY25" value={fmtPct(korch)} cls="pos" />
           <Tile label="Biggest winner" value={fmtPct(best.return, 0)} cls="pos" callout note={best.ticker} />
           <Tile label="Biggest loser" value={fmtPct(worst.return, 0)} cls="neg" callout note={worst.ticker} />
         </div>
@@ -297,12 +250,10 @@ export default function Dashboard() {
 
       <section className="section">
         <h2 className="section-title">The leaderboard</h2>
-        <p className="section-sub">
-          One pick per person, ~$1,000 each, Oct 10 → Oct 10. Quarterly winners and losers below are
-          quarter-over-quarter moves — the same math the newsletter uses.
-        </p>
-        <Chips />
-        <Leaderboard people={year2.people} />
+        <RosterTable
+          rows={year2.people.map((p) => ({ name: p.name, ticker: p.ticker, since: p.return, openingPrice: p.prices?.[0], latest: p.prices?.at(-1) }))}
+          sinceLabel="FY25"
+        />
       </section>
 
       <section className="section">
@@ -316,11 +267,7 @@ export default function Dashboard() {
 
       <section className="section">
         <h2 className="section-title">Hold or Switch?</h2>
-        <p className="section-sub">
-          What if nobody ever sold? Top Year 1 picks if held from October 2023 all the way through
-          October 2025.
-        </p>
-        <DiamondHands />
+        <HoldOrSwitch quotes={data?.quotes} />
       </section>
     </>
   )
