@@ -65,6 +65,14 @@ export function sinceTracking(openingPrice, live) {
   return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
 }
 
+// "Sep 22nd Daily Change" -- today's date, spelled out, for the since-open tile.
+function dailyChangeLabel(date = new Date()) {
+  const month = date.toLocaleDateString('en-US', { month: 'short' })
+  const day = date.getDate()
+  const suffix = day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'
+  return `${month} ${day}${suffix} Daily Change`
+}
+
 // A pick caught in a corporate action mid-season no longer has a live quote
 // under its original ticker -- derive an equivalent per-original-share value
 // instead: a liquidation's frozen cash payout, or a merger/rebrand's cash-plus-
@@ -366,7 +374,7 @@ export default function FY26() {
             </div>
           </div>
           <div className="tile">
-            <div className="label">Since open</div>
+            <div className="label">{dailyChangeLabel()}</div>
             <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
               {pv.dailyChange >= 0 ? '+' : '-'}
               {fmtMoney(Math.abs(pv.dailyChange))}
