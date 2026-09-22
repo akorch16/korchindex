@@ -41,7 +41,11 @@ export default function LineChart({ series, xLabels, height = 300, yFmt = (v) =>
   const [ref, width] = useWidth()
   const [hover, setHover] = useState(null)
 
-  const PAD = { top: 14, right: 118, bottom: 26, left: 52 }
+  const mobile = width < 500
+  // On narrow screens the fixed 118px label gutter ate most of the plot
+  // width -- shrink it and let end labels overlay the chart instead (the
+  // SVG already has overflow: visible for exactly this).
+  const PAD = { top: 14, right: mobile ? 8 : 118, bottom: mobile ? 16 : 26, left: 52 }
   const W = Math.max(width, 320)
   const H = height
   const iw = W - PAD.left - PAD.right
@@ -112,11 +116,15 @@ export default function LineChart({ series, xLabels, height = 300, yFmt = (v) =>
             </text>
           </g>
         ))}
-        {xLabels.map((l, i) => (
-          <text key={i} x={x(i)} y={H - 8} textAnchor="middle" fontSize="11" fill="var(--muted)">
-            {l}
-          </text>
-        ))}
+        {mobile
+          ? xLabels.map((l, i) => (
+              <line key={i} x1={x(i)} x2={x(i)} y1={PAD.top + ih} y2={PAD.top + ih + 4} stroke="var(--muted)" strokeWidth={1} />
+            ))
+          : xLabels.map((l, i) => (
+              <text key={i} x={x(i)} y={H - 8} textAnchor="middle" fontSize="11" fill="var(--muted)">
+                {l}
+              </text>
+            ))}
         {hover != null && (
           <line x1={x(hover.i)} x2={x(hover.i)} y1={PAD.top} y2={PAD.top + ih} stroke="var(--baseline)" strokeWidth={1} />
         )}
