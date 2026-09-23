@@ -14,14 +14,12 @@ const STAKE = 1000
 
 // Purely decorative -- KORCH has no relationship with any company shown.
 const NOT_SPONSORED_LOGOS = [
-  { file: 'logo-tesla.webp', name: 'Tesla' },
   { file: 'logo-nike.webp', name: 'Nike' },
   { file: 'logo-amazon.webp', name: 'Amazon' },
   { file: 'logo-microsoft.webp', name: 'Microsoft' },
   { file: 'logo-nvidia.webp', name: 'NVIDIA' },
   { file: 'logo-meta.webp', name: 'Meta' },
   { file: 'logo-costco.webp', name: 'Costco' },
-  { file: 'logo-chipotle.webp', name: 'Chipotle' },
   { file: 'logo-shopify.webp', name: 'Shopify' },
 ]
 const NOT_ENDORSED_LOGOS = [
@@ -30,7 +28,6 @@ const NOT_ENDORSED_LOGOS = [
   { file: 'logo-caterpillar.webp', name: 'Caterpillar' },
   { file: 'logo-servicenow.webp', name: 'ServiceNow' },
   { file: 'logo-reddit.webp', name: 'Reddit' },
-  { file: 'logo-procter-gamble.webp', name: 'Procter & Gamble' },
   { file: 'logo-zscaler.webp', name: 'Zscaler' },
   { file: 'logo-visa.webp', name: 'Visa' },
 ]
@@ -450,7 +447,7 @@ export default function FY26() {
         <HeadToHead korchReturn={korchSeries.at(-1) ?? null} spReturn={sp?.since ?? null} buffettReturn={brk?.since ?? null} />
       </section>
 
-      <LogoStrip eyebrow="Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
+      <LogoStrip eyebrow="KORCH is Powered By But Totally Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">KORCH: The Stock Picks</h2>
@@ -464,7 +461,7 @@ export default function FY26() {
 
       <StockSpotlight />
 
-      <LogoStrip eyebrow="Definitely Not Endorsed By" logos={NOT_ENDORSED_LOGOS} />
+      <LogoStrip eyebrow="KORCH is Inspired By But Definitely Not Endorsed By" logos={NOT_ENDORSED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">Quarterly winners and losers</h2>
@@ -476,7 +473,7 @@ export default function FY26() {
         <Showdowns rows={rows} showdownLabels={showdownLabels} />
       </section>
 
-      <LogoStrip eyebrow="Absolutely Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
+      <LogoStrip eyebrow="KORCH is Fueled By But Absolutely Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">Hold or Switch?</h2>
