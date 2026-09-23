@@ -476,12 +476,12 @@ export default function FY26() {
         <Showdowns rows={rows} showdownLabels={showdownLabels} />
       </section>
 
+      <LogoStrip eyebrow="Absolutely Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
+
       <section className="section">
         <h2 className="section-title">Hold or Switch?</h2>
         <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
-
-      <LogoStrip eyebrow="Absolutely Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
     </>
   )
 }
