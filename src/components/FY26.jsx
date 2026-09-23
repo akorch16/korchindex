@@ -8,8 +8,35 @@ import HeadToHead from './HeadToHead'
 import HowKorchWorks from './HowKorchWorks'
 import RosterTable from './RosterTable'
 import StockSpotlight from './StockSpotlight'
+import LogoStrip from './LogoStrip'
 
 const STAKE = 1000
+
+// Purely decorative -- KORCH has no relationship with any company shown.
+const NOT_SPONSORED_LOGOS = [
+  { file: 'logo-tesla.webp', name: 'Tesla' },
+  { file: 'logo-nike.webp', name: 'Nike' },
+  { file: 'logo-amazon.webp', name: 'Amazon' },
+  { file: 'logo-microsoft.webp', name: 'Microsoft' },
+  { file: 'logo-nvidia.webp', name: 'NVIDIA' },
+  { file: 'logo-meta.webp', name: 'Meta' },
+  { file: 'logo-costco.webp', name: 'Costco' },
+  { file: 'logo-chipotle.webp', name: 'Chipotle' },
+  { file: 'logo-shopify.webp', name: 'Shopify' },
+  { file: 'logo-palantir.webp', name: 'Palantir' },
+]
+const NOT_ENDORSED_LOGOS = [
+  { file: 'logo-moderna.webp', name: 'Moderna' },
+  { file: 'logo-asml.webp', name: 'ASML' },
+  { file: 'logo-caterpillar.webp', name: 'Caterpillar' },
+  { file: 'logo-servicenow.webp', name: 'ServiceNow' },
+  { file: 'logo-reddit.webp', name: 'Reddit' },
+  { file: 'logo-procter-gamble.webp', name: 'Procter & Gamble' },
+  { file: 'logo-zscaler.webp', name: 'Zscaler' },
+  { file: 'logo-visa.webp', name: 'Visa' },
+  { file: 'logo-brookfield.webp', name: 'Brookfield' },
+  { file: 'logo-equinix.webp', name: 'Equinix' },
+]
 
 // Current dollar value of one person's $1,000 FY26 stake, and its dollar
 // swing since today's market open -- both measured off the same $1,000
@@ -402,6 +429,12 @@ export default function FY26() {
         <HowKorchWorks count={year3.people.length} />
       </section>
 
+      <LogoStrip
+        eyebrow="Not Sponsored By"
+        note="(no affiliation, no sponsorship — we just like their logos)"
+        logos={NOT_SPONSORED_LOGOS}
+      />
+
       <section className="section">
         <h2 className="section-title">KORCH vs. The Market</h2>
         <RaceChart
@@ -441,6 +474,12 @@ export default function FY26() {
         <h2 className="section-title">Hold or Switch?</h2>
         <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
+
+      <LogoStrip
+        eyebrow="Definitely Not Endorsed By"
+        note="(seriously — none of these companies know we exist)"
+        logos={NOT_ENDORSED_LOGOS}
+      />
     </>
   )
 }
