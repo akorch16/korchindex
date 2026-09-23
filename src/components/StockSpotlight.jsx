@@ -25,9 +25,10 @@ export default function StockSpotlight() {
 
   return (
     <section className="section">
+      <h2 className="section-title">Daily Stock Spotlight</h2>
       <div className="card spotlight-card">
         <div className="spotlight-head">
-          <span className="spotlight-eyebrow">Stock Spotlight · {dateLabel}</span>
+          <span className="spotlight-eyebrow">{dateLabel}</span>
         </div>
         <div className="spotlight-body">
           <div className="spotlight-who">

@@ -429,11 +429,7 @@ export default function FY26() {
         <HowKorchWorks count={year3.people.length} />
       </section>
 
-      <LogoStrip
-        eyebrow="Not Sponsored By"
-        note="(no affiliation, no sponsorship — we just like their logos)"
-        logos={NOT_SPONSORED_LOGOS}
-      />
+      <LogoStrip eyebrow="Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">KORCH vs. The Market</h2>
