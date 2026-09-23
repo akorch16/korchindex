@@ -23,7 +23,6 @@ const NOT_SPONSORED_LOGOS = [
   { file: 'logo-costco.webp', name: 'Costco' },
   { file: 'logo-chipotle.webp', name: 'Chipotle' },
   { file: 'logo-shopify.webp', name: 'Shopify' },
-  { file: 'logo-palantir.webp', name: 'Palantir' },
 ]
 const NOT_ENDORSED_LOGOS = [
   { file: 'logo-moderna.webp', name: 'Moderna' },
