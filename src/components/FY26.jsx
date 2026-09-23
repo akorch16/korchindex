@@ -33,8 +33,17 @@ const NOT_ENDORSED_LOGOS = [
   { file: 'logo-procter-gamble.webp', name: 'Procter & Gamble' },
   { file: 'logo-zscaler.webp', name: 'Zscaler' },
   { file: 'logo-visa.webp', name: 'Visa' },
-  { file: 'logo-brookfield.webp', name: 'Brookfield' },
-  { file: 'logo-equinix.webp', name: 'Equinix' },
+]
+const NOT_SUPPORTED_LOGOS = [
+  { file: 'logo-palantir.webp', name: 'Palantir' },
+  { file: 'logo-3m.webp', name: '3M' },
+  { file: 'logo-figma.jpg', name: 'Figma' },
+  { file: 'logo-kratos.webp', name: 'Kratos' },
+  { file: 'logo-mp-materials.webp', name: 'MP Materials' },
+  { file: 'logo-beyond-meat.webp', name: 'Beyond Meat' },
+  { file: 'logo-nextera.webp', name: 'NextEra Energy' },
+  { file: 'logo-supermicro.webp', name: 'Super Micro' },
+  { file: 'logo-sweetgreen.webp', name: 'Sweetgreen' },
 ]
 
 // Current dollar value of one person's $1,000 FY26 stake, and its dollar
@@ -455,11 +464,7 @@ export default function FY26() {
 
       <StockSpotlight />
 
-      <LogoStrip
-        eyebrow="Definitely Not Endorsed By"
-        note="(seriously — none of these companies know we exist)"
-        logos={NOT_ENDORSED_LOGOS}
-      />
+      <LogoStrip eyebrow="Definitely Not Endorsed By" logos={NOT_ENDORSED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">Quarterly winners and losers</h2>
@@ -475,6 +480,8 @@ export default function FY26() {
         <h2 className="section-title">Hold or Switch?</h2>
         <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
+
+      <LogoStrip eyebrow="Absolutely Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
     </>
   )
 }
