@@ -429,8 +429,6 @@ export default function FY26() {
         <HowKorchWorks count={year3.people.length} />
       </section>
 
-      <LogoStrip eyebrow="Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
-
       <section className="section">
         <h2 className="section-title">KORCH vs. The Market</h2>
         <RaceChart
@@ -444,6 +442,8 @@ export default function FY26() {
         <HeadToHead korchReturn={korchSeries.at(-1) ?? null} spReturn={sp?.since ?? null} buffettReturn={brk?.since ?? null} />
       </section>
 
+      <LogoStrip eyebrow="Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
+
       <section className="section">
         <h2 className="section-title">KORCH: The Stock Picks</h2>
         <RosterTable
@@ -455,6 +455,12 @@ export default function FY26() {
       </section>
 
       <StockSpotlight />
+
+      <LogoStrip
+        eyebrow="Definitely Not Endorsed By"
+        note="(seriously — none of these companies know we exist)"
+        logos={NOT_ENDORSED_LOGOS}
+      />
 
       <section className="section">
         <h2 className="section-title">Quarterly winners and losers</h2>
@@ -470,12 +476,6 @@ export default function FY26() {
         <h2 className="section-title">Hold or Switch?</h2>
         <DiamondHands rows={rows} quotes={data?.quotes} />
       </section>
-
-      <LogoStrip
-        eyebrow="Definitely Not Endorsed By"
-        note="(seriously — none of these companies know we exist)"
-        logos={NOT_ENDORSED_LOGOS}
-      />
     </>
   )
 }
