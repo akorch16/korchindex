@@ -447,7 +447,7 @@ export default function FY26() {
         <HeadToHead korchReturn={korchSeries.at(-1) ?? null} spReturn={sp?.since ?? null} buffettReturn={brk?.since ?? null} />
       </section>
 
-      <LogoStrip eyebrow="KORCH is Powered By But Totally Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
+      <LogoStrip eyebrow="KORCH is Powered By But Definitely Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">KORCH: The Stock Picks</h2>
@@ -461,7 +461,7 @@ export default function FY26() {
 
       <StockSpotlight />
 
-      <LogoStrip eyebrow="KORCH is Inspired By But Definitely Not Endorsed By" logos={NOT_ENDORSED_LOGOS} />
+      <LogoStrip eyebrow="KORCH is Inspired By But Absolutely Not Endorsed By" logos={NOT_ENDORSED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">Quarterly winners and losers</h2>
@@ -473,7 +473,7 @@ export default function FY26() {
         <Showdowns rows={rows} showdownLabels={showdownLabels} />
       </section>
 
-      <LogoStrip eyebrow="KORCH is Fueled By But Absolutely Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
+      <LogoStrip eyebrow="KORCH is Fueled By But For Sure Not Supported By" logos={NOT_SUPPORTED_LOGOS} />
 
       <section className="section">
         <h2 className="section-title">Hold or Switch?</h2>
