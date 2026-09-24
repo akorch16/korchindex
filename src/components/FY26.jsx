@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import LineChart, { RaceChart, Legend, fmtPct, fmtMoney } from './LineChart'
 import year3 from '../data/year3.json'
 import year2 from '../data/year2.json'
+import year1 from '../data/year1.json'
 import cohortMembership from '../data/cohort_membership.json'
 import stockNotes from '../data/stock-notes.json'
 import HeadToHead from './HeadToHead'
@@ -71,11 +72,17 @@ function positionStats(p, quotes) {
 // Hosea has no known match at all -- not in the FY25 demographic roster.
 const NAME_ALIASES = {
   'Alex Armstrong': 'Alexander Armstrong',
+  'Brit': 'Brittany Buckley',
+  'Buckley': 'Scott Buckley',
   'Chris Morris': 'Christopher Morris',
+  'Jamie': 'Jamie Armstrong',
   'Karen Korchinski': 'Karin Korchinski',
+  'Leala': 'Leala Wong',
   'Michelle Fried': 'Michelle Sullivan',
+  'Natalie Tran': 'Natalie Lee',
   'Suzanne Korchinski': 'Suzy Walker',
   'Theo Lee': 'Theodore Lee',
+  'Tim': 'Tim Morris',
 }
 const canonicalName = (name) => NAME_ALIASES[name] ?? name
 
@@ -90,6 +97,7 @@ const SHOWDOWNS = [
   { title: 'Men vs. Women', keys: ['Men', 'Women'] },
   { title: 'Uncles vs. Aunts vs. Cousins', keys: ['Uncles', 'Aunts', 'Cousins'] },
   { title: 'Country of birth', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
+  { title: 'Veterans vs. Newcomers', keys: ['Veterans', 'Newcomers'] },
   { title: 'The Wife vs. everyone', keys: ['Wife'] },
 ]
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
@@ -290,6 +298,11 @@ function DiamondHands({ rows, quotes }) {
 }
 
 function Showdowns({ rows, showdownLabels }) {
+  // Original FY24 roster (35 people) vs. everyone added since, in FY25 or
+  // FY26 (7 people) -- cross-season via the same canonicalName aliasing
+  // used for Hold or Switch, not a cohort from cohort_membership.json.
+  const veteranNames = new Set(year1.people.map((p) => canonicalName(p.name)))
+
   return (
     <div className="showdown-grid">
       {SHOWDOWNS.map((s) => {
@@ -300,8 +313,25 @@ function Showdowns({ rows, showdownLabels }) {
                 <h3 className="chart-title">{s.title}</h3>
               </div>
               <div className="showdown-empty">
-                DATA NOT AVAILABLE, CHECK PREVIOUS YEARS FOR WIFE SUPERIORITY.
+                DATA NOT AVAILABLE, CHECK PREVIOUS YEARS FOR EVIDENCE OF WIFE'S SUPERIORITY.
               </div>
+            </div>
+          )
+        }
+        if (s.title === 'Veterans vs. Newcomers') {
+          const veterans = rows.filter((r) => veteranNames.has(canonicalName(r.name)))
+          const newcomers = rows.filter((r) => !veteranNames.has(canonicalName(r.name)))
+          const chartSeries = [
+            { name: 'Veterans', color: SLOT_COLORS[0], values: averageOf(veterans.map((r) => series(r, r.live))) },
+            { name: 'Newcomers', color: SLOT_COLORS[1], values: averageOf(newcomers.map((r) => series(r, r.live))) },
+          ]
+          return (
+            <div key={s.title} className="card chart-card">
+              <div className="chart-head">
+                <h3 className="chart-title">{s.title}</h3>
+              </div>
+              <Legend series={chartSeries} />
+              <LineChart series={chartSeries} xLabels={showdownLabels} height={220} />
             </div>
           )
         }
@@ -312,14 +342,6 @@ function Showdowns({ rows, showdownLabels }) {
         const chartSeries = s.keys
           .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: seriesFor(cohortMembership[k] ?? []) }))
           .filter((line) => line.values.some((v) => v != null))
-        if (s.title === 'The Wife vs. everyone') {
-          chartSeries.push({
-            name: 'Everyone else',
-            color: 'var(--baseline)',
-            values: averageOf(rows.map((r) => series(r, r.live))),
-            dash: true,
-          })
-        }
         if (chartSeries.length <= 1) return null
         return (
           <div key={s.title} className="card chart-card">
