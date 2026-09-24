@@ -144,7 +144,7 @@ const SHOWDOWNS = [
   {
     title: 'Santa Barbara High vs. UCLA',
     keys: ['Santa Barbara High Grad', 'Wife of SBHS', 'UCLA Grad', 'Wife of UCLA Grad'],
-    rename: { 'Santa Barbara High Grad': 'SBHS grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
+    rename: { 'Santa Barbara High Grad': 'SBHS Grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA Grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
   },
   {
     title: 'Birth year',
@@ -163,7 +163,7 @@ const SHOWDOWNS = [
     keys: ['Americans', 'Canadians', 'Mexicans', 'English'],
   },
   {
-    title: 'My Wife vs. everyone',
+    title: 'My Wife vs. Everyone',
     keys: ['Wife'],
   },
 ]
@@ -181,7 +181,7 @@ function Showdowns() {
             color: SLOT_COLORS[i],
             values: groups[k],
           }))
-        if (s.title === 'My Wife vs. everyone') {
+        if (s.title === 'My Wife vs. Everyone') {
           series.push({ name: 'Everyone else', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
         }
         return (
