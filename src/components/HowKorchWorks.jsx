@@ -26,8 +26,11 @@ function StakeIcon() {
 function WagerIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 3h10l-1 7a4 4 0 0 1-8 0z" />
-      <path d="M12 13v6.5M8.5 21.5h7" />
+      <circle cx="12" cy="13" r="5" />
+      <path d="M3 2v6c0 1.1.9 2 2 2h3a2 2 0 0 0 2-2V2" />
+      <path d="M6.5 2v20" />
+      <path d="M20 2c-2.6 0-4.5 2.3-4.5 5.5S17.4 13 20 13" />
+      <path d="M20 2v20" />
     </svg>
   )
 }
@@ -35,7 +38,7 @@ function WagerIcon() {
 const CARDS = [
   {
     icon: RosterIcon,
-    label: 'The roster',
+    label: 'The Braintrust',
     accent: true,
     desc: () => <>Friends &amp; family each pick a stock.</>,
   },
@@ -43,7 +46,11 @@ const CARDS = [
     icon: StakeIcon,
     label: 'The stake',
     accent: true,
-    desc: () => <>Real money invested in each pick. Held for one year.</>,
+    desc: () => (
+      <>
+        Invested in each pick. Held for <b>one year</b>.
+      </>
+    ),
   },
   {
     icon: WagerIcon,
