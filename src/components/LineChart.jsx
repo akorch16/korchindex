@@ -178,7 +178,14 @@ export default function LineChart({ series, xLabels, height = 300, yFmt = (v) =>
                   y1={e.yPos} y2={e.yPos}
                   stroke={e.color} strokeWidth={3} strokeLinecap="round"
                 />
-                <text x={W - PAD.right + 19} y={e.yPos + 4} fontSize="12" fontWeight="600" fill="var(--ink-2)">
+                <text
+                  x={W - PAD.right + 19}
+                  y={e.yPos + 4}
+                  fontSize="12"
+                  fontWeight="600"
+                  fill="var(--ink-2)"
+                  style={{ paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 3 }}
+                >
                   {e.name}
                 </text>
               </g>
