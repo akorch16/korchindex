@@ -293,6 +293,18 @@ function Showdowns({ rows, showdownLabels }) {
   return (
     <div className="showdown-grid">
       {SHOWDOWNS.map((s) => {
+        if (s.title === 'The Wife vs. everyone') {
+          return (
+            <div key={s.title} className="card chart-card">
+              <div className="chart-head">
+                <h3 className="chart-title">{s.title}</h3>
+              </div>
+              <div className="showdown-empty">
+                DATA NOT AVAILABLE, CHECK PREVIOUS YEARS FOR WIFE SUPERIORITY.
+              </div>
+            </div>
+          )
+        }
         const seriesFor = (cohortNames) => {
           const members = rows.filter((r) => cohortNames.includes(canonicalName(r.name)))
           return averageOf(members.map((r) => series(r, r.live)))
