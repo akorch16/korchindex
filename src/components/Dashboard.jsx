@@ -163,7 +163,7 @@ const SHOWDOWNS = [
     keys: ['Americans', 'Canadians', 'Mexicans', 'English'],
   },
   {
-    title: 'The Wife vs. everyone',
+    title: 'My Wife vs. everyone',
     keys: ['Wife'],
   },
 ]
@@ -181,7 +181,7 @@ function Showdowns() {
             color: SLOT_COLORS[i],
             values: groups[k],
           }))
-        if (s.title === 'The Wife vs. everyone') {
+        if (s.title === 'My Wife vs. everyone') {
           series.push({ name: 'Everyone else', color: 'var(--baseline)', values: groups['Everyone'], dash: true })
         }
         return (

@@ -98,7 +98,7 @@ const SHOWDOWNS = [
   { title: 'Uncles vs. Aunts vs. Cousins', keys: ['Uncles', 'Aunts', 'Cousins'] },
   { title: 'Country of birth', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
   { title: 'Veterans vs. Newcomers', keys: ['Veterans', 'Newcomers'] },
-  { title: 'The Wife vs. everyone', keys: ['Wife'] },
+  { title: 'My Wife vs. everyone', keys: ['Wife'] },
 ]
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
 
@@ -306,7 +306,7 @@ function Showdowns({ rows, showdownLabels }) {
   return (
     <div className="showdown-grid">
       {SHOWDOWNS.map((s) => {
-        if (s.title === 'The Wife vs. everyone') {
+        if (s.title === 'My Wife vs. everyone') {
           return (
             <div key={s.title} className="card chart-card">
               <div className="chart-head">
