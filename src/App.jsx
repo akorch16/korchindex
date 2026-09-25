@@ -130,7 +130,7 @@ export default function App() {
 
   return (
     <div className="shell">
-      <header className="hero">
+      <header className={`hero${page !== 'home' ? ' hero-compact' : ''}`}>
         <nav className="hero-nav">
           <button type="button" className="hero-wordmark" onClick={() => navigate('home')}>
             <svg className="mark" width="30" height="30" viewBox="0 0 100 100" aria-hidden="true">
