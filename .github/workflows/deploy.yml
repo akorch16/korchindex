@@ -26,6 +26,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # GitHub Pages has no server-side router: a request for e.g. /our-story
+      # 404s unless a 404.html exists, so copy the SPA shell there too --
+      # index.html reads the URL itself once it loads (see App.jsx).
+      - run: cp dist/index.html dist/404.html
       # Publish dist/ to the gh-pages branch. Creating the branch auto-enables
       # GitHub Pages (branch publishing) — no repo-settings step required.
       - run: |
