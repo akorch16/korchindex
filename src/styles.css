@@ -180,6 +180,7 @@ body {
   .logo-strip-item { height: 20px; max-width: 84px; }
 }
 .tabs + main > .section:first-child { margin-top: 16px; }
+header + main > .section:first-child { margin-top: 16px; }
 .section-title { font-size: 22px; font-weight: 700; margin: 0 0 4px; }
 .section-sub { color: var(--ink-2); font-size: 14px; margin: 0 0 20px; max-width: 64ch; }
 
