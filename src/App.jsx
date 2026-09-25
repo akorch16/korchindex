@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FY26 from './components/FY26'
 import Dashboard from './components/Dashboard'
 import ArchiveY1 from './components/ArchiveY1'
@@ -104,15 +104,35 @@ const PAGES = {
   'investing-philosophy': { label: 'Investing Philosophy', el: <InvestingPhilosophy /> },
 }
 
+// Real URLs for each page (not just component state) so the browser's
+// back/forward buttons work between them, and a direct link/refresh lands
+// on the right page (see the matching 404.html copy in deploy.yml --
+// GitHub Pages has no server-side router, so an unknown path falls back to
+// the SPA shell, which then reads the URL itself here).
+const PAGE_PATHS = { home: '/', 'our-story': '/our-story', team: '/team', 'investing-philosophy': '/investing-philosophy' }
+const pathToPage = (pathname) => Object.entries(PAGE_PATHS).find(([, path]) => path === pathname)?.[0] ?? 'home'
+
 export default function App() {
   const [tab, setTab] = useState('fy26')
-  const [page, setPage] = useState('home')
+  const [page, setPageState] = useState(() => pathToPage(window.location.pathname))
+
+  const navigate = (id) => {
+    setPageState(id)
+    const path = PAGE_PATHS[id]
+    if (window.location.pathname !== path) window.history.pushState(null, '', path)
+  }
+
+  useEffect(() => {
+    const onPopState = () => setPageState(pathToPage(window.location.pathname))
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
 
   return (
     <div className="shell">
       <header className="hero">
         <nav className="hero-nav">
-          <button type="button" className="hero-wordmark" onClick={() => setPage('home')}>
+          <button type="button" className="hero-wordmark" onClick={() => navigate('home')}>
             <svg className="mark" width="30" height="30" viewBox="0 0 100 100" aria-hidden="true">
               <rect x="8" y="8" width="84" height="84" rx="18" fill="var(--accent)" />
               <line x1="34" y1="26" x2="34" y2="74" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" />
@@ -128,7 +148,7 @@ export default function App() {
                 key={id}
                 type="button"
                 className={page === id ? 'active' : ''}
-                onClick={() => setPage(id)}
+                onClick={() => navigate(id)}
               >
                 {p.label}
               </button>
