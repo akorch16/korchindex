@@ -17,22 +17,50 @@ function OurStory() {
       <h2 className="section-title">Our Story</h2>
       <p className="section-sub">
         On September 27, 2023, days before turning 35, Alex emailed 35 friends and family members
-        with an idea he put simply:
+        — everyone on BCC. Here's the email, verbatim:
       </p>
-      <blockquote className="rationale">
-        “The premise is pretty simple: can stock tips from my friends and family beat the
-        markets?”
-      </blockquote>
       <div className="letter">
+        <p>Hi friends and family,</p>
+        <p>I’m creating an index fund. It’s called KORCH.</p>
+        <p>The premise is pretty simple: can stock tips from my friends and family beat the markets?</p>
         <p>
-          The rules were straightforward. Everyone on the email got to pick one stock — anything
-          tradeable on Robinhood, long only — and Alex put $1,000 behind each pick, $35,000 in
-          total. After one season, the winner got taken to a dinner of their choosing; the biggest
-          loser had to take Alex to dinner instead.
+          Since I’m about to turn 35, I’m asking 35 people to pick a stock for me. That’s you
+          (everyone is on BCC). I’ll invest $1,000 in each for a total of $35,000. That’s a lot of
+          money for me, but I can tolerate risk here.
         </p>
         <p>
-          Three seasons later, KORCH is still run the same way: a new round of picks every
-          October, tracked against the S&amp;P 500 and Warren Buffett's Berkshire Hathaway.
+          The stock can be anything that you can buy on Robinhood (crypto, Chipotle, Cisco, etc),
+          and it has to be long, not short.
+        </p>
+        <p>
+          Just to be clear, I am not asking you to invest any money in KORCH, but I’d be curious to
+          hear an explanation justifying your choice. You can spend thirty seconds on your decision
+          and give me a few words. You can also research for hours and write 1,000 words.
+        </p>
+        <p>
+          The investment period is for one year. After one year, I’ll take the winner out to a
+          dinner of their choosing. The biggest loser takes me out to a dinner of my choosing.
+          Should you be in a different city or country, I’ll find a way to come to you.
+        </p>
+        <p>
+          If you are married, I’ve also invited your spouse, even if you primarily manage the
+          money. I’d request that your picks remain independent from one another. Wives and
+          husbands are perfectly capable of making their own decisions without the other’s input
+          and expertise, thank you very much.
+        </p>
+        <p>
+          You can submit your stock tip to me any time in the next week, but I’d like your picks
+          by Tuesday morning, October 3rd. I’ll put in orders to buy immediately when the markets
+          open on Wednesday morning.
+        </p>
+        <p>
+          I may send out quarterly reports with graphs, analysis, and commentary making arbitrary
+          comparisons and drawing sweeping conclusions with no statistical significance.
+        </p>
+        <p className="sig">
+          Love,
+          <br />
+          Alex
         </p>
       </div>
     </section>
