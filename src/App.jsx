@@ -65,20 +65,7 @@ function InvestingPhilosophy() {
   return (
     <section className="section">
       <h2 className="section-title">Investing Philosophy</h2>
-      <p className="section-sub">There isn't one. That's kind of the point.</p>
-      <ul className="philosophy-list">
-        <li>$1,000 per pick, long only — anything tradeable on Robinhood counts.</li>
-        <li>
-          One pick per person, per season. No research requirement: you can spend thirty seconds
-          on your decision, or research for hours and write a thousand words.
-        </li>
-        <li>Picks are held for the full season — no trading in or out.</li>
-        <li>
-          Performance is tracked against the S&amp;P 500 and Warren Buffett's Berkshire Hathaway
-          (BRK.B), yielding, in the founder's own words, “arbitrary comparisons and sweeping
-          conclusions with no statistical significance.”
-        </li>
-      </ul>
+      <p className="section-sub">This page intentionally left blank because there is none.</p>
     </section>
   )
 }
