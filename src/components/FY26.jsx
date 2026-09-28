@@ -15,7 +15,7 @@ const STAKE = 1000
 
 // Purely decorative -- KORCH has no relationship with any company shown.
 const NOT_SPONSORED_LOGOS = [
-  { file: 'logo-nike.webp', name: 'Nike' },
+  { file: 'logo-visa.webp', name: 'Visa' },
   { file: 'logo-amazon.webp', name: 'Amazon' },
   { file: 'logo-microsoft.webp', name: 'Microsoft' },
   { file: 'logo-nvidia.webp', name: 'NVIDIA' },
@@ -30,7 +30,7 @@ const NOT_ENDORSED_LOGOS = [
   { file: 'logo-servicenow.webp', name: 'ServiceNow' },
   { file: 'logo-reddit.webp', name: 'Reddit' },
   { file: 'logo-zscaler.webp', name: 'Zscaler' },
-  { file: 'logo-visa.webp', name: 'Visa' },
+  { file: 'logo-nike.webp', name: 'Nike' },
 ]
 const NOT_SUPPORTED_LOGOS = [
   { file: 'logo-palantir.webp', name: 'Palantir' },
