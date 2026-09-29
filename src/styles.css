@@ -237,6 +237,7 @@ header + main > .section:first-child { margin-top: 8px; }
 .spotlight-news a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--border); }
 .spotlight-news a:hover { border-color: var(--ink); }
 .spotlight-publisher { color: var(--muted); }
+.spotlight-summary { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
 
 @media (max-width: 600px) {
   .spotlight-company { font-size: 15px; }

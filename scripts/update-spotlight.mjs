@@ -1,6 +1,7 @@
 // Finds FY26's biggest mover since today's market open and fetches a real
-// news headline for it from Yahoo Finance's public, no-key search endpoint
-// (same "no API key" approach as update-prices.mjs). Writes
+// news headline (Yahoo's search endpoint) plus a short summary snippet
+// (Yahoo's RSS feed, which has a description the search endpoint lacks) --
+// same "no API key" approach as update-prices.mjs. Writes
 // public/live/spotlight.json. Run by .github/workflows/update-prices.yml
 // right after update-prices.mjs, since it reads that script's output.
 import { readFile, writeFile } from 'node:fs/promises'
@@ -44,11 +45,46 @@ async function fetchNews(ticker) {
   return res.json()
 }
 
+const MAX_SUMMARY_LEN = 220
+
+// The search endpoint above has no article body -- Yahoo's older RSS feed
+// does, as a short <description> alongside the top headline. Best-effort
+// only: some publishers' descriptions just repeat the title, and the feed
+// occasionally has nothing at all for a thinly-covered ticker.
+async function fetchRssSummary(ticker) {
+  const url = `https://feeds.finance.yahoo.com/rss/2.0/headline?s=${encodeURIComponent(
+    toYahoo(ticker)
+  )}&region=US&lang=en-US`
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) korchindex-price-updater' },
+  })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const xml = await res.text()
+  const item = xml.match(/<item>([\s\S]*?)<\/item>/)?.[1]
+  const descMatch = item?.match(/<description>([\s\S]*?)<\/description>/)
+  if (!descMatch) return null
+  let desc = descMatch[1]
+  desc = desc.match(/<!\[CDATA\[([\s\S]*?)\]\]>/)?.[1] ?? desc
+  desc = desc
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, '’')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!desc) return null
+  return desc.length > MAX_SUMMARY_LEN ? `${desc.slice(0, MAX_SUMMARY_LEN).trimEnd()}…` : desc
+}
+
 let companyName = stockNotes[mover.ticker]?.company ?? null
 let headline = null
 let publisher = null
 let link = null
 let publishedAt = null
+let summary = null
 
 try {
   const result = await fetchNews(mover.ticker)
@@ -68,6 +104,18 @@ try {
   console.log(`News lookup failed for ${mover.ticker}: ${err.message}`)
 }
 
+if (headline) {
+  try {
+    const rssSummary = await fetchRssSummary(mover.ticker)
+    // Skip it if it's just the headline restated with no new information.
+    if (rssSummary && rssSummary.toLowerCase() !== headline.toLowerCase()) {
+      summary = rssSummary
+    }
+  } catch (err) {
+    console.log(`RSS summary lookup failed for ${mover.ticker}: ${err.message}`)
+  }
+}
+
 const spotlight = {
   date: new Date().toISOString().slice(0, 10),
   name: mover.name,
@@ -77,10 +125,14 @@ const spotlight = {
   price: mover.price,
   open: mover.open,
   headline,
+  summary,
   publisher,
   link,
   publishedAt,
 }
 
 await writeFile(SPOTLIGHT_PATH, JSON.stringify(spotlight, null, 1) + '\n')
-console.log(`Spotlight: ${spotlight.ticker} (${spotlight.company}), ${(spotlight.changePct * 100).toFixed(1)}%${headline ? ' -- headline found' : ' -- no headline found'}`)
+console.log(
+  `Spotlight: ${spotlight.ticker} (${spotlight.company}), ${(spotlight.changePct * 100).toFixed(1)}%` +
+    `${headline ? ' -- headline found' : ' -- no headline found'}${summary ? ' + summary' : ''}`
+)
