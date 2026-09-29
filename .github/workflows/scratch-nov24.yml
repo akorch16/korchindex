@@ -1,0 +1,14 @@
+name: Scratch - fetch Nov 24 closes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/scratch-fetch-nov24-close.mjs
