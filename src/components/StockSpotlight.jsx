@@ -51,8 +51,9 @@ export default function StockSpotlight() {
   if (!data) return null
 
   const dateLabel = new Date(`${data.date}T00:00:00Z`).toLocaleDateString('en-US', {
-    month: 'short',
+    month: 'long',
     day: 'numeric',
+    year: 'numeric',
   })
   const up = data.changePct >= 0
   const logo = TICKER_LOGOS[data.ticker]
@@ -85,6 +86,7 @@ export default function StockSpotlight() {
             {data.publisher && <span className="spotlight-publisher"> — {data.publisher}</span>}
           </p>
         )}
+        {data.summary && <p className="spotlight-summary">{data.summary}</p>}
       </div>
     </section>
   )
