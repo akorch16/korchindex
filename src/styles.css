@@ -228,9 +228,9 @@ header + main > .section:first-child { margin-top: 8px; }
 
 /* ---------- stock spotlight ---------- */
 .spotlight-card { display: flex; flex-direction: column; gap: 10px; }
-.spotlight-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
 .spotlight-body { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; }
 .spotlight-who { display: flex; align-items: center; gap: 10px; }
+.spotlight-logo { height: 22px; width: auto; max-width: 80px; object-fit: contain; }
 .spotlight-company { font-size: 17px; font-weight: 700; }
 .spotlight-change { font-size: 15px; font-weight: 700; white-space: nowrap; }
 .spotlight-news { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
@@ -240,6 +240,7 @@ header + main > .section:first-child { margin-top: 8px; }
 
 @media (max-width: 600px) {
   .spotlight-company { font-size: 15px; }
+  .spotlight-logo { height: 18px; max-width: 60px; }
 }
 
 /* ---------- chart chrome ---------- */

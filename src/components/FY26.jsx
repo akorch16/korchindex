@@ -483,6 +483,8 @@ export default function FY26() {
 
       <LogoStrip eyebrow="KORCH is Powered By But Definitely Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
 
+      <StockSpotlight />
+
       <section className="section">
         <h2 className="section-title">KORCH: The Stock Picks</h2>
         <RosterTable
@@ -492,8 +494,6 @@ export default function FY26() {
           errNote={err ? 'Live prices haven’t published yet today — showing each pick’s opening price.' : null}
         />
       </section>
-
-      <StockSpotlight />
 
       <LogoStrip eyebrow="KORCH is Inspired By But Absolutely Not Endorsed By" logos={NOT_ENDORSED_LOGOS} />
 
