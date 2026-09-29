@@ -15,6 +15,9 @@ const prices = JSON.parse(await readFile(PRICES_PATH, 'utf8'))
 const year3 = JSON.parse(await readFile(YEAR3_PATH, 'utf8'))
 const stockNotes = JSON.parse(await readFile(STOCK_NOTES_PATH, 'utf8'))
 
+// Yahoo symbol format: class shares use '-' (BRK.B -> BRK-B)
+const toYahoo = (t) => t.replace('.', '-')
+
 // Corporate-action picks (mergers, liquidations, rebrands) no longer trade
 // under their original ticker -- skip them, since "why did it move" news
 // for the successor company would be a confusing non sequitur here.
