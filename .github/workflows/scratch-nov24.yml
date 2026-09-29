@@ -1,6 +1,8 @@
 name: Scratch - fetch Nov 24 closes
 
 on:
+  push:
+    branches: [claude/nov24-scratch-analysis]
   workflow_dispatch:
 
 jobs:
