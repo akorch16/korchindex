@@ -10,6 +10,7 @@ import HowKorchWorks from './HowKorchWorks'
 import RosterTable from './RosterTable'
 import StockSpotlight from './StockSpotlight'
 import LogoStrip from './LogoStrip'
+import { TICKER_LOGOS } from '../data/ticker-logos'
 
 const STAKE = 1000
 
@@ -451,14 +452,42 @@ export default function FY26() {
             <div className="value pos">
               {best ? fmtPct(best.since) : '—'}
             </div>
-            <div className="note big pos">{best ? best.ticker : 'check back tomorrow'}</div>
+            <div className="note big pos">
+              {best ? (
+                TICKER_LOGOS[best.ticker] ? (
+                  <img
+                    className="note-logo"
+                    src={`${import.meta.env.BASE_URL}${TICKER_LOGOS[best.ticker]}`}
+                    alt={best.ticker}
+                  />
+                ) : (
+                  best.ticker
+                )
+              ) : (
+                'check back tomorrow'
+              )}
+            </div>
           </div>
           <div className="tile callout">
             <div className="label">Biggest loser</div>
             <div className="value neg">
               {worst ? fmtPct(worst.since) : '—'}
             </div>
-            <div className="note big neg">{worst ? worst.ticker : 'check back tomorrow'}</div>
+            <div className="note big neg">
+              {worst ? (
+                TICKER_LOGOS[worst.ticker] ? (
+                  <img
+                    className="note-logo"
+                    src={`${import.meta.env.BASE_URL}${TICKER_LOGOS[worst.ticker]}`}
+                    alt={worst.ticker}
+                  />
+                ) : (
+                  worst.ticker
+                )
+              ) : (
+                'check back tomorrow'
+              )}
+            </div>
           </div>
         </div>
       </section>

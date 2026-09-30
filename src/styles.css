@@ -209,6 +209,7 @@ header + main > .section:first-child { margin-top: 8px; }
 .tile .value { font-size: 34px; font-weight: 750; margin-top: 2px; }
 .tile .note { color: var(--muted); font-size: 12px; margin-top: 4px; }
 .tile .note.big { font-size: 16px; font-weight: 700; margin-top: 6px; }
+.note-logo { height: 18px; width: auto; max-width: 100%; object-fit: contain; }
 .pos { color: var(--up); }
 .neg { color: var(--loss); }
 .warn { color: var(--s3); }
@@ -219,6 +220,7 @@ header + main > .section:first-child { margin-top: 8px; }
   .tile .label { font-size: 11px; }
   .tile .value { font-size: 20px; margin-top: 4px; }
   .tile .note, .tile .note.big { font-size: 11px; }
+  .note-logo { height: 14px; }
 
   .hero-row { align-items: flex-start; gap: 10px; }
   .guy-line { flex-wrap: wrap; }
