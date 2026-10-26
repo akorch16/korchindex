@@ -1,14 +1,14 @@
 {
  "date": "2026-10-26",
- "name": "Olivia Hardley",
- "ticker": "FIG",
- "company": "Figma, Inc.",
- "changePct": -0.05720681988982572,
- "price": 23.155,
- "open": 24.559999465942383,
- "headline": "Oppenheimer names top SMID software stocks ahead of Q3 earnings",
- "summary": "Figma's CEO went on a podcast to warn that AI makes creative work look the same, and investors who wrote off the stock at a 38% loss this year may have missed the part where that warning is actually Figma's business mode…",
- "publisher": "Investing.com",
- "link": "https://finance.yahoo.com/markets/stocks/articles/oppenheimer-names-top-smid-software-054256707.html",
- "publishedAt": "2026-10-23T05:42:56.000Z"
+ "name": "Kevin Perko",
+ "ticker": "MRNA",
+ "company": "Moderna, Inc.",
+ "changePct": 0.06391512539737106,
+ "price": 198.85,
+ "open": 186.9040069580078,
+ "headline": "Moderna CEO Says Its Cancer Vaccine Isn’t a Disappointment, It’s a Blockbuster",
+ "summary": "Moderna’s stock tanked Thursday following a data leak for the drugmaker’s cancer-vaccine candidate, which is co-developed with Merck.",
+ "publisher": "Barrons.com",
+ "link": "https://finance.yahoo.com/m/0e2659e9-da0c-3880-acf7-af50cda3e44b/moderna-ceo-says-its-cancer.html",
+ "publishedAt": "2026-10-26T22:22:00.000Z"
 }
