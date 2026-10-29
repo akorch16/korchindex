@@ -44,24 +44,6 @@ const NOT_SUPPORTED_LOGOS = [
   { file: 'logo-sweetgreen.webp', name: 'Sweetgreen' },
 ]
 
-// Current dollar value of one person's $1,000 FY26 stake, and its dollar
-// swing since today's market open -- both measured off the same $1,000
-// basis scaled by price ratios, so a corporate-action pick (frozen payout,
-// or a merger/rebrand's successor-share value) falls out of the same math
-// with no special case: a frozen payout has today's price equal to today's
-// open, so its swing is naturally $0.
-function positionStats(p, quotes) {
-  const caLive = corporateActionValue(p.corporateAction, quotes, 'price')
-  const live = caLive ?? quotes?.[p.ticker]?.price ?? null
-  const caOpen = corporateActionValue(p.corporateAction, quotes, 'open')
-  const open = p.corporateAction ? caOpen : (quotes?.[p.ticker]?.open ?? null)
-
-  const value = live != null && p.openingPrice != null ? STAKE * (live / p.openingPrice) : STAKE
-  const sinceOpenReturn = live != null && open != null && open !== 0 ? (live - open) / open : null
-  const dollarChange = sinceOpenReturn != null ? value * sinceOpenReturn : 0
-  return { value, dollarChange }
-}
-
 // Names recorded differently across seasons than in the FY25 spreadsheet
 // (the source of cohortMembership) -- resolved by cross-season corroboration
 // (see backend/scripts/derived/cohort_memberships.json history). Two are
@@ -106,13 +88,6 @@ export function sinceTracking(openingPrice, live) {
   return live != null && openingPrice != null ? (live - openingPrice) / openingPrice : null
 }
 
-// "Sep 22 · Change" -- today's date, for the since-open tile.
-function dailyChangeLabel(date = new Date()) {
-  const month = date.toLocaleDateString('en-US', { month: 'short' })
-  const day = date.getDate()
-  return `${month} ${day} · Change`
-}
-
 // A pick caught in a corporate action mid-season no longer has a live quote
 // under its original ticker -- derive an equivalent per-original-share value
 // instead: a liquidation's frozen cash payout, or a merger/rebrand's cash-plus-
@@ -138,14 +113,13 @@ export function displayTicker(p) {
   return ca.successorTicker ? `${p.ticker} (${ca.successorTicker})` : `${p.ticker} (liquidated)`
 }
 
-// [0, chg-at-Q1, chg-at-Q2, ..., chg-at-now] for one entity, from its
-// backfilled checkpointPrices plus the live "now" price as the open quarter.
-function series(entity, live) {
+// [0, chg-at-checkpoint-1, ..., chg-at-season-end] for one entity, from its
+// frozen checkpointPrices (the last entry is the season-end close).
+function series(entity) {
   const cps = entity.checkpointPrices
   const open = cps?.[0] ?? entity.openingPrice
   const chg = (p) => (open != null && p != null ? (p - open) / open : null)
-  const historical = (cps ?? []).slice(1).map(chg)
-  return [0, ...historical, chg(live)]
+  return [0, ...(cps ?? []).slice(1).map(chg)]
 }
 
 // Average several entities' series index-by-index, ignoring gaps.
@@ -159,13 +133,12 @@ function averageOf(seriesList) {
 
 // Quarter-over-quarter winner/loser: biggest rise and fall within each
 // quarter window specifically (not cumulative since the FY26 open), using
-// the checkpointPrices indices for Oct 28 / Jan 28 / Apr 28 / Jul 28 --
-// Q4 (Jul 28 -> now) uses the live price for its still-open end point.
+// the checkpointPrices indices for Oct 28 / Jan 28 / Apr 28 / Jul 28 / Oct 28.
 const QUARTER_WINDOWS = [
   { label: 'Q1', sub: 'Oct 28 → Jan 28', startIdx: 0, endIdx: 3 },
   { label: 'Q2', sub: 'Jan 28 → Apr 28', startIdx: 3, endIdx: 6 },
   { label: 'Q3', sub: 'Apr 28 → Jul 28', startIdx: 6, endIdx: 9 },
-  { label: 'Q4', sub: 'Jul 28 → now', startIdx: 9, endIdx: null },
+  { label: 'Q4', sub: 'Jul 28 → Oct 28', startIdx: 9, endIdx: 12 },
 ]
 
 function quarterExtremes(rows) {
@@ -174,7 +147,7 @@ function quarterExtremes(rows) {
     let worst = null
     for (const r of rows) {
       const start = r.checkpointPrices?.[startIdx]
-      const end = endIdx != null ? r.checkpointPrices?.[endIdx] : r.live
+      const end = r.checkpointPrices?.[endIdx]
       if (start == null || end == null) continue
       const qoq = (end - start) / start
       if (!best || qoq > best.qoq) best = { ticker: r.ticker, qoq }
@@ -322,8 +295,8 @@ function Showdowns({ rows, showdownLabels }) {
           const veterans = rows.filter((r) => veteranNames.has(canonicalName(r.name)))
           const newcomers = rows.filter((r) => !veteranNames.has(canonicalName(r.name)))
           const chartSeries = [
-            { name: 'Veterans', color: SLOT_COLORS[0], values: averageOf(veterans.map((r) => series(r, r.live))) },
-            { name: 'Newcomers', color: SLOT_COLORS[1], values: averageOf(newcomers.map((r) => series(r, r.live))) },
+            { name: 'Veterans', color: SLOT_COLORS[0], values: averageOf(veterans.map((r) => series(r))) },
+            { name: 'Newcomers', color: SLOT_COLORS[1], values: averageOf(newcomers.map((r) => series(r))) },
           ]
           return (
             <div key={s.title} className="card chart-card">
@@ -337,7 +310,7 @@ function Showdowns({ rows, showdownLabels }) {
         }
         const seriesFor = (cohortNames) => {
           const members = rows.filter((r) => cohortNames.includes(canonicalName(r.name)))
-          return averageOf(members.map((r) => series(r, r.live)))
+          return averageOf(members.map((r) => series(r)))
         }
         const chartSeries = s.keys
           .map((k, i) => ({ name: s.rename?.[k] || k, color: SLOT_COLORS[i], values: seriesFor(cohortMembership[k] ?? []) }))
@@ -358,71 +331,53 @@ function Showdowns({ rows, showdownLabels }) {
 }
 
 export default function FY26() {
+  // Live quotes feed only "Hold or Switch" (what a FY25 pick is worth today);
+  // everything else on this page is frozen at the Oct 28, 2026 season close.
   const [data, setData] = useState(null)
-  const [err, setErr] = useState(false)
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}live/prices.json`, { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then(setData)
-      .catch(() => setErr(true))
+      .catch(() => {})
   }, [])
 
   const rows = useMemo(() => {
     return year3.people
-      .map((p) => {
-        const caValue = corporateActionValue(p.corporateAction, data?.quotes)
-        const q = data?.quotes[p.ticker]
-        const live = caValue ?? q?.price ?? p.openingPrice
-        return { ...p, live, since: sinceTracking(p.openingPrice, live) }
-      })
+      .map((p) => ({ ...p, live: p.checkpointPrices.at(-1), since: p.return }))
       .sort((a, b) => (b.since ?? -Infinity) - (a.since ?? -Infinity))
-  }, [data])
+  }, [])
 
   const benchmarks = useMemo(() => {
-    return year3.benchmarks.map((b) => {
-      const q = data?.quotes[b.ticker]
-      const live = q?.price ?? b.openingPrice
-      return { ...b, live, since: sinceTracking(b.openingPrice, live) }
-    })
-  }, [data])
+    return year3.benchmarks.map((b) => ({ ...b, live: b.checkpointPrices.at(-1), since: b.return }))
+  }, [])
 
-  const pv = useMemo(() => {
-    const positions = year3.people.map((p) => positionStats(p, data?.quotes))
-    const start = year3.people.length * STAKE
-    const total = positions.reduce((sum, p) => sum + p.value, 0)
-    const dailyChange = positions.reduce((sum, p) => sum + p.dollarChange, 0)
-    return { start, total, dailyChange, totalReturn: (total - start) / start }
-  }, [data])
+  const korch = year3.korchReturn
+  const total = year3.people.length * STAKE * (1 + korch)
 
-  const tracked = rows.filter((r) => r.since != null)
   const sp = benchmarks.find((b) => b.ticker === 'VOO')
   const brk = benchmarks.find((b) => b.ticker === 'BRK.B')
-  const best = tracked[0]
-  const worst = tracked[tracked.length - 1]
-  const korchSeries = averageOf(rows.map((r) => series(r, r.live)))
+  const best = rows[0]
+  const worst = rows[rows.length - 1]
+  const korchSeries = averageOf(rows.map((r) => series(r)))
 
-  const raceLabels = useMemo(() => {
-    const n = (year3.checkpointDates?.length ?? 1) + 1 // +1 for the live "now" point
-    const labels = (year3.checkpointDates ?? [year3.seasonOpened]).map((d) =>
-      new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
-    )
-    labels.length = n - 1
-    labels.push('Now')
-    return labels
-  }, [])
+  const raceLabels = useMemo(
+    () =>
+      year3.checkpointDates.map((d) =>
+        new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+      ),
+    []
+  )
 
-  // Bare month name, no year -- the showdown cards are too narrow for 11
+  // Bare month name, no year -- the showdown cards are too narrow for 13
   // "Oct '25"-style labels to fit without breaking.
-  const showdownLabels = useMemo(() => {
-    const n = (year3.checkpointDates?.length ?? 1) + 1
-    const labels = (year3.checkpointDates ?? [year3.seasonOpened]).map((d) =>
-      new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short' })
-    )
-    labels.length = n - 1
-    labels.push('Now')
-    return labels
-  }, [])
+  const showdownLabels = useMemo(
+    () =>
+      year3.checkpointDates.map((d) =>
+        new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short' })
+      ),
+    []
+  )
 
   return (
     <>
@@ -431,20 +386,11 @@ export default function FY26() {
         <div className="kpi-row">
           <div className="tile hero">
             <div className="label">KORCH · Total</div>
-            <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
+            <div className={`value ${korch >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(total)}</div>
           </div>
           <div className="tile hero">
             <div className="label">KORCH · FY26</div>
-            <div className={`value ${korchSeries.at(-1) >= 0 ? 'pos' : 'neg'}`}>
-              {korchSeries.at(-1) != null ? fmtPct(korchSeries.at(-1)) : '—'}
-            </div>
-          </div>
-          <div className="tile">
-            <div className="label">{dailyChangeLabel()}</div>
-            <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
-              {pv.dailyChange >= 0 ? '+' : '-'}
-              {`$${Math.round(Math.abs(pv.dailyChange)).toLocaleString('en-US')}`}
-            </div>
+            <div className={`value ${korch >= 0 ? 'pos' : 'neg'}`}>{fmtPct(korch)}</div>
           </div>
           <div className="tile callout">
             <div className="label">Biggest winner</div>
@@ -473,12 +419,12 @@ export default function FY26() {
         <RaceChart
           series={[
             { name: 'KORCH', color: 'var(--s1)', values: korchSeries, emphasis: true },
-            { name: 'S&P 500', color: 'var(--muted)', values: sp ? series(sp, sp.live) : [] },
-            { name: 'W. Buffett', color: 'var(--baseline)', values: brk ? series(brk, brk.live) : [] },
+            { name: 'S&P 500', color: 'var(--muted)', values: sp ? series(sp) : [] },
+            { name: 'W. Buffett', color: 'var(--baseline)', values: brk ? series(brk) : [] },
           ]}
           xLabels={raceLabels}
         />
-        <HeadToHead korchReturn={korchSeries.at(-1) ?? null} spReturn={sp?.since ?? null} buffettReturn={brk?.since ?? null} />
+        <HeadToHead korchReturn={korch} spReturn={sp?.since ?? null} buffettReturn={brk?.since ?? null} />
       </section>
 
       <LogoStrip eyebrow="KORCH is Powered By But Definitely Not Sponsored By" logos={NOT_SPONSORED_LOGOS} />
@@ -491,7 +437,6 @@ export default function FY26() {
           rows={rows.map((r) => ({ ...r, displayTicker: displayTicker(r), latest: r.live }))}
           sinceLabel="FY26"
           notes={stockNotes}
-          errNote={err ? 'Live prices haven’t published yet today — showing each pick’s opening price.' : null}
         />
       </section>
 

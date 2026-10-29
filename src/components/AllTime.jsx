@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { fmtPct } from './LineChart'
 import year1 from '../data/year1.json'
 import year2 from '../data/year2.json'
 import year3 from '../data/year3.json'
-import { corporateActionValue, sinceTracking, displayTicker } from './FY26'
+import { displayTicker } from './FY26'
 import PredictivePower from './PredictivePower'
 
 // Names recorded differently across the three seasons' rosters -- this is
@@ -27,10 +27,9 @@ const canonicalName = (name) => NAME_ALIASES[name] ?? name
 
 // One row per person, merging their pick + return from whichever of the
 // three seasons they played (not everyone has played all three -- the
-// roster has grown each year). FY24/FY25 returns are the season's final,
-// already-settled numbers; FY26 is computed live the same way the FY26 tab
-// does, corporate actions included.
-function allTimeRows(quotes) {
+// roster has grown each year). All three returns are the seasons' final,
+// already-settled numbers (FY26 frozen at the Oct 28, 2026 close).
+function allTimeRows() {
   const byName = new Map()
   const add = (season, p, ret) => {
     const key = canonicalName(p.name)
@@ -40,12 +39,7 @@ function allTimeRows(quotes) {
 
   year1.people.forEach((p) => add('fy24', p, p.return))
   year2.people.forEach((p) => add('fy25', p, p.return))
-  year3.people.forEach((p) => {
-    const caValue = corporateActionValue(p.corporateAction, quotes)
-    const q = quotes?.[p.ticker]
-    const live = caValue ?? q?.price ?? p.openingPrice
-    add('fy26', p, sinceTracking(p.openingPrice, live))
-  })
+  year3.people.forEach((p) => add('fy26', p, p.return))
 
   return [...byName.values()].map((r) => {
     const played = [r.fy24?.ret, r.fy25?.ret, r.fy26?.ret].filter((v) => v != null)
@@ -58,18 +52,9 @@ const fmtOrDash = (v) => (v == null ? '—' : fmtPct(v))
 const initials = (name) => name.split(' ').filter(Boolean).map((w) => w[0]).join('').toUpperCase()
 
 export default function AllTime() {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}live/prices.json`, { cache: 'no-store' })
-      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then(setData)
-      .catch(() => {})
-  }, [])
-
   const rows = useMemo(() => {
-    return allTimeRows(data?.quotes).sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity))
-  }, [data])
+    return allTimeRows().sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity))
+  }, [])
 
   return (
     <>
