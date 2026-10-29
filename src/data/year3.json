@@ -22,7 +22,8 @@
     38.46,
     41.78,
     35.09
-   ]
+   ],
+   "return": -0.319566
   },
   {
    "name": "Tim Morris",
@@ -43,7 +44,8 @@
     505.06,
     509.22,
     531.33
-   ]
+   ],
+   "return": -0.000357
   },
   {
    "name": "Suzanne Korchinski",
@@ -64,7 +66,8 @@
     154.33,
     144.01,
     165.81
-   ]
+   ],
+   "return": -0.052839
   },
   {
    "name": "Betsy Arch",
@@ -85,7 +88,8 @@
     6.79,
     8.24,
     10.31
-   ]
+   ],
+   "return": 0.424033
   },
   {
    "name": "Scott Mitchell",
@@ -105,7 +109,7 @@
     null,
     null,
     null,
-    null
+    57.4411
    ],
    "corporateAction": {
     "type": "merger",
@@ -114,7 +118,8 @@
     "cashPerShare": 8.71,
     "shareRatio": 0.9809,
     "note": "REV Group merged into Terex Corp (TEX): $8.71 cash + 0.9809 TEX shares per REVG share. Final independent trading price $63.90 (Jan 30, 2026)."
-   }
+   },
+   "return": -0.062798
   },
   {
    "name": "Alex Armstrong",
@@ -135,7 +140,8 @@
     137.4,
     157.14,
     141.4
-   ]
+   ],
+   "return": -0.521699
   },
   {
    "name": "Scott Buckley",
@@ -156,7 +162,8 @@
     83.47,
     75.49,
     82.42
-   ]
+   ],
+   "return": -0.041962
   },
   {
    "name": "Alejandra Orozco",
@@ -177,7 +184,8 @@
     38.46,
     41.78,
     35.09
-   ]
+   ],
+   "return": -0.319566
   },
   {
    "name": "Allie Mitchell",
@@ -198,7 +206,8 @@
     32.49,
     27.87,
     29.27
-   ]
+   ],
+   "return": -0.021398
   },
   {
    "name": "Adam Fried",
@@ -219,7 +228,8 @@
     153.95,
     143.08,
     136.46
-   ]
+   ],
+   "return": -0.377577
   },
   {
    "name": "Jim Korchinski",
@@ -240,7 +250,8 @@
     227.98,
     228.86,
     217.94
-   ]
+   ],
+   "return": 0.138127
   },
   {
    "name": "Michelle Fried",
@@ -261,7 +272,8 @@
     37.22,
     31.85,
     27.98
-   ]
+   ],
+   "return": -0.318558
   },
   {
    "name": "Todd Grover",
@@ -285,7 +297,8 @@
    ],
    "splitAdjusted": [
     "1:30 reverse split, 2026-08-14"
-   ]
+   ],
+   "return": -0.871087
   },
   {
    "name": "Karen Korchinski",
@@ -306,7 +319,8 @@
     817,
     819.95,
     713.31
-   ]
+   ],
+   "return": 0.35335
   },
   {
    "name": "Nicole Haylock",
@@ -327,7 +341,8 @@
     178.83,
     169.48,
     171.58
-   ]
+   ],
+   "return": 0.018884
   },
   {
    "name": "Cynthia Withers",
@@ -348,7 +363,8 @@
     505.06,
     509.22,
     531.33
-   ]
+   ],
+   "return": -0.000357
   },
   {
    "name": "Julia Korchinski",
@@ -369,7 +385,8 @@
     256.26,
     246.15,
     253.1
-   ]
+   ],
+   "return": 0.115125
   },
   {
    "name": "Jason Feder",
@@ -390,7 +407,8 @@
     185.93,
     187.48,
     198.73
-   ]
+   ],
+   "return": 0.050481
   },
   {
    "name": "Greg Arch",
@@ -410,14 +428,15 @@
     null,
     null,
     null,
-    null
+    30.8963
    ],
    "corporateAction": {
     "type": "liquidation",
     "date": "2025-11-13",
     "payout": 30.8963,
     "note": "Fidelity liquidated the fund. Final trading price $30.88 (Nov 13, 2025); cash payout $30.8963/share (Nov 25, 2025)."
-   }
+   },
+   "return": -0.005911
   },
   {
    "name": "Isabelle Korchinski",
@@ -438,7 +457,8 @@
     476.67,
     607.87,
     560.26
-   ]
+   ],
+   "return": 1.157585
   },
   {
    "name": "Jack Korchinski",
@@ -459,7 +479,8 @@
     505.06,
     509.22,
     531.33
-   ]
+   ],
+   "return": -0.000357
   },
   {
    "name": "Bibi Withers",
@@ -480,7 +501,8 @@
     934.66,
     922.92,
     992.13
-   ]
+   ],
+   "return": 0.066979
   },
   {
    "name": "Adriana Withers",
@@ -500,7 +522,7 @@
     null,
     null,
     null,
-    null
+    2.25
    ],
    "corporateAction": {
     "type": "rebrand",
@@ -508,7 +530,8 @@
     "successorTicker": "KEEL",
     "shareRatio": 1,
     "note": "Bitfarms completed a US redomiciliation and rebranded 1:1 to Keel Infrastructure Corp (KEEL)."
-   }
+   },
+   "return": -0.497768
   },
   {
    "name": "Kevin Perko",
@@ -529,7 +552,8 @@
     142.77,
     197.28,
     207.97
-   ]
+   ],
+   "return": 6.800825
   },
   {
    "name": "Olivia Hardley",
@@ -550,7 +574,8 @@
     30.62,
     20.25,
     22.98
-   ]
+   ],
+   "return": -0.567557
   },
   {
    "name": "Chris Morris",
@@ -571,7 +596,8 @@
     69.56,
     72.53,
     70.19
-   ]
+   ],
+   "return": -0.29999
   },
   {
    "name": "Natalie Lee",
@@ -592,7 +618,8 @@
     340.65,
     342.75,
     320.58
-   ]
+   ],
+   "return": 0.190552
   },
   {
    "name": "Jamie Armstrong",
@@ -613,7 +640,8 @@
     379.66,
     367.74,
     401.86
-   ]
+   ],
+   "return": 0.155368
   },
   {
    "name": "Brittany Buckley",
@@ -634,7 +662,8 @@
     340.65,
     342.75,
     320.58
-   ]
+   ],
+   "return": 0.190552
   },
   {
    "name": "Brenley",
@@ -655,7 +684,8 @@
     154.33,
     144.01,
     165.81
-   ]
+   ],
+   "return": -0.052839
   },
   {
    "name": "Leala Wong",
@@ -676,7 +706,8 @@
     1735.01,
     1771.41,
     1635.57
-   ]
+   ],
+   "return": 0.54302
   },
   {
    "name": "Hector Sarmiento",
@@ -697,7 +728,8 @@
     138.43,
     131.45,
     154.78
-   ]
+   ],
+   "return": -0.182183
   },
   {
    "name": "Ana Sarmiento",
@@ -718,7 +750,8 @@
     53.69,
     44.07,
     41.32
-   ]
+   ],
+   "return": -0.544332
   },
   {
    "name": "Joe Hobbs",
@@ -739,7 +772,8 @@
     354.81,
     357.45,
     407.46
-   ]
+   ],
+   "return": -0.099377
   },
   {
    "name": "Alex Morris",
@@ -760,7 +794,8 @@
     59.03,
     46.45,
     40.87
-   ]
+   ],
+   "return": -0.376697
   },
   {
    "name": "Victoria Withers",
@@ -781,7 +816,8 @@
     187.3,
     199.39,
     260.15
-   ]
+   ],
+   "return": -0.202801
   },
   {
    "name": "Theo Lee",
@@ -802,7 +838,8 @@
     38.44,
     36.39,
     37.56
-   ]
+   ],
+   "return": -0.452398
   },
   {
    "name": "Scott Korchinski",
@@ -823,7 +860,8 @@
     37.22,
     31.85,
     27.98
-   ]
+   ],
+   "return": -0.318558
   },
   {
    "name": "Kelly Grover",
@@ -844,7 +882,8 @@
     1076.45,
     1011.07,
     999.38
-   ]
+   ],
+   "return": 0.185828
   },
   {
    "name": "Brett Morris",
@@ -865,7 +904,8 @@
     626.5,
     610.83,
     654.99
-   ]
+   ],
+   "return": 0.239432
   },
   {
    "name": "Anthony Fryar",
@@ -886,7 +926,8 @@
     143.14,
     149.03,
     159.23
-   ]
+   ],
+   "return": 0.049361
   },
   {
    "name": "Stephen Hosea",
@@ -907,7 +948,8 @@
     571.1,
     715.62,
     620.19
-   ]
+   ],
+   "return": -0.173983
   }
  ],
  "trackingSince": "2026-07-23",
@@ -931,7 +973,8 @@
     708.75,
     703.61,
     707.52
-   ]
+   ],
+   "return": 0.123048
   },
   {
    "ticker": "BRK.B",
@@ -952,7 +995,8 @@
     503.7,
     503.09,
     542.99
-   ]
+   ],
+   "return": 0.112525
   }
  ],
  "checkpointDates": [
@@ -969,5 +1013,6 @@
   "2026-08-28",
   "2026-09-28",
   "2026-10-28"
- ]
+ ],
+ "korchReturn": 0.095166
 }
