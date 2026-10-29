@@ -18,4 +18,4 @@ for (const t of tickers) {
   } catch (e) { out[t] = null }
   await new Promise((r) => setTimeout(r, 250))
 }
-console.log('CLOSES_JSON=' + JSON.stringify(out))
+import('node:fs').then((fs) => fs.writeFileSync(new URL('./closes.json', import.meta.url), JSON.stringify(out)))
