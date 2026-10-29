@@ -1,0 +1,13 @@
+name: Scratch fetch
+on:
+  push:
+    branches: [claude/fetch-tex-keel-scratch]
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/scratch/fetch-close.mjs
