@@ -73,11 +73,14 @@ function positionStats(p, quotes) {
 const NAME_ALIASES = {
   'Alex Armstrong': 'Alexander Armstrong',
   'Allison Mitchell': 'Allie Mitchell',
+  'Ana Kovacevic': 'Ana Sarmiento',
+  'Betsy Polan': 'Betsy Arch',
   'Brenley MacEachern': 'Brenley',
   'Brit': 'Brittany Buckley',
   'Buckley': 'Scott Buckley',
   'Chris Morris': 'Christopher Morris',
   'Jamie': 'Jamie Armstrong',
+  'Julia M': 'Julia Korchinski',
   'Karen Korchinski': 'Karin Korchinski',
   'Leala': 'Leala Wong',
   'Michelle Fried': 'Michelle Sullivan',
@@ -87,6 +90,7 @@ const NAME_ALIASES = {
   'Suzy': 'Suzy Walker',
   'Theo Lee': 'Theodore Lee',
   'Tim': 'Tim Morris',
+  'Toe Withers': 'Victoria Withers',
 }
 const canonicalName = (name) => NAME_ALIASES[name] ?? name
 
