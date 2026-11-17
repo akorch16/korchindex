@@ -114,7 +114,8 @@
   "Stephen Hosea",
   "Theodore Lee",
   "Tim Morris",
-  "Todd Grover"
+  "Todd Grover",
+  "Asher Korchinski"
  ],
  "Women": [
   "Adriana Withers",
@@ -191,7 +192,8 @@
   "Scott Mitchell",
   "Stephen Hosea",
   "Theodore Lee",
-  "Todd Grover"
+  "Todd Grover",
+  "Asher Korchinski"
  ],
  "Gen Z": [
   "Isabelle Korchinski",
@@ -291,5 +293,8 @@
   "Kelly Grover",
   "Natalie Lee",
   "Olivia Hardley"
+ ],
+ "Gen Beta": [
+  "Asher Korchinski"
  ]
 }

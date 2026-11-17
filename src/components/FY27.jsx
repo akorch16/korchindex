@@ -101,14 +101,14 @@ const SHOWDOWNS = [
     keys: ['Santa Barbara High Grad', 'Wife of SBHS', 'UCLA Grad', 'Wife of UCLA Grad'],
     rename: { 'Santa Barbara High Grad': 'SBHS Grad', 'Wife of SBHS': 'Wife of SBHS', 'UCLA Grad': 'UCLA Grad', 'Wife of UCLA Grad': 'Wife of UCLA' },
   },
-  { title: 'Birth year', keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers'] },
+  { title: 'Birth year', keys: ['Gen Z', 'Millennials', 'Gen X', 'Boomers', 'Gen Beta'] },
   { title: 'Men vs. Women', keys: ['Men', 'Women'] },
   { title: 'Uncles vs. Aunts vs. Cousins', keys: ['Uncles', 'Aunts', 'Cousins'] },
   { title: 'Country of birth', keys: ['Americans', 'Canadians', 'Mexicans', 'English'] },
   { title: 'Veterans vs. Newcomers', keys: ['Veterans', 'Newcomers'] },
   { title: 'My Wife vs. Everyone', keys: ['Wife'] },
 ]
-const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)']
+const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)']
 
 // "Sep 22 · Change" -- today's date, for the since-open tile.
 function dailyChangeLabel(date = new Date()) {
