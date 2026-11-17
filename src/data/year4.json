@@ -1,435 +1,435 @@
 {
  "label": "Year 4",
  "fiscal": "FY27",
- "seasonOpened": "2026-11-16",
+ "seasonOpened": "2026-11-17",
  "people": [
   {
    "name": "Adam Fried",
    "ticker": "NVDA",
-   "openingPrice": 159.02,
-   "openingDate": "2026-11-16",
+   "openingPrice": 156.91,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    159.02
+    156.91
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Adriana Withers",
    "ticker": "BN",
-   "openingPrice": 40.75,
-   "openingDate": "2026-11-16",
+   "openingPrice": 40.09,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    40.75
+    40.09
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Alejandra Orozco",
    "ticker": "VRT",
-   "openingPrice": 192.125,
-   "openingDate": "2026-11-16",
+   "openingPrice": 191.975,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    192.125
+    191.975
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Alex Morris",
    "ticker": "CRWD",
-   "openingPrice": 223.8,
-   "openingDate": "2026-11-16",
+   "openingPrice": 224,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    223.8
+    224
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Alexander Armstrong",
    "ticker": "MSTR",
-   "openingPrice": 103.74,
-   "openingDate": "2026-11-16",
+   "openingPrice": 102.668,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    103.74
+    102.668
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Allison Mitchell",
    "ticker": "FSLR",
-   "openingPrice": 168.9,
-   "openingDate": "2026-11-16",
+   "openingPrice": 163.08,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    168.9
+    163.08
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Ana Kovacevic",
    "ticker": "GE",
-   "openingPrice": 331.21,
-   "openingDate": "2026-11-16",
+   "openingPrice": 324.2,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    331.21
+    324.2
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Anthony Fryar",
    "ticker": "BRK.B",
-   "openingPrice": 594.97,
-   "openingDate": "2026-11-16",
+   "openingPrice": 589.98,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    594.97
+    589.98
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Asher Korchinski",
    "ticker": "GS",
-   "openingPrice": 906.49,
-   "openingDate": "2026-11-16",
+   "openingPrice": 888.06,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    906.49
+    888.06
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Betsy Polan",
    "ticker": "REF",
-   "openingPrice": 18.35,
-   "openingDate": "2026-11-16",
+   "openingPrice": 18.97,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    18.35
+    18.97
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Bibi Withers",
    "ticker": "COST",
-   "openingPrice": 1111.1801,
-   "openingDate": "2026-11-16",
+   "openingPrice": 1110,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    1111.1801
+    1110
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Brenley MacEachern",
    "ticker": "DECK",
-   "openingPrice": 85.98,
-   "openingDate": "2026-11-16",
+   "openingPrice": 83.635,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    85.98
+    83.635
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Brett Morris",
    "ticker": "FNV",
-   "openingPrice": 243.42,
-   "openingDate": "2026-11-16",
+   "openingPrice": 242.96,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    243.42
+    242.96
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Brittany Buckley",
    "ticker": "GE",
-   "openingPrice": 331.21,
-   "openingDate": "2026-11-16",
+   "openingPrice": 324.2,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    331.21
+    324.2
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Chris Morris",
    "ticker": "STX",
-   "openingPrice": 500,
-   "openingDate": "2026-11-16",
+   "openingPrice": 510,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    500
+    510
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Cynthia Withers",
    "ticker": "BRK.B",
-   "openingPrice": 594.97,
-   "openingDate": "2026-11-16",
+   "openingPrice": 589.98,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    594.97
+    589.98
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Greg Arch",
    "ticker": "ESGU",
-   "openingPrice": 163.9,
-   "openingDate": "2026-11-16",
+   "openingPrice": 161.73,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    163.9
+    161.73
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Hector Sarmiento",
    "ticker": "NOG",
-   "openingPrice": 24.74,
-   "openingDate": "2026-11-16",
+   "openingPrice": 24.38,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    24.74
+    24.38
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Isabelle Korchinski",
    "ticker": "AVGO",
-   "openingPrice": 332.49,
-   "openingDate": "2026-11-16",
+   "openingPrice": 335.59,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    332.49
+    335.59
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Jack Korchinski",
    "ticker": "AMD",
-   "openingPrice": 503.45,
-   "openingDate": "2026-11-16",
+   "openingPrice": 511.6,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    503.45
+    511.6
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Jamie Armstrong",
    "ticker": "JNJ",
-   "openingPrice": 288.99,
-   "openingDate": "2026-11-16",
+   "openingPrice": 278.99,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    288.99
+    278.99
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Jason Feder",
    "ticker": "AMPX",
-   "openingPrice": 7.53,
-   "openingDate": "2026-11-16",
+   "openingPrice": 7.17,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    7.53
+    7.17
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Jim Korchinski",
    "ticker": "VRT",
-   "openingPrice": 192.125,
-   "openingDate": "2026-11-16",
+   "openingPrice": 191.975,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    192.125
+    191.975
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Joe Hobbs",
    "ticker": "IREN",
-   "openingPrice": 17.08,
-   "openingDate": "2026-11-16",
+   "openingPrice": 16.58,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    17.08
+    16.58
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "John Withers",
    "ticker": "AVGO",
-   "openingPrice": 332.49,
-   "openingDate": "2026-11-16",
+   "openingPrice": 335.59,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    332.49
+    335.59
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Julia M",
    "ticker": "MU",
-   "openingPrice": 734.16,
-   "openingDate": "2026-11-16",
+   "openingPrice": 726.2225,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    734.16
+    726.2225
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Karin Korchinski",
    "ticker": "GEV",
-   "openingPrice": 783.62,
-   "openingDate": "2026-11-16",
+   "openingPrice": 775.5,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    783.62
+    775.5
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Kelly Grover",
    "ticker": "EQIX",
-   "openingPrice": 1041.36,
-   "openingDate": "2026-11-16",
+   "openingPrice": 1044.63,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    1041.36
+    1044.63
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Kevin Perko",
    "ticker": "CRCL",
-   "openingPrice": 57.67,
-   "openingDate": "2026-11-16",
+   "openingPrice": 57.28,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    57.67
+    57.28
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Leala Wong",
    "ticker": "ASML",
-   "openingPrice": 1436.64,
-   "openingDate": "2026-11-16",
+   "openingPrice": 1405,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    1436.64
+    1405
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Michelle Sullivan",
    "ticker": "CAKE",
-   "openingPrice": 108.69,
-   "openingDate": "2026-11-16",
+   "openingPrice": 109.63,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    108.69
+    109.63
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Natalie Tran",
    "ticker": "NKE",
-   "openingPrice": 38.34,
-   "openingDate": "2026-11-16",
+   "openingPrice": 40.2,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    38.34
+    40.2
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Nicole Haylock",
    "ticker": "FOXA",
-   "openingPrice": 68.585,
-   "openingDate": "2026-11-16",
+   "openingPrice": 67.43,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    68.585
+    67.43
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Olivia Hardley",
    "ticker": "IVVD",
-   "openingPrice": 0.575,
-   "openingDate": "2026-11-16",
+   "openingPrice": 0.545,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    0.575
+    0.545
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Scott Buckley",
    "ticker": "PRAX",
-   "openingPrice": 323.36,
-   "openingDate": "2026-11-16",
+   "openingPrice": 315.74,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    323.36
+    315.74
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Scott Korchinski",
    "ticker": "CMG",
-   "openingPrice": 36.09,
-   "openingDate": "2026-11-16",
+   "openingPrice": 35.79,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    36.09
+    35.79
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Scott Mitchell",
    "ticker": "BSP",
-   "openingPrice": 40.64,
-   "openingDate": "2026-11-16",
+   "openingPrice": 42.33,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    40.64
+    42.33
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Steve Hosea",
    "ticker": "GOOGL",
-   "openingPrice": 293.81,
-   "openingDate": "2026-11-16",
+   "openingPrice": 283.4,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    293.81
+    283.4
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Suzy",
    "ticker": "NVDA",
-   "openingPrice": 159.02,
-   "openingDate": "2026-11-16",
+   "openingPrice": 156.91,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    159.02
+    156.91
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Theo Lee",
    "ticker": "CEG",
-   "openingPrice": 275.52,
-   "openingDate": "2026-11-16",
+   "openingPrice": 276.6,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    275.52
+    276.6
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Tim Morris",
    "ticker": "NVDA",
-   "openingPrice": 159.02,
-   "openingDate": "2026-11-16",
+   "openingPrice": 156.91,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    159.02
+    156.91
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Toe Withers",
    "ticker": "AVGO",
-   "openingPrice": 332.49,
-   "openingDate": "2026-11-16",
+   "openingPrice": 335.59,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    332.49
+    335.59
    ],
    "openingTime": "09:30 ET"
   },
   {
    "name": "Todd Grover",
    "ticker": "NVDA",
-   "openingPrice": 159.02,
-   "openingDate": "2026-11-16",
+   "openingPrice": 156.91,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    159.02
+    156.91
    ],
    "openingTime": "09:30 ET"
   }
@@ -438,25 +438,25 @@
   {
    "ticker": "VOO",
    "name": "S&P 500",
-   "openingPrice": 689.11,
-   "openingDate": "2026-11-16",
+   "openingPrice": 678.82,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    689.11
+    678.82
    ],
    "openingTime": "09:30 ET"
   },
   {
    "ticker": "BRK.B",
    "name": "Warren Buffett",
-   "openingPrice": 594.97,
-   "openingDate": "2026-11-16",
+   "openingPrice": 589.98,
+   "openingDate": "2026-11-17",
    "checkpointPrices": [
-    594.97
+    589.98
    ],
    "openingTime": "09:30 ET"
   }
  ],
  "checkpointDates": [
-  "2026-11-16"
+  "2026-11-17"
  ]
 }
