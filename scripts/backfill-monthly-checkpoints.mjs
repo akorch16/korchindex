@@ -1,25 +1,18 @@
-// On-demand: replaces the quarterly race-chart checkpoints with monthly
-// ones across all three seasons. FY24/FY25 are closed, so this fetches a
-// full new set of monthly historical closes for every person + benchmark
-// (their existing `prices`/`changes` arrays stay untouched -- those still
-// drive the quarterly Leaderboard columns, only the "monthlyPrices" field
-// added here feeds the race chart). FY26 is ongoing, so only completed
-// months are backfilled here; the season's current in-progress month is
-// represented by the live price at render time, same as before.
+// On-demand: refreshes the current season's (FY27) monthly race-chart
+// checkpoints. FY24-FY26 are closed and frozen -- their checkpoints must NOT
+// be re-run through this script (re-fetching would overwrite FY26's
+// hand-set corporate-action final values and re-baseline its opening
+// point), so only the ongoing season is touched. Only completed months are
+// backfilled; the in-progress month is represented by the live price at
+// render time. Checkpoint 0 is the season's openingPrice (the prior close
+// the picks were priced from), not a fetched bar.
 //
-// Uses the same "closest bar by absolute distance, reject if >10 days off"
-// selection logic as the other backfill scripts, so a bad fetch surfaces as
-// a null gap instead of a wrong number. Run via the "Backfill monthly
-// checkpoints" GitHub Action, workflow_dispatch only.
+// Each checkpoint is the last trading bar ON OR BEFORE its date. Run via
+// the "Backfill monthly checkpoints" GitHub Action, workflow_dispatch only.
 import { readFile, writeFile } from 'node:fs/promises'
 
-const YEAR1_PATH = new URL('../src/data/year1.json', import.meta.url)
-const YEAR2_PATH = new URL('../src/data/year2.json', import.meta.url)
-const YEAR3_PATH = new URL('../src/data/year3.json', import.meta.url)
-
-const year1 = JSON.parse(await readFile(YEAR1_PATH, 'utf8'))
-const year2 = JSON.parse(await readFile(YEAR2_PATH, 'utf8'))
-const year3 = JSON.parse(await readFile(YEAR3_PATH, 'utf8'))
+const YEAR4_PATH = new URL('../src/data/year4.json', import.meta.url)
+const year4 = JSON.parse(await readFile(YEAR4_PATH, 'utf8'))
 
 const toYahoo = (t) => t.trim().replace('.', '-')
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -105,38 +98,19 @@ async function backfillSeason(label, dates, entities) {
   return failed
 }
 
-const allFailed = []
-
-// FY24 -- closed season, real end date.
-const y1Dates = monthlyCheckpoints(year1.dates[0], year1.dates[year1.dates.length - 1], true)
-year1.monthlyDates = y1Dates
-allFailed.push(...(await backfillSeason('FY24', y1Dates, [...year1.people, ...year1.benchmarks])))
-
-// FY25 -- closed season, real end date.
-const y2Dates = monthlyCheckpoints(year2.dates[0], year2.dates[year2.dates.length - 1], true)
-year2.monthlyDates = y2Dates
-allFailed.push(...(await backfillSeason('FY25', y2Dates, [...year2.people, ...year2.benchmarks])))
-
-// FY26 -- ongoing season, only completed months; "now" stays live-rendered.
+// FY27 -- ongoing season, only completed months; "now" stays live-rendered.
 const todayStr = new Date().toISOString().slice(0, 10)
-const y3Dates = monthlyCheckpoints(year3.seasonOpened, todayStr, false)
-year3.checkpointDates = y3Dates
-allFailed.push(
-  ...(await backfillSeason('FY26', y3Dates, [...year3.people, ...year3.benchmarks]).then((failed) => {
-    // Reuse the existing checkpointPrices field name (only the race chart
-    // reads it) -- backfillSeason wrote monthlyPrices, copy it over. Yahoo's
-    // chart closes are already split-adjusted, so no rescaling here.
-    for (const e of [...year3.people, ...year3.benchmarks]) {
-      e.checkpointPrices = e.monthlyPrices
-      delete e.monthlyPrices
-    }
-    return failed
-  }))
-)
+const y4Dates = monthlyCheckpoints(year4.seasonOpened, todayStr, false)
+year4.checkpointDates = y4Dates
+const entities = [...year4.people, ...year4.benchmarks]
+const allFailed = await backfillSeason('FY27', y4Dates.slice(1), entities)
+for (const e of entities) {
+  // monthlyPrices covers dates 1..n; prepend the opening price as checkpoint 0.
+  e.checkpointPrices = [e.openingPrice, ...(e.monthlyPrices ?? [])]
+  delete e.monthlyPrices
+}
 
-await writeFile(YEAR1_PATH, JSON.stringify(year1, null, 1) + '\n')
-await writeFile(YEAR2_PATH, JSON.stringify(year2, null, 1) + '\n')
-await writeFile(YEAR3_PATH, JSON.stringify(year3, null, 1) + '\n')
+await writeFile(YEAR4_PATH, JSON.stringify(year4, null, 1) + '\n')
 
-console.log(`\nMonthly checkpoints: FY24 ${y1Dates.length} dates, FY25 ${y2Dates.length} dates, FY26 ${y3Dates.length} dates.`)
+console.log(`\nMonthly checkpoints: FY27 ${y4Dates.length} dates.`)
 if (allFailed.length) console.log(`Gaps (${allFailed.length}):\n` + allFailed.join('\n'))
