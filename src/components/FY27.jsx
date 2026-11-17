@@ -138,13 +138,13 @@ function averageOf(seriesList) {
 
 // Quarter-over-quarter winner/loser: biggest rise and fall within each
 // quarter window specifically (not cumulative since the FY27 open), using
-// the checkpointPrices indices for Nov 17 / Feb 17 / May 17 / Aug 17 --
-// Q4 (Aug 17 -> now) uses the live price for its still-open end point.
+// the checkpointPrices indices for Nov 16 / Feb 16 / May 16 / Aug 16 --
+// Q4 (Aug 16 -> now) uses the live price for its still-open end point.
 const QUARTER_WINDOWS = [
-  { label: 'Q1', sub: 'Nov 17 → Feb 17', startIdx: 0, endIdx: 3 },
-  { label: 'Q2', sub: 'Feb 17 → May 17', startIdx: 3, endIdx: 6 },
-  { label: 'Q3', sub: 'May 17 → Aug 17', startIdx: 6, endIdx: 9 },
-  { label: 'Q4', sub: 'Aug 17 → now', startIdx: 9, endIdx: null },
+  { label: 'Q1', sub: 'Nov 16 → Feb 16', startIdx: 0, endIdx: 3 },
+  { label: 'Q2', sub: 'Feb 16 → May 16', startIdx: 3, endIdx: 6 },
+  { label: 'Q3', sub: 'May 16 → Aug 16', startIdx: 6, endIdx: 9 },
+  { label: 'Q4', sub: 'Aug 16 → now', startIdx: 9, endIdx: null },
 ]
 
 function quarterExtremes(rows) {
@@ -183,7 +183,7 @@ function QuarterChips({ rows }) {
 }
 
 // For every FY26 pick, what it would be worth today if never sold -- from the
-// same close (2026-11-16) the real FY27 pick was priced from, stored on each
+// same price (the 2026-11-16 9:30 AM open) the real FY27 pick was priced from, stored on each
 // FY26 pick as fy27OpenPrice, so it's a true apples-to-apples window with the
 // switched comparison. For a same-ticker pick, "held" and "switched" are the
 // same continuous position, so reuse FY27's own since/openingPrice basis --
