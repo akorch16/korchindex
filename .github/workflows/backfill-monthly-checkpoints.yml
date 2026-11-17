@@ -1,7 +1,7 @@
 name: Backfill monthly checkpoints
 
-# On-demand only. Re-run to refresh FY26's completed months as the season
-# progresses; FY24/FY25 are closed and only need running once.
+# On-demand only. Re-run to refresh FY27's completed months as the season
+# progresses. FY24-FY26 are closed and frozen -- the script no longer touches them.
 on:
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ jobs:
           else
             git config user.name "korch-bot"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add src/data/year1.json src/data/year2.json src/data/year3.json
+            git add src/data/year4.json
             git commit -m "chore: backfill monthly race-chart checkpoints"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"

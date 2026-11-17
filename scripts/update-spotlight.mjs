@@ -1,4 +1,4 @@
-// Finds FY26's biggest mover since today's market open and fetches a real
+// Finds FY27's biggest mover since today's market open and fetches a real
 // news headline (Yahoo's search endpoint) plus a short summary snippet
 // (Yahoo's RSS feed, which has a description the search endpoint lacks) --
 // same "no API key" approach as update-prices.mjs. Writes
@@ -8,11 +8,11 @@ import { readFile, writeFile } from 'node:fs/promises'
 
 const PRICES_PATH = new URL('../public/live/prices.json', import.meta.url)
 const SPOTLIGHT_PATH = new URL('../public/live/spotlight.json', import.meta.url)
-const YEAR3_PATH = new URL('../src/data/year3.json', import.meta.url)
+const YEAR4_PATH = new URL('../src/data/year4.json', import.meta.url)
 const STOCK_NOTES_PATH = new URL('../src/data/stock-notes.json', import.meta.url)
 
 const prices = JSON.parse(await readFile(PRICES_PATH, 'utf8'))
-const year3 = JSON.parse(await readFile(YEAR3_PATH, 'utf8'))
+const year4 = JSON.parse(await readFile(YEAR4_PATH, 'utf8'))
 const stockNotes = JSON.parse(await readFile(STOCK_NOTES_PATH, 'utf8'))
 
 // Yahoo symbol format: class shares use '-' (BRK.B -> BRK-B)
@@ -21,7 +21,7 @@ const toYahoo = (t) => t.replace('.', '-')
 // Corporate-action picks (mergers, liquidations, rebrands) no longer trade
 // under their original ticker -- skip them, since "why did it move" news
 // for the successor company would be a confusing non sequitur here.
-const candidates = year3.people
+const candidates = year4.people
   .filter((p) => !p.corporateAction)
   .map((p) => {
     const q = prices.quotes?.[p.ticker.trim()]

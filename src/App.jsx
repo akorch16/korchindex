@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import FY27 from './components/FY27'
 import FY26 from './components/FY26'
 import Dashboard from './components/Dashboard'
 import ArchiveY1 from './components/ArchiveY1'
 import AllTime from './components/AllTime'
 
 const TABS = [
+  { id: 'fy27', label: 'FY27', el: <FY27 /> },
   { id: 'fy26', label: 'FY26', el: <FY26 /> },
   { id: 'dashboard', label: 'FY25', el: <Dashboard /> },
   { id: 'year1', label: 'FY24', el: <ArchiveY1 /> },
@@ -83,7 +85,7 @@ function Team() {
           “wives and husbands are perfectly capable of making their own decisions without the
           other's input and expertise, thank you very much.”
         </p>
-        <p>See who picked what, and why, on the FY24, FY25, and FY26 tabs.</p>
+        <p>See who picked what, and why, on the FY24, FY25, FY26, and FY27 tabs.</p>
       </div>
     </section>
   )
@@ -113,7 +115,7 @@ const PAGE_PATHS = { home: '/', 'our-story': '/our-story', team: '/team', 'inves
 const pathToPage = (pathname) => Object.entries(PAGE_PATHS).find(([, path]) => path === pathname)?.[0] ?? 'home'
 
 export default function App() {
-  const [tab, setTab] = useState('fy26')
+  const [tab, setTab] = useState('fy27')
   const [page, setPageState] = useState(() => pathToPage(window.location.pathname))
 
   const navigate = (id) => {
