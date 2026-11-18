@@ -406,7 +406,7 @@ export default function FY27() {
             Last refreshed: {refreshedLabel(data.updated)}
           </p>
         )}
-        <div className="kpi-row">
+        <div className="kpi-row wrap-labels">
           <div className="tile hero">
             <div className="label">KORCH · Total</div>
             <div className={`value ${pv.totalReturn >= 0 ? 'pos' : 'neg'}`}>{fmtMoney(pv.total)}</div>
@@ -418,7 +418,11 @@ export default function FY27() {
             </div>
           </div>
           <div className="tile">
-            <div className="label">Daily Change</div>
+            <div className="label">
+              {data?.updated
+                ? `${new Date(data.updated).toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' })} · Daily Change`
+                : 'Daily Change'}
+            </div>
             <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
               {pv.dailyChange >= 0 ? '+' : '-'}
               {`$${Math.round(Math.abs(pv.dailyChange)).toLocaleString('en-US')}`}

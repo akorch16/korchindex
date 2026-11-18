@@ -217,6 +217,8 @@ header + main > .section:first-child { margin-top: 8px; }
   .kpi-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .tile { padding: 10px 8px; }
   .tile .label { font-size: 11px; }
+  /* Keep values level when one tile label (e.g. "Nov 18 · Daily Change") wraps. */
+  .kpi-row.wrap-labels .tile .label { min-height: 3em; }
   .tile .value { font-size: 20px; margin-top: 4px; }
   .tile .note, .tile .note.big { font-size: 11px; }
 
