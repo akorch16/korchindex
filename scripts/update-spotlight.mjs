@@ -1,41 +1,81 @@
-// Finds FY27's biggest mover since today's market open and fetches a real
-// news headline (Yahoo's search endpoint) plus a short summary snippet
-// (Yahoo's RSS feed, which has a description the search endpoint lacks) --
-// same "no API key" approach as update-prices.mjs. Writes
-// public/live/spotlight.json. Run by .github/workflows/update-prices.yml
-// right after update-prices.mjs, since it reads that script's output.
+// Once each morning, finds FY27's biggest mover over the previous trading
+// day (open to close) and fetches a real news headline (Yahoo's search
+// endpoint) plus a short summary snippet (Yahoo's RSS feed, which has a
+// description the search endpoint lacks) -- same "no API key" approach as
+// update-prices.mjs. Writes public/live/spotlight.json. Run by
+// .github/workflows/update-prices.yml after every price update, but it
+// exits early if today's spotlight already exists, so only the first run of
+// the (Eastern) day does any work.
 import { readFile, writeFile } from 'node:fs/promises'
 
-const PRICES_PATH = new URL('../public/live/prices.json', import.meta.url)
 const SPOTLIGHT_PATH = new URL('../public/live/spotlight.json', import.meta.url)
 const YEAR4_PATH = new URL('../src/data/year4.json', import.meta.url)
 const STOCK_NOTES_PATH = new URL('../src/data/stock-notes.json', import.meta.url)
 
-const prices = JSON.parse(await readFile(PRICES_PATH, 'utf8'))
 const year4 = JSON.parse(await readFile(YEAR4_PATH, 'utf8'))
 const stockNotes = JSON.parse(await readFile(STOCK_NOTES_PATH, 'utf8'))
 
 // Yahoo symbol format: class shares use '-' (BRK.B -> BRK-B)
 const toYahoo = (t) => t.replace('.', '-')
 
-// Corporate-action picks (mergers, liquidations, rebrands) no longer trade
-// under their original ticker -- skip them, since "why did it move" news
-// for the successor company would be a confusing non sequitur here.
-const candidates = year4.people
-  .filter((p) => !p.corporateAction)
-  .map((p) => {
-    const q = prices.quotes?.[p.ticker.trim()]
-    if (q?.price == null || q?.open == null || q.open === 0) return null
-    return { name: p.name, ticker: p.ticker.trim(), price: q.price, open: q.open, changePct: (q.price - q.open) / q.open }
-  })
-  .filter(Boolean)
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+const todayET = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
 
-if (candidates.length === 0) {
-  console.log('No candidates with both price and open -- leaving spotlight.json untouched.')
+let existing = null
+try {
+  existing = JSON.parse(await readFile(SPOTLIGHT_PATH, 'utf8'))
+} catch {}
+if (existing?.generatedOn === todayET) {
+  console.log(`Spotlight already generated for ${todayET} -- leaving it as is.`)
   process.exit(0)
 }
 
-const mover = candidates.reduce((a, b) => (Math.abs(b.changePct) > Math.abs(a.changePct) ? b : a))
+// Last completed daily bar strictly before today (Eastern), so Monday picks
+// up Friday and a post-holiday morning picks up the last trading day.
+async function previousSession(ticker) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(toYahoo(ticker))}?range=5d&interval=1d`
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) korchindex-price-updater' },
+  })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const r = (await res.json())?.chart?.result?.[0]
+  const q = r?.indicators?.quote?.[0]
+  const bars = (r?.timestamp ?? [])
+    .map((ts, i) => ({
+      date: new Date(ts * 1000).toLocaleDateString('en-CA', { timeZone: 'America/New_York' }),
+      open: q?.open?.[i],
+      close: q?.close?.[i],
+    }))
+    .filter((b) => b.date < todayET && Number.isFinite(b.open) && Number.isFinite(b.close) && b.open !== 0)
+  return bars.at(-1) ?? null
+}
+
+// Corporate-action picks (mergers, liquidations, rebrands) no longer trade
+// under their original ticker -- skip them, since "why did it move" news
+// for the successor company would be a confusing non sequitur here.
+const candidates = []
+for (const p of year4.people.filter((p) => !p.corporateAction)) {
+  const ticker = p.ticker.trim()
+  if (candidates.some((c) => c.ticker === ticker)) continue
+  try {
+    const bar = await previousSession(ticker)
+    if (bar) candidates.push({ name: p.name, ticker, date: bar.date, price: bar.close, open: bar.open, changePct: (bar.close - bar.open) / bar.open })
+  } catch (err) {
+    console.log(`Previous-session lookup failed for ${ticker}: ${err.message}`)
+  }
+  await sleep(300)
+}
+
+// Compare everyone on the same (most recent) session.
+const session = candidates.map((c) => c.date).sort().at(-1)
+const sameSession = candidates.filter((c) => c.date === session)
+
+if (sameSession.length === 0) {
+  console.log('No previous-session data -- leaving spotlight.json untouched.')
+  process.exit(0)
+}
+
+const mover = sameSession.reduce((a, b) => (Math.abs(b.changePct) > Math.abs(a.changePct) ? b : a))
 
 async function fetchNews(ticker) {
   const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(
@@ -120,7 +160,8 @@ if (headline) {
 }
 
 const spotlight = {
-  date: new Date().toISOString().slice(0, 10),
+  date: mover.date,
+  generatedOn: todayET,
   name: mover.name,
   ticker: mover.ticker,
   company: companyName ?? mover.ticker,
