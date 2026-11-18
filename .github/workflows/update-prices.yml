@@ -14,7 +14,17 @@ on:
     # an hour of padding on each side, so it doesn't need to change
     # with DST.
     - cron: "7,37 13-21 * * 1-5"
+  # Primary trigger: an external scheduler (cron-job.org) calls the
+  # workflow_dispatch API hourly 9:30 AM-4:00 PM ET plus once after the
+  # close. API-dispatched runs start immediately; the cron above is a
+  # best-effort backup, since GitHub delays or drops scheduled runs under load.
   workflow_dispatch:
+
+# Queue overlapping runs (external trigger + backup cron) instead of letting
+# two runs race to push prices.json.
+concurrency:
+  group: update-prices
+  cancel-in-progress: false
 
 permissions:
   contents: write
