@@ -1,0 +1,22 @@
+name: Scratch fetch
+on:
+  push:
+    branches: [claude/fetch-tex-keel-scratch]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/update-spotlight.mjs && node scripts/update-spotlight.mjs
+      - run: |
+          git config user.name "korch-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p scripts/scratch && cp public/live/spotlight.json scripts/scratch/spotlight-test.json
+          git add scripts/scratch/spotlight-test.json
+          git commit -m "scratch: spotlight test"
+          git push
