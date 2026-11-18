@@ -1,0 +1,25 @@
+[project]
+name = "korchindex-backend"
+version = "0.1.0"
+description = "KORCH fund API — deliberately overengineered for system-design practice"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "asyncpg>=0.30",
+    "pydantic-settings>=2.6",
+    "redis>=5.2",
+    "pybreaker>=1.2",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "openpyxl>=3.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
