@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { TICKER_LOGOS } from '../data/ticker-logos'
 
-// "Stock of the day" -- FY26's biggest mover since market open, with a real
-// news headline for it when one's available. Data comes from
-// public/live/spotlight.json, written by scripts/update-spotlight.mjs
-// alongside every price update. Renders nothing while loading or if the
+// "Stock of the day" -- the previous trading day's biggest FY27 mover (open to
+// close), with a real news headline for it when one's available. Data comes
+// from public/live/spotlight.json, written once each morning by
+// scripts/update-spotlight.mjs. Renders nothing while loading or if the
 // file/headline isn't there -- this is a bonus, not load-bearing content.
 export default function StockSpotlight() {
   const [data, setData] = useState(null)
@@ -38,7 +38,7 @@ export default function StockSpotlight() {
             <span className="spotlight-company">{data.company}</span>
           </div>
           <div className={`spotlight-change ${up ? 'pos' : 'neg'}`}>
-            {up ? '▲' : '▼'} {(Math.abs(data.changePct) * 100).toFixed(1)}% since open
+            {up ? '▲' : '▼'} {(Math.abs(data.changePct) * 100).toFixed(1)}% on the day
           </div>
         </div>
         {data.headline && (

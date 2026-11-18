@@ -112,11 +112,13 @@ const SHOWDOWNS = [
 ]
 const SLOT_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)']
 
-// "Sep 22 · Change" -- today's date, for the since-open tile.
-function dailyChangeLabel(date = new Date()) {
-  const month = date.toLocaleDateString('en-US', { month: 'short' })
-  const day = date.getDate()
-  return `${month} ${day} · Change`
+// "Nov 18, 2026 at 3:30 PM ET" -- when prices were last refreshed, in market time.
+function refreshedLabel(updated) {
+  const d = new Date(updated)
+  const tz = { timeZone: 'America/New_York' }
+  const date = d.toLocaleDateString('en-US', { ...tz, month: 'short', day: 'numeric', year: 'numeric' })
+  const time = d.toLocaleTimeString('en-US', { ...tz, hour: 'numeric', minute: '2-digit' })
+  return `${date} at ${time} ET`
 }
 
 // [0, chg-at-Q1, chg-at-Q2, ..., chg-at-now] for one entity, from its
@@ -399,6 +401,11 @@ export default function FY27() {
     <>
       <section className="section">
         <h2 className="section-title">FY27: Topline stats</h2>
+        {data?.updated && (
+          <p className="updated" style={{ margin: '0 0 12px' }}>
+            Last refreshed: {refreshedLabel(data.updated)}
+          </p>
+        )}
         <div className="kpi-row">
           <div className="tile hero">
             <div className="label">KORCH · Total</div>
@@ -411,7 +418,7 @@ export default function FY27() {
             </div>
           </div>
           <div className="tile">
-            <div className="label">{dailyChangeLabel()}</div>
+            <div className="label">Daily Change</div>
             <div className={`value ${pv.dailyChange >= 0 ? 'pos' : 'neg'}`}>
               {pv.dailyChange >= 0 ? '+' : '-'}
               {`$${Math.round(Math.abs(pv.dailyChange)).toLocaleString('en-US')}`}
